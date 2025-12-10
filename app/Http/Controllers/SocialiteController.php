@@ -26,9 +26,11 @@ class SocialiteController extends Controller
         }
 
         $providerId = $socialUser->getId();
-        $email      = $socialUser->getEmail();
-        $name       = $socialUser->getName() ?? 'User';
-        $avatar     = $socialUser->getAvatar();
+        $email = $socialUser->getEmail();
+        $name = $socialUser->getName()
+            ?: $socialUser->getNickname()
+            ?: 'User';
+        $avatar = $socialUser->getAvatar();
 
         $account = SocialAccount::where('provider', $provider)
             ->where('provider_id', $providerId)
@@ -36,14 +38,17 @@ class SocialiteController extends Controller
 
         if ($account) {
             Auth::login($account->user);
-            return redirect('/dashboard');
+
+            if (is_null($account->user->password)) {
+                return redirect()->route('password.setup');
+            }
+
+            return $account->user->role === 'admin'
+                ? redirect('/dashboard')
+                : redirect('/');
         }
 
-        $user = null;
-
-        if ($email) {
-            $user = User::where('email', $email)->first();
-        }
+        $user = $email ? User::where('email', $email)->first() : null;
 
         if (!$user) {
             $user = User::create([
@@ -51,6 +56,7 @@ class SocialiteController extends Controller
                 'email' => $email,
                 'avatar' => $avatar,
                 'role' => 'user',
+                'password' => null,
             ]);
         }
 
@@ -62,6 +68,12 @@ class SocialiteController extends Controller
 
         Auth::login($user);
 
-        return redirect('/dashboard');
+        if (is_null($user->password)) {
+            return redirect()->route('password.setup');
+        }
+
+        return $user->role === 'admin'
+            ? redirect('/dashboard')
+            : redirect('/');
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.app', ['title' => 'Login'])]
+#[Layout('app', ['title' => 'Login'])]
 class Login extends Component
 {
     public $email;
@@ -26,11 +26,12 @@ class Login extends Component
 
         session()->regenerate();
 
-        return redirect()->to('/dashboard');
-    }
+        $user = Auth::user();
 
-    public function render()
-    {
-        return view('livewire.auth.login');
+        if ($user->role === 'admin') {
+            return redirect()->to('/dashboard');
+        }
+
+        return redirect()->to('/');
     }
 }
