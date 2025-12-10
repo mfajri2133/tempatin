@@ -1,6 +1,5 @@
 <div class="w-full max-w-md">
     <div class="bg-white rounded-2xl shadow-2xl p-8">
-        <!-- Header -->
         <div class="text-center mb-8">
             <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome Back!</h1>
             <p class="text-gray-600">Login dengan akun sosial media Anda</p>
@@ -12,9 +11,7 @@
             </div>
         @endif
 
-        <!-- Social Login Buttons -->
         <div class="space-y-4">
-            <!-- Google Login -->
             <a href="{{ route('socialite.redirect', 'google') }}"
                 class="flex items-center justify-center w-full px-6 py-3 bg-white border-2 border-gray-300 rounded-lg hover:border-gray-400 transition duration-200 group">
                 <svg class="w-6 h-6 mr-3" viewBox="0 0 24 24">
@@ -30,7 +27,6 @@
                 <span class="text-gray-700 font-medium group-hover:text-gray-900">Login dengan Google</span>
             </a>
 
-            <!-- GitHub Login -->
             <a href="{{ route('socialite.redirect', 'github') }}"
                 class="flex items-center justify-center w-full px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition duration-200 group">
                 <svg class="w-6 h-6 mr-3 fill-current" viewBox="0 0 24 24">
@@ -41,7 +37,6 @@
             </a>
         </div>
 
-        <!-- Divider -->
         <div class="relative my-8">
             <div class="absolute inset-0 flex items-center">
                 <div class="w-full border-t border-gray-300"></div>
