@@ -39,16 +39,16 @@ class SocialiteController extends Controller
         if ($account) {
             Auth::login($account->user);
 
+            if (is_null($account->user->password)) {
+                return redirect()->route('password.setup');
+            }
+
             return $account->user->role === 'admin'
                 ? redirect('/dashboard')
                 : redirect('/');
         }
 
-        $user = null;
-
-        if ($email) {
-            $user = User::where('email', $email)->first();
-        }
+        $user = $email ? User::where('email', $email)->first() : null;
 
         if (!$user) {
             $user = User::create([
@@ -56,6 +56,7 @@ class SocialiteController extends Controller
                 'email' => $email,
                 'avatar' => $avatar,
                 'role' => 'user',
+                'password' => null,
             ]);
         }
 
@@ -66,6 +67,10 @@ class SocialiteController extends Controller
         ]);
 
         Auth::login($user);
+
+        if (is_null($user->password)) {
+            return redirect()->route('password.setup');
+        }
 
         return $user->role === 'admin'
             ? redirect('/dashboard')
