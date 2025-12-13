@@ -57,19 +57,6 @@
                 <span>Profile</span>
             </a>
         </nav>
-
-        <!-- User Profile Section in Sidebar -->
-        <div class="border-t dark:border-[#333] p-4">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
-                    {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
-                </div>
-                <div class="flex-1 min-w-0">
-                    <p class="text-sm font-semibold dark:text-white truncate">{{ auth()->user()->name ?? 'User' }}</p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ auth()->user()->email ?? 'user@example.com' }}</p>
-                </div>
-            </div>
-        </div>
     </aside>
 
     <!-- Sidebar Overlay -->
@@ -100,9 +87,16 @@
                     <div x-data="{ open: false }" class="relative">
                         <button @click="open = !open"
                             class="flex items-center gap-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-[#2a2a2a] transition-colors">
-                            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                                {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
-                            </div>
+                            
+                            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+                    {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                </div>
+                <div class="flex-1 min-w-0 hidden sm:block">
+                    <p class="text-sm font-semibold dark:text-white truncate">{{ auth()->user()->name ?? 'User' }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ auth()->user()->email ?? 'user@example.com' }}</p>
+                </div>
+            </div>
                             <svg class="w-4 h-4 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
@@ -113,9 +107,6 @@
                             class="absolute right-0 mt-2 w-48 bg-white dark:bg-[#1a1a1a] rounded-lg shadow-xl border dark:border-[#333] z-50">
                             <a href="/profile" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-[#2a2a2a] transition-colors text-sm dark:text-white">
                                 Profile
-                            </a>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-[#2a2a2a] transition-colors text-sm dark:text-white">
-                                Settings
                             </a>
                             <hr class="dark:border-[#333]">
                             <form method="POST" action="{{ route('logout') }}" class="block">
