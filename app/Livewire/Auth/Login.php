@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('app', ['title' => 'Login'])]
+#[Layout('layouts.app', ['title' => 'Login'])]
 class Login extends Component
 {
     public $email;

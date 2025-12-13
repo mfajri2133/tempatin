@@ -5,7 +5,7 @@ namespace App\Livewire;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('app', ['title' => 'Welcome'])]
+#[Layout('layouts.app', ['title' => 'Welcome'])]
 class Welcome extends Component
 {
     public function render()

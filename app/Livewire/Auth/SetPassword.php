@@ -5,7 +5,7 @@ namespace App\Livewire\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('app', ['title' => 'Set Password'])]
+#[Layout('layouts.app', ['title' => 'Set Password'])]
 class SetPassword extends Component
 {
     public $name;

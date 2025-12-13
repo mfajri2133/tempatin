@@ -5,6 +5,8 @@ use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\SetPassword;
 use App\Livewire\Dashboard;
+use App\Livewire\Dashboard\Users;
+use App\Livewire\Dashboard\Venues;
 use App\Livewire\Welcome;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +22,8 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/users', Users::class)->name('users');
+    Route::get('/venues', Venues::class)->name('venues');
     Route::get('/set-password', SetPassword::class)->name('password.setup');
 
     Route::post('/logout', function () {
