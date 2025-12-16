@@ -78,7 +78,7 @@
                         <div x-show="open" @click.outside="open = false"
                             class="absolute right-0 mt-2 w-48 bg-[#1a1a1a] rounded-lg shadow-xl border border-[#333] z-50 overflow-hidden">
 
-                            <a href="/profile"
+                            <a href="{{ route('user.profile') }}"
                                 class="block px-4 py-2 hover:bg-[#2a2a2a] transition-colors text-sm text-white">
                                 Profile
                             </a>
