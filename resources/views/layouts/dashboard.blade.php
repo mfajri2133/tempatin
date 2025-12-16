@@ -29,7 +29,7 @@
         <!-- Sidebar Navigation -->
         <nav class="flex-1 p-4 space-y-2 text-white overflow-y-auto text-sm">
 
-            <a href="/dashboard"
+            <a href="{{ route('dashboard') }}"
                 class="flex items-center gap-3 px-3 py-2 rounded transition-colors
                 {{ request()->is('dashboard') ? 'bg-blue-900/30 text-blue-400 font-semibold' : 'hover:bg-[#2a2a2a]' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -41,7 +41,7 @@
                 <span>Dashboard</span>
             </a>
 
-            <a href="/users"
+            <a href="{{ route('users') }}"
                 class="flex items-center gap-3 px-3 py-2 rounded transition-colors
                 {{ request()->is('users*') ? 'bg-blue-900/30 text-blue-400 font-semibold' : 'hover:bg-[#2a2a2a]' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -52,7 +52,7 @@
                 <span>Pengguna</span>
             </a>
 
-            <a href="/admin"
+            <a href="{{ route('admin') }}"
                 class="flex items-center gap-3 px-3 py-2 rounded transition-colors
                 {{ request()->is('admin*') ? 'bg-blue-900/30 text-blue-400 font-semibold' : 'hover:bg-[#2a2a2a]' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -63,7 +63,18 @@
                 <span>Admin</span>
             </a>
 
-            <a href="/venues"
+            <a href="{{ route('categories') }}"
+                class="flex items-center gap-3 px-3 py-2 rounded transition-colors
+                {{ request()->is('categories*') ? 'bg-blue-900/30 text-blue-400 font-semibold' : 'hover:bg-[#2a2a2a]' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                </svg>
+                <span>Kategori</span>
+            </a>
+
+            <a href="{{ route('venues') }}"
                 class="flex items-center gap-3 px-3 py-2 rounded transition-colors
                 {{ request()->is('venues*') ? 'bg-blue-900/30 text-blue-400 font-semibold' : 'hover:bg-[#2a2a2a]' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -71,7 +82,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
                 </svg>
-                <span>Venue</span>
+                <span>Tempat</span>
             </a>
         </nav>
     </aside>
@@ -121,7 +132,8 @@
                         <div x-show="open" @click.outside="open = false"
                             class="absolute right-0 mt-2 w-48 bg-[#1a1a1a] rounded-lg shadow-xl border border-[#333] z-50 overflow-hidden">
 
-                            <a href="/profile" class="block px-4 py-2 hover:bg-[#2a2a2a] text-sm text-white">
+                            <a href="{{ route('admin.profile') }}"
+                                class="block px-4 py-2 hover:bg-[#2a2a2a] text-sm text-white">
                                 Profile
                             </a>
 
