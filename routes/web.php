@@ -9,6 +9,7 @@ use App\Livewire\Dashboard\Profile;
 use App\Livewire\Dashboard\Users;
 use App\Livewire\Dashboard\Admin;
 use App\Livewire\Dashboard\Venues;
+use App\Livewire\Dashboard\Category;
 use App\Livewire\Welcome;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', Users::class)->name('users');
     Route::get('/admin', Admin::class)->name('admin');
     Route::get('/venues', Venues::class)->name('venues');
+    Route::get('/categories', Category::class)->name('categories');
 
     Route::get('/set-password', SetPassword::class)->name('password.setup');
 
