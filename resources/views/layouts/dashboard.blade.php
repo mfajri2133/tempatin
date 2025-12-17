@@ -10,109 +10,152 @@
     @livewireStyles
 </head>
 
-<body class="h-full flex bg-gray-100 dark:bg-[#0f0f0f]" x-data="{ sidebarOpen: false, notificationsOpen: false, userMenuOpen: false }">
+<body class="h-full flex bg-[#f1f5f9]" x-data="{ sidebarOpen: false }">
 
     <!-- Sidebar -->
     <aside x-bind:class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-        class="fixed inset-y-0 left-0 z-30 w-64 bg-white dark:bg-[#1a1a1a] shadow-lg transform transition-transform duration-300 lg:static lg:translate-x-0 flex flex-col">
+        class="fixed inset-y-0 left-0 z-30 w-60 bg-ptx-black shadow-lg transform transition-transform duration-300 lg:static lg:translate-x-0 flex flex-col">
 
         <!-- Sidebar Header -->
-        <div class="p-4 border-b dark:border-[#333]">
-            <h1 class="text-xl font-bold dark:text-white">🎫 Pasuntix</h1>
+        <div class="px-4 py-5.5 border-b border-blue-400 text-center">
+            <a href="{{ route('dashboard') }}" class="text-xl font-bold text-white">Tempat<span
+                    class="text-blue-400">IN</span></a>
         </div>
 
         <!-- Sidebar Navigation -->
-        <nav class="flex-1 p-4 space-y-2 dark:text-white overflow-y-auto">
-            <a href="/dashboard" 
-                class="flex items-center gap-3 px-3 py-2 rounded transition-colors {{ request()->is('dashboard') ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-semibold' : 'hover:bg-gray-100 dark:hover:bg-[#2a2a2a]' }}">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+        <nav class="flex-1 p-4 space-y-2 text-white overflow-y-auto text-xs">
+            <a href="{{ route('dashboard') }}"
+                class="flex items-center gap-3 px-2 py-2 rounded transition-colors
+                {{ request()->is('dashboard') ? 'bg-blue-500/10 text-blue-400 font-semibold' : 'hover:bg-white/5 hover:text-blue-400' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                 </svg>
-                <span>Home</span>
+                <span>Dashboard</span>
             </a>
 
-            <a href="/events" 
-                class="flex items-center gap-3 px-3 py-2 rounded transition-colors {{ request()->is('events*') ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-semibold' : 'hover:bg-gray-100 dark:hover:bg-[#2a2a2a]' }}">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.3A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
+            <a href="{{ route('users') }}"
+                class="flex items-center gap-3 px-2 py-2 rounded transition-colors
+                {{ request()->is('users*') ? 'bg-blue-500/10 text-blue-400 font-semibold' : 'hover:bg-white/5 hover:text-blue-400' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
                 </svg>
-                <span>Events</span>
+                <span>Pengguna</span>
             </a>
 
-            <a href="/orders" 
-                class="flex items-center gap-3 px-3 py-2 rounded transition-colors {{ request()->is('orders*') ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-semibold' : 'hover:bg-gray-100 dark:hover:bg-[#2a2a2a]' }}">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 6H6.28l-.31-1.243A1 1 0 005 4H3z" />
-                    <path d="M16 16a2 2 0 11-4 0 2 2 0 014 0z" />
-                    <path d="M4 16a2 2 0 11-4 0 2 2 0 014 0z" />
+            <a href="{{ route('admin') }}"
+                class="flex items-center gap-3 px-2 py-2 rounded transition-colors
+                {{ request()->is('admin*') ? 'bg-blue-500/10 text-blue-400 font-semibold' : 'hover:bg-white/5 hover:text-blue-400' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
                 </svg>
-                <span>Orders</span>
+                <span>Admin</span>
             </a>
 
-            <a href="/profile" 
-                class="flex items-center gap-3 px-3 py-2 rounded transition-colors {{ request()->is('profile*') ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-semibold' : 'hover:bg-gray-100 dark:hover:bg-[#2a2a2a]' }}">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+            <a href="{{ route('categories') }}"
+                class="flex items-center gap-3 px-2 py-2 rounded transition-colors
+                {{ request()->is('categories*') ? 'bg-blue-500/10 text-blue-400 font-semibold' : 'hover:bg-white/5 hover:text-blue-400' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
                 </svg>
-                <span>Profile</span>
+                <span>Kategori</span>
+            </a>
+
+            <a href="{{ route('venues') }}"
+                class="flex items-center gap-3 px-2 py-2 rounded transition-colors
+                {{ request()->is('venues*') ? 'bg-blue-500/10 text-blue-400 font-semibold' : 'hover:bg-white/5 hover:text-blue-400' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                </svg>
+                <span>Tempat</span>
             </a>
         </nav>
     </aside>
 
-    <!-- Sidebar Overlay -->
-    <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-black/40 z-20 lg:hidden"></div>
+    <!-- Overlay -->
+    <div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-linear duration-300"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0" @click="sidebarOpen = false" class="fixed inset-0 bg-black/40 z-20 lg:hidden"
+        style="display: none;">
+    </div>
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-h-screen">
 
         <!-- Header -->
-        <header class="bg-white dark:bg-[#1a1a1a] shadow lg:shadow-sm dark:border-b dark:border-[#333]">
-            <div class="flex items-center gap-3 px-4 py-3">
-                <!-- Menu Toggle -->
+        <header class="bg-white border-b border-gray-200 shadow-sm">
+            <div class="flex items-center border-b border-blue-400">
+
                 <button @click="sidebarOpen = !sidebarOpen"
-                    class="lg:hidden p-2 rounded hover:bg-gray-200 dark:hover:bg-[#2a2a2a] transition-colors">
-                    <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" stroke-width="2"
+                    class="lg:hidden p-4 rounded-lg hover:bg-gray-100 transition-colors">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
 
-                <!-- Page Title -->
-                <h2 class="text-lg font-semibold dark:text-white">{{ $title ?? 'Dashboard' }}</h2>
-
-                <!-- Right Actions -->
                 <div class="ml-auto flex items-center gap-2">
-                   
-                    <!-- User Menu -->
                     <div x-data="{ open: false }" class="relative">
                         <button @click="open = !open"
-                            class="flex items-center gap-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-[#2a2a2a] transition-colors">
-                            
-                            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
-                    {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
-                </div>
-                <div class="flex-1 min-w-0 hidden sm:block">
-                    <p class="text-sm font-semibold dark:text-white truncate">{{ auth()->user()->name ?? 'User' }}</p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ auth()->user()->email ?? 'user@example.com' }}</p>
-                </div>
-            </div>
-                            <svg class="w-4 h-4 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
+                            class="flex items-center gap-3 p-4 hover:bg-blue-50 hover:cursor-pointer transition-colors">
+                            <div class="hidden sm:block text-right">
+                                <p class="text-sm font-semibold text-gray-800">
+                                    {{ auth()->user()->name }}
+                                </p>
+                            </div>
+
+                            <div
+                                class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                                {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                            </div>
                         </button>
 
-                        <!-- User Menu Dropdown -->
-                        <div x-show="open" @click.outside="open = false"
-                            class="absolute right-0 mt-2 w-48 bg-white dark:bg-[#1a1a1a] rounded-lg shadow-xl border dark:border-[#333] z-50">
-                            <a href="/profile" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-[#2a2a2a] transition-colors text-sm dark:text-white">
+                        <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                            x-transition:enter-start="transform opacity-0 scale-95"
+                            x-transition:enter-end="transform opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-75"
+                            x-transition:leave-start="transform opacity-100 scale-100"
+                            x-transition:leave-end="transform opacity-0 scale-95" @click.outside="open = false"
+                            class="absolute right-4 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50 overflow-hidden"
+                            style="display: none;">
+
+                            <div class="px-4 py-3 border-b border-gray-100">
+                                <p class="text-sm font-medium text-gray-800">{{ auth()->user()->name ?? 'User' }}</p>
+                                <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email ?? '' }}</p>
+                            </div>
+
+                            <a href="{{ route('admin.profile') }}"
+                                class="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
                                 Profile
                             </a>
-                            <hr class="dark:border-[#333]">
-                            <form method="POST" action="{{ route('logout') }}" class="block">
+
+                            <hr class="border-gray-100">
+
+                            <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="w-full text-left px-4 py-2 hover:bg-gray-50 dark:hover:bg-[#2a2a2a] transition-colors text-sm dark:text-white text-red-600 dark:text-red-400">
-                                    Logout
+                                <button type="submit"
+                                    class="w-full flex items-center gap-2 px-4 py-2 hover:bg-red-50 text-sm text-red-600 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                                    </svg>
+                                    Keluar
                                 </button>
                             </form>
                         </div>
@@ -120,42 +163,23 @@
                 </div>
             </div>
 
-            <!-- Breadcrumbs -->
-            <div class="px-4 py-2 bg-gray-50 dark:bg-[#0f0f0f] text-sm dark:text-gray-400">
-                <div class="flex items-center gap-2">
-                    <a href="/dashboard" class="text-blue-600 dark:text-blue-400 hover:underline">Dashboard</a>
-                    @if($title && $title !== 'Dashboard')
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
-                        <span class="dark:text-white">{{ $title }}</span>
-                    @endif
-                </div>
+            <!-- Breadcrumb -->
+            <div class="px-4 py-2 bg-gray-50 text-sm border-b border-blue-400">
+                <a href="/dashboard" class="text-blue-500 hover:text-blue-600 transition-colors">Dashboard</a>
+                @if ($title && $title !== 'Dashboard')
+                    <span class="mx-2 text-gray-400">›</span>
+                    <span class="text-gray-700">{{ $title }}</span>
+                @endif
             </div>
         </header>
 
-        <!-- Main Content Area -->
-        <main class="flex-1 p-6 overflow-y-auto">
+        <!-- Content -->
+        <main class="flex-1 p-4 overflow-y-auto bg-[#f1f5f9]">
             {{ $slot }}
         </main>
-
-        <!-- Footer -->
-        <footer class="bg-white dark:bg-[#1a1a1a] border-t dark:border-[#333] px-4 py-4 text-center text-sm text-gray-600 dark:text-gray-400">
-            <p>&copy; 2025 Pasuntix. All rights reserved. | <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Privacy</a> | <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Terms</a></p>
-        </footer>
-    <!-- Empty State Component Example (for use in views) -->
-    <template id="empty-state">
-        <div class="flex flex-col items-center justify-center py-12">
-            <svg class="w-16 h-16 text-gray-300 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-            </svg>
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No data available</h3>
-            <p class="text-gray-500 dark:text-gray-400 text-center max-w-md">Start by creating your first item or check back later for updates.</p>
-        </div>
-    </template>
+    </div>
 
     @livewireScripts
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.0/cdn.min.js" defer></script>
-
 </body>
 
 </html>
