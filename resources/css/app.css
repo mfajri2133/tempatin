@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -6,6 +6,31 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+@theme inline {
+    --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+
+    --color-ptx-blue: var(--ptx-blue);
+    --color-ptx-bluesky: var(--ptx-bluesky);
+    --color-ptx-white: var(--ptx-white);
+    --color-ptx-black: var(--ptx-black);
+}
+
+:root {
+    --ptx-blue: #1156b0;
+    --ptx-bluesky: #93bfef;
+    --ptx-white: #e9f5ff;
+    --ptx-black: #1f1f1f;
+}
+
+.plus-jakarta-sans {
+    font-family: "Plus Jakarta Sans";
+    font-weight: 400;
+    font-style: normal;
 }

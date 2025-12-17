@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('app', ['title' => 'Register'])]
+#[Layout('layouts.app', ['title' => 'Register'])]
 class Register extends Component
 {
     public $name = '';
