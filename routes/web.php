@@ -27,9 +27,9 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
-    Route::get('/profile-profile', DashboardProfile::class)->name('admin.profile');
+    Route::get('/profile-admin', DashboardProfile::class)->name('admin.profile');
     Route::get('/users', Users::class)->name('users');
-    Route::get('/admin', Admin::class)->name('admin');
+    Route::get('/admin-users', Admin::class)->name('admin-users');
     Route::get('/venues', Venues::class)->name('venues');
     Route::get('/categories', Categories::class)->name('categories');
 
