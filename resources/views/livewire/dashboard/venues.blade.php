@@ -281,10 +281,10 @@
     </x-modal>
 
     <!-- DELETE MODAL -->
-    <x-modal show="showDeleteModal" title="Hapus Admin" maxWidth="sm">
+    <x-modal show="showDeleteModal" title="Hapus Venue" maxWidth="sm">
 
         <p class="text-sm text-gray-500">
-            Apakah kamu yakin ingin menghapus admin ini?
+            Apakah kamu yakin ingin menghapus Venue ini?
         </p>
 
         <x-slot:footer>
