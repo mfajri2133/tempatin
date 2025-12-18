@@ -284,7 +284,7 @@
     <x-modal show="showDeleteModal" title="Hapus Venue" maxWidth="sm">
 
         <p class="text-sm text-gray-500">
-            Apakah kamu yakin ingin menghapus Venue ini?
+            Apakah kamu yakin ingin menghapus venue ini?
         </p>
 
         <x-slot:footer>
