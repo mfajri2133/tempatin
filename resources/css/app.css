@@ -16,21 +16,25 @@
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 
-    --color-ptx-blue: var(--ptx-blue);
-    --color-ptx-bluesky: var(--ptx-bluesky);
-    --color-ptx-white: var(--ptx-white);
-    --color-ptx-black: var(--ptx-black);
+    --color-tp-blue: var(--tp-blue);
+    --color-tp-bluesky: var(--tp-bluesky);
+    --color-tp-white: var(--tp-white);
+    --color-tp-black: var(--tp-black);
 }
 
 :root {
-    --ptx-blue: #1156b0;
-    --ptx-bluesky: #93bfef;
-    --ptx-white: #e9f5ff;
-    --ptx-black: #1f1f1f;
+    --tp-blue: #1156b0;
+    --tp-bluesky: #93bfef;
+    --tp-white: #e9f5ff;
+    --tp-black: #1f1f1f;
 }
 
 .plus-jakarta-sans {
     font-family: "Plus Jakarta Sans";
     font-weight: 400;
     font-style: normal;
+}
+
+button {
+    cursor: pointer;
 }

@@ -19,81 +19,60 @@
 
     <!-- Sidebar -->
     <aside x-bind:class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-        class="fixed inset-y-0 left-0 z-30 w-60 bg-ptx-black shadow-lg transform transition-transform duration-300 lg:static lg:translate-x-0 flex flex-col">
+        class="fixed inset-y-0 left-0 z-30 w-64 bg-tp-black shadow-lg transform transition-transform duration-300 lg:static lg:translate-x-0 flex flex-col">
 
         <!-- Sidebar Header -->
         <div class="px-4 py-5.5 border-b border-blue-400 text-center">
-            <a href="{{ route('dashboard') }}" class="text-xl font-bold text-white">Tempat<span
+            <a href="{{ route('welcome') }}" class="text-xl font-bold text-white">Tempat<span
                     class="text-blue-400">IN</span></a>
         </div>
 
         <!-- Sidebar Navigation -->
         <nav class="flex-1 p-4 space-y-2 text-white overflow-y-auto text-xs">
-            <a href="{{ route('dashboard') }}"
-                class="flex items-center gap-3 px-2 py-2 rounded transition-colors
-                {{ request()->is('dashboard') ? 'bg-blue-500/10 text-blue-400 font-semibold' : 'hover:bg-white/5 hover:text-blue-400' }}">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-5">
+            <x-nav-item :href="route('dashboard')" :active="request()->is('dashboard')">
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                 </svg>
                 <span>Dashboard</span>
-            </a>
+            </x-nav-item>
 
-            <a href="{{ route('users') }}"
-                class="flex items-center gap-3 px-2 py-2 rounded transition-colors
-                {{ request()->is('users*') ? 'bg-blue-500/10 text-blue-400 font-semibold' : 'hover:bg-white/5 hover:text-blue-400' }}">
+            <x-nav-item :href="route('admin-users')" :active="request()->is('admin-users*')">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                </svg>
+                <span>Admin</span>
+            </x-nav-item>
+
+            <x-nav-item :href="route('users')" :active="request()->is('users*')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
                 </svg>
                 <span>Pengguna</span>
-            </a>
+            </x-nav-item>
 
-            <a href="{{ route('admin') }}"
-                class="flex items-center gap-3 px-2 py-2 rounded transition-colors
-                {{ request()->is('admin*') ? 'bg-blue-500/10 text-blue-400 font-semibold' : 'hover:bg-white/5 hover:text-blue-400' }}">
+            <x-nav-item :href="route('categories')" :active="request()->is('categories*')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-                </svg>
-                <span>Admin</span>
-            </a>
-
-            <a href="{{ route('categories') }}"
-                class="flex items-center gap-3 px-2 py-2 rounded transition-colors
-                {{ request()->is('categories*') ? 'bg-blue-500/10 text-blue-400 font-semibold' : 'hover:bg-white/5 hover:text-blue-400' }}">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
                 </svg>
                 <span>Kategori</span>
-            </a>
+            </x-nav-item>
 
-            <a href="{{ route('venues') }}"
-                class="flex items-center gap-3 px-2 py-2 rounded transition-colors
-                {{ request()->is('venues*') ? 'bg-blue-500/10 text-blue-400 font-semibold' : 'hover:bg-white/5 hover:text-blue-400' }}">
+            <x-nav-item :href="route('venues')" :active="request()->is('venues*')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
                 </svg>
                 <span>Tempat</span>
-            </a>
-
-            <a href="/categories"
-                class="flex items-center gap-3 px-3 py-2 rounded transition-colors
-                {{ request()->is('categories*') ? 'bg-blue-900/30 text-blue-400 font-semibold' : 'hover:bg-[#2a2a2a]' }}">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
-                </svg>
-                <span>Kategori</span>
-            </a>
+            </x-nav-item>
         </nav>
     </aside>
 
@@ -107,7 +86,6 @@
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-h-screen">
-
         <!-- Header -->
         <header class="bg-white border-b border-gray-200 shadow-sm">
             <div class="flex items-center border-b border-blue-400">
@@ -123,7 +101,7 @@
                 <div class="ml-auto flex items-center gap-2">
                     <div x-data="{ open: false }" class="relative">
                         <button @click="open = !open"
-                            class="flex items-center gap-3 p-4 hover:bg-blue-50 hover:cursor-pointer transition-colors">
+                            class="flex items-center gap-3 p-4 hover:bg-blue-100 hover:cursor-pointer transition-colors">
                             <div class="hidden sm:block text-right">
                                 <p class="text-sm font-semibold text-gray-800">
                                     {{ auth()->user()->name }}
@@ -142,7 +120,7 @@
                             x-transition:leave="transition ease-in duration-75"
                             x-transition:leave-start="transform opacity-100 scale-100"
                             x-transition:leave-end="transform opacity-0 scale-95" @click.outside="open = false"
-                            class="absolute right-4 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50 overflow-hidden"
+                            class="absolute right-4 mt-2 w-48 bg-white rounded shadow-lg border border-gray-200 z-50 overflow-hidden"
                             style="display: none;">
 
                             <div class="px-4 py-3 border-b border-gray-100">
@@ -165,7 +143,7 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit"
-                                    class="w-full flex items-center gap-2 px-4 py-2 hover:bg-red-50 text-sm text-red-600 transition-colors">
+                                    class="w-full flex items-center gap-2 px-4 py-2 hover:bg-red-50 text-sm text-red-600 transition-colors cursor-pointer">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -177,11 +155,10 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <!-- Breadcrumb -->
-            <div class="px-4 py-2 bg-gray-50 text-sm border-b border-blue-400">
+            <div class="px-4 py-2 bg-white text-sm border-b border-blue-400">
                 <a href="/dashboard" class="text-blue-500 hover:text-blue-600 transition-colors">Dashboard</a>
                 @if ($title && $title !== 'Dashboard')
                     <span class="mx-2 text-gray-400">›</span>
@@ -191,7 +168,7 @@
         </header>
 
         <!-- Content -->
-        <main class="flex-1 p-4 overflow-y-auto bg-[#f1f5f9]">
+        <main class="flex-1 p-6 overflow-y-auto bg-gray-100">
             {{ $slot }}
         </main>
     </div>

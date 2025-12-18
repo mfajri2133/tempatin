@@ -14,7 +14,7 @@
                                     Nama
                                 </label>
                                 <input type="text" value="Murod Fikri F"
-                                    class="mt-1 w-full rounded-md bg-slate-50 border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 
+                                    class="mt-1 w-full rounded-md bg-slate-50 border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400
                                   focus:border-teal-500 focus:ring-teal-500 focus:ring-1 transition">
                             </div>
 
@@ -23,13 +23,13 @@
                                     Email
                                 </label>
                                 <input type="email" value="murod@gmail.com"
-                                    class="mt-1 w-full rounded-md bg-slate-50 border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 
+                                    class="mt-1 w-full rounded-md bg-slate-50 border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400
                                   focus:border-teal-500 focus:ring-teal-500 focus:ring-1 transition">
                             </div>
 
                             <div class="pt-4">
                                 <button
-                                    class="w-full bg-ptx-blue hover:bg-[#93BFEF] hover:cursor-pointer
+                                    class="w-full bg-tp-blue hover:bg-[#93BFEF] hover:cursor-pointer
                                     text-white font-semibold py-2
                                       rounded-md transition">
                                     SIMPAN
@@ -54,7 +54,7 @@
                                     Kata Sandi Saat Ini
                                 </label>
                                 <input type="password"
-                                    class="mt-1 w-full rounded-md bg-slate-50 border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 
+                                    class="mt-1 w-full rounded-md bg-slate-50 border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400
                                   focus:border-teal-500 focus:ring-teal-500 focus:ring-1 transition">
                             </div>
 
@@ -63,7 +63,7 @@
                                     Kata Sandi Baru
                                 </label>
                                 <input type="password"
-                                    class="mt-1 w-full rounded-md bg-slate-50 border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 
+                                    class="mt-1 w-full rounded-md bg-slate-50 border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400
                                   focus:border-teal-500 focus:ring-teal-500 focus:ring-1 transition">
                             </div>
 
@@ -72,13 +72,13 @@
                                     Konfirmasi Kata Sandi
                                 </label>
                                 <input type="password"
-                                    class="mt-1 w-full rounded-md bg-slate-50 border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 
+                                    class="mt-1 w-full rounded-md bg-slate-50 border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400
                                   focus:border-teal-500 focus:ring-teal-500 focus:ring-1 transition">
                             </div>
 
                             <div class="pt-4">
                                 <button
-                                    class="w-full bg-ptx-blue hover:bg-[#93BFEF] hover:cursor-pointer
+                                    class="w-full bg-tp-blue hover:bg-[#93BFEF] hover:cursor-pointer
                                       text-white font-semibold py-2
                                       rounded-md transition">
                                     SIMPAN
