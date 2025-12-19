@@ -6,12 +6,13 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Auth\SetPassword;
 use App\Livewire\Dashboard;
 use App\Livewire\Dashboard\Profile as DashboardProfile;
+use App\Livewire\User\About;
 use App\Livewire\User\Profile as UserProfile;
 use App\Livewire\Dashboard\Users;
 use App\Livewire\Dashboard\Admin;
 use App\Livewire\Dashboard\Categories;
-use App\Livewire\Dashboard\Venues;
-use App\Livewire\User\About;
+use App\Livewire\Dashboard\Venues\VenueCreate;
+use App\Livewire\Dashboard\Venues\Venues;
 use App\Livewire\Welcome;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,8 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile-profile', DashboardProfile::class)->name('admin.profile');
     Route::get('/users', Users::class)->name('users');
     Route::get('/admin-users', Admin::class)->name('admin-users');
-    Route::get('/venues', Venues::class)->name('venues');
     Route::get('/categories', Categories::class)->name('categories');
+
+    Route::prefix('venues')->name('venues.')->group(function () {
+        Route::get('/', Venues::class)->name('index');
+        Route::get('/create', VenueCreate::class)->name('create');
+        // Route::get('/{venue}/edit', VenueEdit::class)->name('edit');
+    });
 
     Route::get('/set-password', SetPassword::class)->name('password.setup');
 

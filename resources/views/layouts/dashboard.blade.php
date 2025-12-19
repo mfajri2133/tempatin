@@ -65,7 +65,7 @@
                 <span>Kategori</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('venues')" :active="request()->is('venues*')">
+            <x-nav-item :href="route('venues.index')" :active="request()->routeIs('venues.*')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"

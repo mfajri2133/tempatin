@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Dashboard;
+namespace App\Livewire\Dashboard\Venues;
 
 use App\Models\Category;
 use App\Models\Venue;
@@ -166,6 +166,6 @@ class Venues extends Component
 
         $categories = Category::orderBy('name')->get();
 
-        return view('livewire.dashboard.venues', compact('venues', 'categories'));
+        return view('livewire.dashboard.venues.venues', compact('venues', 'categories'));
     }
 }

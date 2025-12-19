@@ -3,10 +3,8 @@
     x-on:close-delete-modal.window="showDeleteModal = false">
 
     <div class="bg-white rounded shadow-md border border-blue-100 overflow-hidden">
-        <!-- SEARCH -->
         <div class="flex flex-col gap-4 sm:flex-row items-center justify-between p-4 bg-white">
             <div class="relative w-full sm:w-64">
-                <!-- icon -->
                 <svg xmlns="http://www.w3.org/2000/svg"
                     class="size-5 text-blue-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
                     fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -14,24 +12,13 @@
                         d="m21 21-5.197-5.197a7.5 7.5 0 1 0-10.607-10.607 7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
 
-                <!-- clear -->
-                @if ($search)
-                    <button wire:click="$set('search','')"
-                        class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                @endif
-
-                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau email"
+                <input type="text" placeholder="Cari nama venue..."
                     class="w-full pl-10 pr-10 py-2 text-sm rounded border border-blue-200 bg-white text-gray-700
                            focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
             </div>
 
-            <!-- ADD BUTTON -->
-            <x-button-add wire:click="create" class="w-full sm:w-auto">
+            <x-button-add :href="route('venues.create')" wire:navigate class="w-full sm:w-auto">
+
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -40,36 +27,44 @@
             </x-button-add>
         </div>
 
-        <!-- TABLE -->
         <div class="overflow-x-auto">
             <table class="w-full text-sm whitespace-nowrap">
                 <thead class="bg-blue-100">
                     <tr>
-                        <th class="px-6 py-3 text-left font-semibold text-black">
-                            Nama
-                        </th>
-                        <th class="px-6 py-3 text-center font-semibold text-black">
-                            Tanggal Dibuat
-                        </th>
-                        <th class="px-6 py-3 text-center font-semibold text-black">
-                            Aksi
-                        </th>
+                        <th class="px-6 py-3 text-left font-semibold text-black">Nama Venue</th>
+                        <th class="px-6 py-3 text-left font-semibold text-black">Alamat</th>
+                        <th class="px-6 py-3 text-center font-semibold text-black">Kapasitas</th>
+                        <th class="px-6 py-3 text-center font-semibold text-black">Harga Per Jam</th>
+                        <th class="px-6 py-3 text-center font-semibold text-black">Status</th>
+                        <th class="px-6 py-3 text-center font-semibold text-black">Aksi</th>
                     </tr>
                 </thead>
 
-                <tbody class="divide-y divide-blue-100">
-                    @forelse ($categories as $category)
-                        <tr class="hover:bg-blue-50 transition">
+                <tbody class="divide-y">
+                    @forelse ($venues as $venue)
+                        <tr class="hover:bg-blue-50">
                             <td class="px-6 py-4 text-xs font-medium text-gray-800">
-                                {{ $category->name }}
+                                {{ $venue->name }}
                             </td>
 
-                            <td class="px-6 py-4 text-xs text-center text-gray-600">
-                                {{ $category->created_at->format('d-m-Y') }}
+                            <td class="px-6 py-4 text-xs text-gray-600">
+                                {{ $venue->address }}
+                            </td>
+
+                            <td class="px-6 py-4 text-xs text-gray-600 text-center">
+                                {{ $venue->capacity }}
+                            </td>
+
+                            <td class="px-6 py-4 text-xs text-gray-600 text-center">
+                                {{ $venue->price_per_hour }}
+                            </td>
+
+                            <td class="px-6 py-4 text-xs text-gray-600 text-center">
+                                {{ $venue->status }}
                             </td>
 
                             <td class="px-6 py-4 text-xs flex gap-2 justify-center">
-                                <x-icon-button wire:click="edit({{ $category->id }})"
+                                <x-icon-button wire:click="edit({{ $venue->id }})"
                                     class="bg-orange-100 text-orange-600 hover:bg-orange-200 focus:ring-orange-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -78,7 +73,7 @@
                                     </svg>
                                 </x-icon-button>
 
-                                <x-icon-button wire:click="confirmDelete({{ $category->id }})"
+                                <x-icon-button wire:click="confirmDelete({{ $venue->id }})"
                                     class="bg-red-100 text-red-600 hover:bg-red-200 focus:ring-red-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -87,11 +82,12 @@
                                     </svg>
                                 </x-icon-button>
                             </td>
+
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="px-6 py-6 text-center text-gray-500">
-                                Tidak ada data kategori
+                            <td colspan="6" class="px-6 py-6 text-center text-gray-500">
+                                Tidak ada data venue
                             </td>
                         </tr>
                     @endforelse
@@ -100,58 +96,11 @@
         </div>
     </div>
 
-    <!-- ADD MODAL -->
-    <x-modal show="showAddModal" :title="$isEdit ? 'Edit Kategori' : 'Tambah Kategori'">
-
-        <form wire:submit.prevent="save" class="space-y-4" autocomplete="off">
-
-            <!-- NAMA -->
-            <div class="space-y-1">
-                <label class="text-sm font-medium text-gray-700">
-                    Nama
-                </label>
-                <input type="text" wire:model.live.debounce.300ms="name" placeholder="Masukkan nama"
-                    class="w-full h-10 px-3 text-sm rounded-md
-                       border border-gray-300
-                       bg-white text-gray-900
-                       placeholder:text-gray-400
-                       focus:outline-none
-                       focus:border-blue-500
-                       focus:ring-1 focus:ring-blue-500
-                       transition
-                       @error('name') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
-                @error('name')
-                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-        </form>
-
-        <x-slot:footer>
-            <button type="button" @click="$dispatch('close-add-modal')"
-                class="h-9 px-4 text-xs rounded-md
-                   border border-gray-300
-                   bg-gray-100 text-gray-700
-                   hover:bg-gray-200 transition">
-                Batal
-            </button>
-
-            <button type="button" wire:click="save"
-                class="h-9 px-4 text-xs rounded-md
-                   bg-blue-600 text-white
-                   hover:bg-blue-700
-                   focus:outline-none
-                   focus:ring-2 focus:ring-blue-500 focus:ring-offset-1
-                   transition">
-                {{ $isEdit ? 'Update' : 'Simpan' }}
-            </button>
-        </x-slot:footer>
-    </x-modal>
-
     <!-- DELETE MODAL -->
-    <x-modal show="showDeleteModal" title="Hapus Kategori" maxWidth="sm">
+    <x-modal show="showDeleteModal" title="Hapus Venue" maxWidth="sm">
 
         <p class="text-sm text-gray-500">
-            Apakah kamu yakin ingin menghapus kategori ini?
+            Apakah kamu yakin ingin menghapus venue ini?
         </p>
 
         <x-slot:footer>
