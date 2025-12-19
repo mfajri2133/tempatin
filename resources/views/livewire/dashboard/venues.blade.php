@@ -1,176 +1,304 @@
-<div class="p-2 sm:p-4 md:p-6">
-    <!-- Vanues Table -->
-    <div class="bg-white rounded-lg shadow w-full overflow-x-auto">
-        <table class="w-full table-auto border-collapse">
-            <!-- Search and button add venue -->
-            <thead>
-                <tr class="bg-tp-white text-tp-blue">
-                    <th colspan="5" class="px-3 py-3 sm:px-4 sm:py-4 md:px-6 md:py-4">
-                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                            <!-- Search bar -->
-                            <div class="w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
-                                <input type="text" placeholder="Telusuri venue..."
-                                    class="w-full px-3 py-2 text-sm border border-blue-400 rounded-lg focus:ring-2 focus:ring-blue-300 focus:border-transparent bg-white placeholder:text-blue-400 text-gray-800">
-                            </div>
+<div x-data="{ showAddModal: false, showDeleteModal: false }" x-on:open-add-modal.window="showAddModal = true"
+    x-on:close-add-modal.window="showAddModal = false" x-on:open-delete-modal.window="showDeleteModal = true"
+    x-on:close-delete-modal.window="showDeleteModal = false">
 
-                            <!-- Button add venue -->
-                            <button @click="addModal = true"
-                                class="flex gap-2 items-center justify-center w-full sm:w-auto bg-tp-blue text-tp-white px-4 py-2 text-sm sm:text-base rounded-lg font-medium transition duration-200 whitespace-nowrap">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                </svg>
-                                <span>Tambah Venue</span>
-                            </button>
-                        </div>
-                    </th>
-                </tr>
-                <tr class="bg-tp-white text-tp-blue">
-                    <th class="px-4 py-2 md:px-6 text-xs uppercase text-left">Nama Venue</th>
-                    <th class="hidden sm:table-cell px-3 py-2 md:px-6 text-xs uppercase text-left">Alamat</th>
-                    <th class="hidden md:table-cell px-3 py-2 md:px-6 text-xs uppercase text-left">Kapasitas</th>
-                    <th class="hidden lg:table-cell px-3 py-2 md:px-6 text-xs uppercase text-left">Harga Per Jam</th>
-                    <th class="px-3 py-2 md:px-6 text-xs uppercase text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody class="bg-tp-black divide-y divide-gray-700">
-                <tr class="hover:bg-gray-700">
-                    <td class="px-4 py-2 sm:px-4 md:px-6 text-xs sm:text-sm font-medium text-gray-100">
-                        <div class="space-y-1">
-                            <div class=>Grand Hall Center</div>
-                            <div class="text-gray-300 text-xs sm:hidden">Jl. Sudirman No. 12, Jakarta</div>
-                            <div class="text-gray-300 text-xs sm:hidden">Capacity: 500</div>
-                            <div class="text-gray-300 text-xs sm:hidden">Rp 2.500.000 / jam</div>
-                        </div>
-                    </td>
-                    <td class="hidden sm:table-cell px-3 py-3 text-gray-300">Jl. Sudirman No. 12, Jakarta</td>
-                    <td class="hidden md:table-cell px-3 py-3 text-gray-300">500</td>
-                    <td class="hidden lg:table-cell px-3 py-3 text-gray-300">Rp 2.500.000</td>
-                    <td class="px-3 py-3 sm:px-4 md:px-6 text-sm font-medium text-center">
-                        <div class="flex justify-center gap-2">
-                            <button @click="editModal = true"
-                                class="px-2 py-2 bg-tp-blue rounded-lg text-tp-white hover:text-blue-300 text-xs sm:text-sm whitespace-nowrap">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                </svg>
-                            </button>
-                            <button @click="deleteModal = true"
-                                class="px-2 py-2 bg-red-600 rounded-lg text-tp-white hover:text-red-300 text-xs sm:text-sm whitespace-nowrap">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                </svg>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <div class="bg-white rounded shadow-md border border-blue-100 overflow-hidden">
+        <div class="flex flex-col gap-4 sm:flex-row items-center justify-between p-4 bg-white">
+            <div class="relative w-full sm:w-64">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="size-5 text-blue-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m21 21-5.197-5.197a7.5 7.5 0 1 0-10.607-10.607 7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
 
-    <div x-show="addModal" x-transition @click.away="addModal = false" @keydown.escape.window="addModal = false"
-        class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center"id="addModal">
-        <div class="relative mx-auto p-5 border w-full max-w-sm shadow-lg rounded-md bg-white my-8">
-            <div class="mt-3">
-                <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Tambah Venue Baru</h3>
-                <form class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Venue</label>
-                        <input type="text"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
-                        <input type="text"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kapasitas</label>
-                        <input type="number"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Harga Per Jam</label>
-                        <input type="number"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-
-                    <div class="flex justify-end space-x-3 pt-4">
-                        <button type="button" @click="addModal = false"
-                            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Batal</button>
-                        <button type="submit"
-                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Simpan Venue</button>
-                    </div>
-                </form>
+                <input type="text" placeholder="Cari nama venue..."
+                    class="w-full pl-10 pr-10 py-2 text-sm rounded border border-blue-200 bg-white text-gray-700
+                           focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
             </div>
+
+            <x-button-add wire:click="create" class="w-full sm:w-auto">
+                Tambah
+            </x-button-add>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm whitespace-nowrap">
+                <thead class="bg-blue-100">
+                    <tr>
+                        <th class="px-6 py-3 text-left font-semibold text-black">Nama Venue</th>
+                        <th class="px-6 py-3 text-left font-semibold text-black">Alamat</th>
+                        <th class="px-6 py-3 text-center font-semibold text-black">Kapasitas</th>
+                        <th class="px-6 py-3 text-center font-semibold text-black">Harga Per Jam</th>
+                        <th class="px-6 py-3 text-center font-semibold text-black">Status</th>
+                        <th class="px-6 py-3 text-center font-semibold text-black">Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y">
+                    @forelse ($venues as $venue)
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-6 py-4 text-xs font-medium text-gray-800">
+                                {{ $venue->name }}
+                            </td>
+
+                            <td class="px-6 py-4 text-xs text-gray-600">
+                                {{ $venue->address }}
+                            </td>
+
+                            <td class="px-6 py-4 text-xs text-gray-600 text-center">
+                                {{ $venue->capacity }}
+                            </td>
+
+                            <td class="px-6 py-4 text-xs text-gray-600 text-center">
+                                {{ $venue->price_per_hour }}
+                            </td>
+                            
+                            <td class="px-6 py-4 text-xs text-gray-600 text-center">
+                                {{ $venue->status }}
+                            </td>
+
+                            <td class="px-6 py-4 text-xs flex gap-2 justify-center">
+                                <x-icon-button wire:click="edit({{ $venue->id }})"
+                                    class="bg-orange-100 text-orange-600 hover:bg-orange-200 focus:ring-orange-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                    </svg>
+                                </x-icon-button>
+
+                                <x-icon-button wire:click="confirmDelete({{ $venue->id }})"
+                                    class="bg-red-100 text-red-600 hover:bg-red-200 focus:ring-red-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>
+                                </x-icon-button>
+                            </td>
+                            
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-6 py-6 text-center text-gray-500">
+                                Tidak ada data venue
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- Edit modal -->
-    <div id="editModal"
-        class="hidden fixed inset-0 bg-tp-black/50 overflow-y-auto h-full w-full z-50 flex min-h-screen items-center justify-center">
-        <div class="relative p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3">
-                <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Edit Venue</h3>
-                <form class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Venue</label>
-                        <input
-                            type="text"class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
-                        <input
-                            type="text"class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                    </div>
+    <!-- ADD MODAL -->
+    <x-modal show="showAddModal" :title="$isEdit ? 'Edit Venue' : 'Tambah Venue'">
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kapasitas</label>
-                        <input type="number"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                    </div>
+        <form wire:submit.prevent="save" class="space-y-4" autocomplete="off">
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Harga Per Jam</label>
-                        <input type="number"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-
-                    <div class="flex justify-end space-x-3 pt-4">
-                        <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')"
-                            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Batal</button>
-                        <button type="submit"
-                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Simpan</button>
-                    </div>
-                </form>
+            <!-- Kategori -->
+            <div class="space-y-1">
+                <label class="text-sm font-medium text-gray-700">
+                    Kategori
+                </label>
+                <input type="text" wire:model.live.debounce.300ms="category" placeholder="Pilih Kategori"
+                    class="w-full h-10 px-3 text-sm rounded-md
+                       border border-gray-300
+                       bg-white text-gray-900
+                       placeholder:text-gray-400
+                       focus:outline-none
+                       focus:border-blue-500
+                       focus:ring-1 focus:ring-blue-500
+                       transition
+                       @error('category') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                @error('category')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
             </div>
-        </div>
-    </div>
 
-    <!-- Delete modal -->
-    <div id="deletemodal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3">
-                <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full mb-4">
-                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-medium leading-6 text-gray-900 text-center mb-2">Hapus User</h3>
-                <p class="text-sm text-gray-500 text-center mb-5">Apakah kamu yakin akan menghapus venue ini</p>
-                <div class="flex justify-center space-x-3">
-                    <button type="button" onclick="document.getElementById('deleteModal').classList.add('hidden')"
-                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Batal</button>
-                    <button type="button"
-                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">Hapus</button>
-                </div>
+
+            <!-- NAMA -->
+            <div class="space-y-1">
+                <label class="text-sm font-medium text-gray-700">
+                    Nama
+                </label>
+                <input type="text" wire:model.live.debounce.300ms="name" placeholder="Masukkan nama"
+                    class="w-full h-10 px-3 text-sm rounded-md
+                       border border-gray-300
+                       bg-white text-gray-900
+                       placeholder:text-gray-400
+                       focus:outline-none
+                       focus:border-blue-500
+                       focus:ring-1 focus:ring-blue-500
+                       transition
+                       @error('name') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                @error('name')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
             </div>
-        </div>
+
+            <!-- Alamat -->
+            <div class="space-y-1">
+                <label class="text-sm font-medium text-gray-700">
+                    Alamat
+                </label>
+                <input type="text" wire:model.live.debounce.300ms="address" placeholder="Masukkan Alamat"
+                    class="w-full h-10 px-3 text-sm rounded-md
+                       border border-gray-300
+                       bg-white text-gray-900
+                       placeholder:text-gray-400
+                       focus:outline-none
+                       focus:border-blue-500
+                       focus:ring-1 focus:ring-blue-500
+                       transition
+                       @error('address') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                @error('address')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Kota -->
+            <div class="space-y-1">
+                <label class="text-sm font-medium text-gray-700">
+                    Kota
+                </label>
+                <input type="text" wire:model.live.debounce.300ms="city" placeholder="Masukkan Kota"
+                    class="w-full h-10 px-3 text-sm rounded-md
+                       border border-gray-300
+                       bg-white text-gray-900
+                       placeholder:text-gray-400
+                       focus:outline-none
+                       focus:border-blue-500
+                       focus:ring-1 focus:ring-blue-500
+                       transition
+                       @error('city') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                @error('city')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Provinsi -->
+            <div class="space-y-1">
+                <label class="text-sm font-medium text-gray-700">
+                    Provinsi
+                </label>
+                <input type="text" wire:model.live.debounce.300ms="province" placeholder="Masukkan Provinsi"
+                    class="w-full h-10 px-3 text-sm rounded-md
+                       border border-gray-300
+                       bg-white text-gray-900
+                       placeholder:text-gray-400
+                       focus:outline-none
+                       focus:border-blue-500
+                       focus:ring-1 focus:ring-blue-500
+                       transition
+                       @error('province') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                @error('province')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Kapasitas -->
+            <div class="space-y-1">
+                <label class="text-sm font-medium text-gray-700">
+                    Kapasitas
+                </label>
+                <input type="number" wire:model.live.debounce.300ms="capacity" placeholder="Masukkan Kapasitas"
+                    class="w-full h-10 px-3 text-sm rounded-md
+                       border border-gray-300
+                       bg-white text-gray-900
+                       placeholder:text-gray-400
+                       focus:outline-none
+                       focus:border-blue-500
+                       focus:ring-1 focus:ring-blue-500
+                       transition
+                       @error('capacity') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                @error('capacity')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Harga Per Jam -->
+            <div class="space-y-1">
+                <label class="text-sm font-medium text-gray-700">
+                    Harga Per Jam
+                </label>
+                <input type="number" wire:model.live.debounce.300ms="price_per_hour" placeholder="Masukkan Harga Per Jam"
+                    class="w-full h-10 px-3 text-sm rounded-md
+                       border border-gray-300
+                       bg-white text-gray-900
+                       placeholder:text-gray-400
+                       focus:outline-none
+                       focus:border-blue-500
+                       focus:ring-1 focus:ring-blue-500
+                       transition
+                       @error('price_per_hour') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                @error('price_per_hour')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            
+            <!-- Status -->
+            <div class="space-y-1">
+                <label class="text-sm font-medium text-gray-700">
+                    Kapasitas
+                </label>
+                <input type="number" wire:model.live.debounce.300ms="capacity" placeholder="Masukkan Kapasitas"
+                    class="w-full h-10 px-3 text-sm rounded-md
+                       border border-gray-300
+                       bg-white text-gray-900
+                       placeholder:text-gray-400
+                       focus:outline-none
+                       focus:border-blue-500
+                       focus:ring-1 focus:ring-blue-500
+                       transition
+                       @error('capacity') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                @error('capacity')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+        </form>
+
+        <x-slot:footer>
+            <button type="button" @click="$dispatch('close-add-modal')"
+                class="h-9 px-4 text-xs rounded-md
+                   border border-gray-300
+                   bg-gray-100 text-gray-700
+                   hover:bg-gray-200 transition">
+                Batal
+            </button>
+
+            <button type="button" wire:click="save"
+                class="h-9 px-4 text-xs rounded-md
+                   bg-blue-600 text-white
+                   hover:bg-blue-700
+                   focus:outline-none
+                   focus:ring-2 focus:ring-blue-500 focus:ring-offset-1
+                   transition">
+                {{ $isEdit ? 'Update' : 'Simpan' }}
+            </button>
+        </x-slot:footer>
+    </x-modal>
+
+    <!-- DELETE MODAL -->
+    <x-modal show="showDeleteModal" title="Hapus Venue" maxWidth="sm">
+
+        <p class="text-sm text-gray-500">
+            Apakah kamu yakin ingin menghapus venue ini?
+        </p>
+
+        <x-slot:footer>
+            <button @click="$dispatch('close-delete-modal')"
+                class="h-10 px-4 rounded bg-gray-100 text-xs text-gray-700 hover:bg-gray-200 transition">
+                Batal
+            </button>
+
+            <button wire:click="delete"
+                class="h-10 px-4 rounded bg-red-600 text-white text-xs hover:bg-red-700 transition">
+                Hapus
+            </button>
+        </x-slot:footer>
+    </x-modal>
+
     </div>
 </div>
