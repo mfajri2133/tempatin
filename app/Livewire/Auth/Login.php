@@ -23,7 +23,7 @@ class Login extends Component
             'email' => $this->email,
             'password' => $this->password
         ])) {
-            $this->addError('email', 'Email atau password salah.');
+            session()->flash('error', 'Email atau password salah.');
             return;
         }
 

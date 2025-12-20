@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Dashboard' }}</title>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
@@ -105,8 +105,7 @@
         <header class="bg-white border-b border-gray-200 shadow-sm">
             <div class="flex items-center border-b border-blue-400">
 
-                <button @click="sidebarOpen = !sidebarOpen"
-                    class="lg:hidden p-4 rounded-lg hover:bg-gray-100 transition-colors">
+                <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden p-4">
                     <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />

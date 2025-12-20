@@ -40,7 +40,7 @@ class SocialiteController extends Controller
             Auth::login($account->user);
 
             if (is_null($account->user->password)) {
-                return redirect()->route('password.setup');
+                return redirect()->route('profile.setup');
             }
 
             return $account->user->role === 'admin'
@@ -69,7 +69,7 @@ class SocialiteController extends Controller
         Auth::login($user);
 
         if (is_null($user->password)) {
-            return redirect()->route('password.setup');
+            return redirect()->route('profile.setup');
         }
 
         return $user->role === 'admin'
