@@ -3,7 +3,7 @@
 use App\Http\Controllers\SocialiteController;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
-use App\Livewire\Auth\SetPassword;
+use App\Livewire\Auth\SetProfile;
 use App\Livewire\Dashboard;
 use App\Livewire\Dashboard\Profile as DashboardProfile;
 use App\Livewire\Dashboard\Venues\VenueEdit;
@@ -27,8 +27,10 @@ Route::get('/about', About::class)->name('about');
 Route::get('/venues', UserVenues::class)->name('venues');
 
 // Auth
-Route::get('/login', Login::class)->name('login');
-Route::get('/register', Register::class)->name('register');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', Login::class)->name('login');
+    Route::get('/register', Register::class)->name('register');
+});
 
 // Socialite
 Route::prefix('auth')->name('socialite.')->group(function () {
@@ -40,10 +42,10 @@ Route::prefix('auth')->name('socialite.')->group(function () {
 });
 
 // Auth User (Admin + User)
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'force.profile'])->group(function () {
     Route::get('/profile', UserProfile::class)->name('user.profile');
 
-    Route::get('/set-password', SetPassword::class)->name('password.setup');
+    Route::get('/set-profile', SetProfile::class)->name('profile.setup');
 
     Route::post('/logout', function () {
         Auth::logout();

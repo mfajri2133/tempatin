@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('order_code')
-                ->unique()
-                ->after('id');
+        Schema::table('venues', function (Blueprint $table) {
+            $table->dropColumn('province');
         });
     }
 
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropUnique(['order_code']);
-            $table->dropColumn('order_code');
+        Schema::table('venues', function (Blueprint $table) {
+            $table->string('province')
+                ->after('city');
         });
     }
 };

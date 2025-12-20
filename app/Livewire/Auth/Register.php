@@ -20,7 +20,7 @@ class Register extends Component
     protected $rules = [
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:6|confirmed',
+        'password' => 'required|min:8|confirmed',
     ];
 
     protected $messages = [
@@ -29,7 +29,7 @@ class Register extends Component
         'email.email' => 'Format email tidak valid.',
         'email.unique' => 'Email sudah terdaftar.',
         'password.required' => 'Password harus diisi.',
-        'password.min' => 'Password minimal 6 karakter.',
+        'password.min' => 'Password minimal 8 karakter.',
         'password.confirmed' => 'Konfirmasi password tidak cocok.',
     ];
 

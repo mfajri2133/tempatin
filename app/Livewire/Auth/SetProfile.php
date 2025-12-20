@@ -5,8 +5,8 @@ namespace App\Livewire\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.app', ['title' => 'Set Password'])]
-class SetPassword extends Component
+#[Layout('layouts.blank', ['title' => 'Set Password'])]
+class SetProfile extends Component
 {
     public $name;
     public $password;
@@ -14,26 +14,33 @@ class SetPassword extends Component
 
     public function mount()
     {
-        $this->name = auth()->user()->name;
+        $user = auth()->user();
+
+        if ($user->password !== null) {
+            return redirect()->route('welcome');
+        }
+
+        $this->name = $user->name;
     }
 
     public function save()
     {
         $this->validate([
             'name' => 'required|string|max:255',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:8|confirmed'
         ]);
 
         $user = auth()->user();
         $user->name = $this->name;
         $user->password = bcrypt($this->password);
         $user->save();
+        session()->regenerate();
 
-        return redirect('/');
+        return redirect()->route('welcome');
     }
 
     public function render()
     {
-        return view('livewire.auth.set-password');
+        return view('livewire.auth.set-profile');
     }
 }

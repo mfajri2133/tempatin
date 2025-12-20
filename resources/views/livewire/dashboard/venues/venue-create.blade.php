@@ -13,7 +13,7 @@
     <!-- FORM -->
     <form wire:submit.prevent="save" class="p-6" autocomplete="off">
         <!-- NAMA -->
-        <div class="grid grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
             <div>
                 <label class="text-sm font-medium text-gray-700">Nama</label>
                 <input type="text" wire:model.live.debounce.300ms="name" placeholder="Masukkan nama venue"
@@ -129,7 +129,9 @@
                 </select>
             </div>
 
-            <x-image-upload wireModel="image" />
+            <div class="col-span-1 sm:grid-cols-4">
+                <x-image-upload wireModel="image" />
+            </div>
         </div>
 
         <!-- ACTION -->
