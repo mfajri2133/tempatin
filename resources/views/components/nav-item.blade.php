@@ -3,7 +3,7 @@
     'active' => false,
 ])
 
-<a href="{{ $href }}"
+<a href="{{ $href }}" wire:navigate
     {{ $attributes->merge([
         'class' =>
             '
