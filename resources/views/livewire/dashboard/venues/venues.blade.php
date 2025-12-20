@@ -68,7 +68,10 @@
                             </td>
 
                             <td class="px-6 py-4 text-xs text-gray-600 text-center">
-                                {{ $venue->status }}
+                                <span class="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full
+                                    {{ $venue->status === 'available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                                    {{($venue->status) }}
+                                </span>
                             </td>
 
                             <td class="px-6 py-4 text-xs flex gap-2 justify-center">
