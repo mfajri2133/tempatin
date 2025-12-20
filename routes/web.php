@@ -12,6 +12,7 @@ use App\Livewire\User\Profile as UserProfile;
 use App\Livewire\Dashboard\Users;
 use App\Livewire\Dashboard\Admin;
 use App\Livewire\Dashboard\Categories;
+use App\Livewire\Dashboard\Transactions;
 use App\Livewire\Dashboard\Venues\VenueCreate;
 use App\Livewire\Dashboard\Venues\Venues;
 use App\Livewire\User\Venues as UserVenues;
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', Users::class)->name('users');
     Route::get('/admin-users', Admin::class)->name('admin-users');
     Route::get('/categories', Categories::class)->name('categories');
+    Route::get('/transactions', Transactions::class)->name('transactions');
 
     Route::prefix('venues')->name('venues.')->group(function () {
         Route::get('/', Venues::class)->name('index');
