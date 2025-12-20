@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class IconButton extends Component
+class NormalButton extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class IconButton extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.icon-button');
+        return view('components.normal-button');
     }
 }
