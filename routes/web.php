@@ -40,10 +40,10 @@ Route::prefix('auth')->name('socialite.')->group(function () {
 });
 
 // Auth User (Admin + User)
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'force.profile'])->group(function () {
     Route::get('/profile', UserProfile::class)->name('user.profile');
 
-    Route::get('/set-password', SetPassword::class)->name('password.setup');
+    Route::get('/set-profile', SetPassword::class)->name('profile.setup');
 
     Route::post('/logout', function () {
         Auth::logout();
