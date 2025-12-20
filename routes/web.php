@@ -6,6 +6,7 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Auth\SetPassword;
 use App\Livewire\Dashboard;
 use App\Livewire\Dashboard\Profile as DashboardProfile;
+use App\Livewire\Dashboard\Venues\VenueEdit;
 use App\Livewire\User\About;
 use App\Livewire\User\Profile as UserProfile;
 use App\Livewire\Dashboard\Users;
@@ -38,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('venues')->name('venues.')->group(function () {
         Route::get('/', Venues::class)->name('index');
         Route::get('/create', VenueCreate::class)->name('create');
-        // Route::get('/{venue}/edit', VenueEdit::class)->name('edit');
+        Route::get('/{venue}/edit', VenueEdit::class)->name('edit');
     });
 
     Route::get('/set-password', SetPassword::class)->name('password.setup');

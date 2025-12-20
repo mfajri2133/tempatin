@@ -8,12 +8,14 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-#[Layout('layouts.dashboard', ['title' => 'Tambah Tempat'])]
-class VenueCreate extends Component
+#[Layout('layouts.dashboard', ['title' => 'Edit Tempat'])]
+class VenueEdit extends Component
 {
     use WithFileUploads;
 
     public $image;
+    public ?string $existingImage = null;
+    public Venue $venue;
     public int|string $category_id = '';
     public string $name = '';
     public string $address = '';
@@ -34,14 +36,30 @@ class VenueCreate extends Component
         'capacity.required' => 'Kapasitas wajib diisi',
         'capacity.integer' => 'Kapasitas harus angka',
         'price_per_hour.required' => 'Harga wajib diisi',
-        'price_per_hour.numeric' => 'Harga harus angka',
-        'image.required' => 'Foto venue wajib diunggah',
-        'image.image' => 'File harus berupa gambar',
-        'image.mimes' => 'Format gambar harus JPG, PNG, atau JPEG',
-        'image.max' => 'Ukuran gambar maksimal 2MB',
+        'price_per_hour.numeric' => 'Harga harus angka'
     ];
 
-    public function save()
+    public function mount(Venue $venue)
+    {
+        $this->venue = $venue;
+
+        $this->category_id = $venue->category_id;
+        $this->name = $venue->name;
+        $this->address = $venue->address;
+        $this->city = $venue->city;
+        $this->province = $venue->province;
+        $this->capacity = $venue->capacity;
+        $this->price_per_hour = $venue->price_per_hour;
+        $this->price_display = $venue->price_per_hour
+            ? 'Rp ' . number_format($venue->price_per_hour, 0, ',', '.')
+            : '';
+
+        $this->status = $venue->status;
+        $this->existingImage = $venue->venue_img;
+    }
+
+
+    public function update()
     {
         $this->validate([
             'category_id' => 'required|exists:categories,id',
@@ -52,16 +70,15 @@ class VenueCreate extends Component
             'capacity' => 'required|integer|min:1',
             'price_per_hour' => 'required|numeric|min:0',
             'status' => 'required|in:available,unavailable',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $imagePath = null;
+        $imagePath = $this->existingImage;
 
         if ($this->image) {
             $imagePath = $this->image->store('venues', 'public');
         }
 
-        Venue::create([
+        $this->venue->update([
             'category_id' => $this->category_id,
             'name' => $this->name,
             'address' => $this->address,
@@ -75,7 +92,7 @@ class VenueCreate extends Component
 
         $this->dispatch('toast', [
             'type' => 'success',
-            'message' => 'Tempat berhasil ditambahkan',
+            'message' => 'Tempat berhasil diperbarui',
         ]);
 
         return redirect()->route('venues.index');
@@ -110,6 +127,6 @@ class VenueCreate extends Component
     {
         $categories = Category::orderBy('name')->get();
 
-        return view('livewire.dashboard.venues.venue-create', compact('categories'));
+        return view('livewire.dashboard.venues.venue-edit', compact('categories'));
     }
 }

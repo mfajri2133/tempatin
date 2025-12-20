@@ -3,17 +3,18 @@
     <!-- HEADER -->
     <div class="px-6 py-4 border-b border-blue-100">
         <h2 class="text-lg font-semibold text-gray-800">
-            Tambah Venue
+            Edit Venue
         </h2>
         <p class="text-sm text-gray-500">
-            Lengkapi data venue di bawah ini
+            Perbarui data venue di bawah ini
         </p>
     </div>
 
     <!-- FORM -->
-    <form wire:submit.prevent="save" class="p-6" autocomplete="off">
-        <!-- NAMA -->
+    <form wire:submit.prevent="update" class="p-6" autocomplete="off">
         <div class="grid grid-cols-4 gap-4">
+
+            <!-- NAMA -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Nama</label>
                 <input type="text" wire:model.live.debounce.300ms="name" placeholder="Masukkan nama venue"
@@ -27,16 +28,11 @@
 
             <!-- KATEGORI -->
             <div>
-                <label class="text-sm font-medium text-gray-700">
-                    Kategori
-                </label>
-
+                <label class="text-sm font-medium text-gray-700">Kategori</label>
                 <select wire:model.live="category_id"
-                    class="w-full h-10 px-3 text-sm rounded-md
-               border border-gray-300 bg-white
-               focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-               transition
-               @error('category_id') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror">
+                    class="w-full h-10 px-3 text-sm rounded-md border border-gray-300 bg-white
+                           focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+                           @error('category_id') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror">
                     <option value="">-- Pilih Kategori --</option>
 
                     @foreach ($categories as $category)
@@ -65,18 +61,12 @@
 
             <!-- HARGA -->
             <div>
-                <label class="text-sm font-medium text-gray-700">
-                    Harga per Jam
-                </label>
-
+                <label class="text-sm font-medium text-gray-700">Harga per Jam</label>
                 <input type="text" wire:model.live.debounce.300ms="price_display" placeholder="Rp 0"
                     inputmode="numeric"
-                    class="w-full h-10 px-3 text-sm rounded-md
-               border border-gray-300 bg-white
-               focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-               transition
-               @error('price_per_hour') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
-
+                    class="w-full h-10 px-3 text-sm rounded-md border border-gray-300 bg-white
+                           focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+                           @error('price_per_hour') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
                 @error('price_per_hour')
                     <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                 @enderror
@@ -129,21 +119,23 @@
                 </select>
             </div>
 
-            <x-image-upload wireModel="image" />
+            <!-- IMAGE UPLOAD (PREVIEW GAMBAR LAMA) -->
+            <x-image-upload wireModel="image" :preview="$existingImage ? asset('storage/' . $existingImage) : null" />
+
         </div>
 
         <!-- ACTION -->
         <div class="flex justify-end gap-2 pt-4">
             <x-normal-button href="{{ route('venues.index') }}" wire:navigate
                 class="h-9 px-4 text-sm rounded-md border border-gray-300 bg-gray-100
-                      text-gray-700 hover:bg-gray-200 transition">
+                       text-gray-700 hover:bg-gray-200 transition">
                 Batal
             </x-normal-button>
 
             <x-normal-button type="submit"
                 class="h-9 px-4 text-sm rounded-md bg-blue-600 text-white
                        hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 transition">
-                Simpan
+                Update
             </x-normal-button>
         </div>
     </form>

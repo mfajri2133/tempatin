@@ -26,6 +26,11 @@ class Venue extends Model
         'capacity' => 'integer',
     ];
 
+    public function getPriceFormattedAttribute(): string
+    {
+        return 'Rp ' . number_format($this->price_per_hour, 0, ',', '.');
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
