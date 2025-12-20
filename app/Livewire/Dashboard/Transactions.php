@@ -11,11 +11,20 @@ class Transactions extends Component
 {
     public function render()
     {
-        $transactions = Order::with([
-            'user:id,name,email',
-            'booking.venue:id,name',
-            'payment',
+        $transactions = Order::select([
+            'id',
+            'order_code',
+            'user_id',
+            'booking_id',
+            'total_amount',
+            'status',
+            'created_at',
         ])
+            ->with([
+                'user:id,name,email',
+                'booking.venue:id,name',
+                'payment:id,order_id,payment_status',
+            ])
             ->latest()
             ->paginate(10);
 
