@@ -126,7 +126,7 @@
 
         <!-- ACTION -->
         <div class="flex justify-end gap-2 pt-4">
-            <x-normal-button href="{{ route('venues.index') }}" wire:navigate
+            <x-normal-button href="{{ route('dashboard.venues.index') }}" wire:navigate
                 class="h-9 px-4 text-sm rounded-md border border-gray-300 bg-gray-100
                        text-gray-700 hover:bg-gray-200 transition">
                 Batal

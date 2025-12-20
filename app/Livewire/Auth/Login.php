@@ -19,7 +19,10 @@ class Login extends Component
             'password' => 'required'
         ]);
 
-        if (!Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
+        if (!Auth::attempt([
+            'email' => $this->email,
+            'password' => $this->password
+        ])) {
             $this->addError('email', 'Email atau password salah.');
             return;
         }
@@ -28,10 +31,14 @@ class Login extends Component
 
         $user = Auth::user();
 
-        if ($user->role === 'admin') {
-            return redirect()->to('/dashboard');
+        if (session()->has('url.intended')) {
+            return redirect()->intended();
         }
 
-        return redirect()->to('/');
+        if ($user->role === 'admin') {
+            return redirect()->route('dashboard.index');
+        }
+
+        return redirect()->route('welcome');
     }
 }

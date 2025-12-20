@@ -10,38 +10,38 @@
 
             <!-- LOGO -->
             <div class="flex-shrink-0">
-                <a href="/"
+                <a href="{{ route('welcome') }}" wire:navigate
                     class="text-xl font-bold tracking-tight text-white hover:text-indigo-400 transition-colors">
                     Tempat<span class="text-indigo-400">IN</span>
                 </a>
             </div>
 
-            <!-- DESKTOP MENU -->
             <div class="hidden md:flex items-center gap-8">
-                <a href="/"
+
+                <a href="{{ route('welcome') }}" wire:navigate
                     class="relative text-sm font-medium transition-colors
-                               {{ request()->is('/') ? 'text-white after:w-full' : 'text-gray-300 hover:text-white' }}
-                               after:absolute after:left-0 after:-bottom-1 after:h-0.5
-                               after:bg-indigo-500 after:transition-all hover:after:w-full
-                               {{ request()->is('/') ? 'after:w-full' : 'after:w-0' }}">
+                        {{ request()->routeIs('welcome') ? 'text-white' : 'text-gray-300 hover:text-white' }}
+                        after:absolute after:left-0 after:-bottom-1 after:h-0.5
+                        after:bg-indigo-500 after:transition-all
+                        {{ request()->routeIs('welcome') ? 'after:w-full' : 'after:w-0 hover:after:w-full' }}">
                     Home
                 </a>
 
-                <a href="{{ route('user-venues') }}"
+                <a href="{{ route('venues') }}" wire:navigate
                     class="relative text-sm font-medium transition-colors
-                               {{ request()->is('/') ? 'text-white after:w-full' : 'text-gray-300 hover:text-white' }}
-                               after:absolute after:left-0 after:-bottom-1 after:h-0.5
-                               after:bg-indigo-500 after:transition-all hover:after:w-full
-                               {{ request()->is('/') ? 'after:w-full' : 'after:w-0' }}">
+                        {{ request()->routeIs('venues') ? 'text-white' : 'text-gray-300 hover:text-white' }}
+                        after:absolute after:left-0 after:-bottom-1 after:h-0.5
+                        after:bg-indigo-500 after:transition-all
+                        {{ request()->routeIs('venues') ? 'after:w-full' : 'after:w-0 hover:after:w-full' }}">
                     Cari Tempat
                 </a>
 
-                <a href="/about"
+                <a href="{{ route('about') }}" wire:navigate
                     class="relative text-sm font-medium transition-colors
-                               {{ request()->is('about') ? 'text-white after:w-full' : 'text-gray-300 hover:text-white' }}
-                               after:absolute after:left-0 after:-bottom-1 after:h-0.5
-                               after:bg-indigo-500 after:transition-all hover:after:w-full
-                               {{ request()->is('about') ? 'after:w-full' : 'after:w-0' }}">
+                        {{ request()->routeIs('about') ? 'text-white' : 'text-gray-300 hover:text-white' }}
+                        after:absolute after:left-0 after:-bottom-1 after:h-0.5
+                        after:bg-indigo-500 after:transition-all
+                        {{ request()->routeIs('about') ? 'after:w-full' : 'after:w-0 hover:after:w-full' }}">
                     Tentang Kami
                 </a>
             </div>
@@ -98,7 +98,7 @@
 
                             <!-- Menu Items -->
                             <div class="py-2">
-                                <a href="{{ route('user.profile') }}"
+                                <a href="{{ route('user.profile') }}" wire:navigate
                                     class="flex items-center gap-3 px-4 py-2.5 transition-colors text-sm
                                                {{ request()->routeIs('user.profile')
                                                    ? 'bg-indigo-500/10 text-indigo-400'
@@ -111,9 +111,9 @@
                                 </a>
 
                                 @if (auth()->user()->role === 'admin')
-                                    <a href="{{ route('dashboard') }}"
+                                    <a href="{{ route('dashboard.index') }}" wire:navigate
                                         class="flex items-center gap-3 px-4 py-2.5 transition-colors text-sm
-                                                   {{ request()->routeIs('dashboard')
+                                                   {{ request()->routeIs('dashboard..index')
                                                        ? 'bg-indigo-500/10 text-indigo-400'
                                                        : 'text-gray-300 hover:bg-[#2a2a2a] hover:text-white' }}">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,18 +145,18 @@
                 @else
                     <!-- Guest Buttons -->
                     <div class="flex items-center gap-3">
-                        <a href="{{ route('login') }}"
+                        <a href="{{ route('login') }}" wire:navigate
                             class="px-4 py-2 text-sm font-medium rounded-lg border transition-all
                                        {{ request()->routeIs('login')
                                            ? 'border-indigo-500 bg-indigo-500/10 text-indigo-400'
                                            : 'border-[#444] text-gray-300 hover:bg-[#2a2a2a] hover:border-gray-500' }}">
                             Log in
                         </a>
-                        <a href="{{ route('register') }}"
+                        <a href="{{ route('register') }}" wire:navigate
                             class="px-4 py-2 text-sm font-medium rounded-lg transition-all shadow-lg
                                        {{ request()->routeIs('register')
                                            ? 'bg-indigo-700 text-white ring-2 ring-indigo-400'
-                                           : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-indigo-500/50' }}">
+                                           : 'bg-indigo-600 text-white hover:bg-indigo-700' }}">
                             Sign up
                         </a>
                     </div>
@@ -202,25 +202,25 @@
 
             <!-- Mobile Navigation -->
             <div class="space-y-1 px-2">
-                <a href="/"
+                <a href="{{ route('welcome') }}" wire:navigate
                     class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
-                               {{ request()->is('/')
+                               {{ request()->routeIs('welcome')
                                    ? 'bg-indigo-500/10 text-indigo-400'
                                    : 'text-gray-300 hover:bg-[#2a2a2a] hover:text-white' }}">
                     <span>Home</span>
                 </a>
 
-                <a href="/"
+                <a href="{{ route('venues') }}" wire:navigate
                     class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
-                               {{ request()->is('/')
+                               {{ request()->routeIs('venues')
                                    ? 'bg-indigo-500/10 text-indigo-400'
                                    : 'text-gray-300 hover:bg-[#2a2a2a] hover:text-white' }}">
                     <span>Carii Tempat</span>
                 </a>
 
-                <a href="/about"
+                <a href="{{ route('about') }}" wire:navigate
                     class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
-                               {{ request()->is('about')
+                               {{ request()->routeIs('about')
                                    ? 'bg-indigo-500/10 text-indigo-400'
                                    : 'text-gray-300 hover:bg-[#2a2a2a] hover:text-white' }}">
                     <span>Tentang Kami</span>
@@ -244,7 +244,7 @@
                     </div>
 
                     <div class="space-y-1">
-                        <a href="{{ route('user.profile') }}"
+                        <a href="{{ route('user.profile') }}" wire:navigate
                             class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors
                                        {{ request()->routeIs('user.profile')
                                            ? 'bg-indigo-500/10 text-indigo-400'
@@ -257,9 +257,9 @@
                         </a>
 
                         @if (auth()->user()->role === 'admin')
-                            <a href="{{ route('dashboard') }}"
+                            <a href="{{ route('dashboard.index') }}" wire:navigate
                                 class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors
-                                           {{ request()->routeIs('dashboard')
+                                           {{ request()->routeIs('dashboard.index')
                                                ? 'bg-indigo-500/10 text-indigo-400'
                                                : 'text-gray-300 hover:bg-[#2a2a2a] hover:text-white' }}">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -287,14 +287,14 @@
             @else
                 <!-- Mobile Guest Buttons -->
                 <div class="mt-4 pt-4 border-t border-[#333] px-2 space-y-2">
-                    <a href="{{ route('login') }}"
+                    <a href="{{ route('login') }}" wire:navigate
                         class="block text-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all
                                    {{ request()->routeIs('login')
                                        ? 'border-2 border-indigo-500 bg-indigo-500/10 text-indigo-400'
                                        : 'border border-[#444] text-gray-300 hover:bg-[#2a2a2a]' }}">
                         Log in
                     </a>
-                    <a href="{{ route('register') }}"
+                    <a href="{{ route('register') }}" wire:navigate
                         class="block text-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all shadow-lg
                                    {{ request()->routeIs('register')
                                        ? 'bg-indigo-700 text-white ring-2 ring-indigo-400'
