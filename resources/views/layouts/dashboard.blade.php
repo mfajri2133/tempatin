@@ -29,7 +29,7 @@
 
         <!-- Sidebar Navigation -->
         <nav class="flex-1 p-4 space-y-2 text-white overflow-y-auto text-xs">
-            <x-nav-item :href="route('dashboard')" :active="request()->is('dashboard')">
+            <x-nav-item :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -38,7 +38,7 @@
                 <span>Dashboard</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('admin-users')" :active="request()->is('admin-users*')">
+            <x-nav-item :href="route('admin-users')" :active="request()->routeIs('admin-users*')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     class="size-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-user-shield">
@@ -50,7 +50,7 @@
                 <span>Admin</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('users')" :active="request()->is('users*')">
+            <x-nav-item :href="route('users')" :active="request()->routeIs('users*')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -59,7 +59,7 @@
                 <span>Pengguna</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('categories')" :active="request()->is('categories*')">
+            <x-nav-item :href="route('categories')" :active="request()->routeIs('categories*')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -77,7 +77,7 @@
                 <span>Tempat</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('transactions')" :active="request()->is('transactions.*')">
+            <x-nav-item :href="route('transactions')" :active="request()->routeIs('transactions*')">
                 <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-dollar">
