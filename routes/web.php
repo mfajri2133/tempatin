@@ -27,8 +27,10 @@ Route::get('/about', About::class)->name('about');
 Route::get('/venues', UserVenues::class)->name('venues');
 
 // Auth
-Route::get('/login', Login::class)->name('login');
-Route::get('/register', Register::class)->name('register');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', Login::class)->name('login');
+    Route::get('/register', Register::class)->name('register');
+});
 
 // Socialite
 Route::prefix('auth')->name('socialite.')->group(function () {

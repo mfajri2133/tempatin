@@ -1,23 +1,10 @@
 <div class="min-h-screen flex items-center justify-center px-4 py-10 bg-gradient-to-br from-gray-50 to-gray-100">
     <div class="w-full max-w-md">
-
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-lg mb-4">
-                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-            </div>
-            <h1 class="text-2xl font-bold text-gray-900 mb-2">
-                Lengkapi Profil Anda
-            </h1>
-            <p class="text-sm text-gray-600">
-                Silakan isi data untuk melengkapi profil
-            </p>
-        </div>
-
         <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Lengkapi Profil Anda</h1>
+                <p class="text-sm text-gray-600 mt-1">Silakan isi data untuk melengkapi profil</p>
+            </div>
             @if (session('success'))
                 <div
                     class="mb-6 p-3 bg-green-50 border border-green-200 text-green-800 text-sm rounded-md flex items-start gap-2">
@@ -202,12 +189,5 @@
                 </div>
             </form>
         </div>
-
-        <p class="text-center text-xs text-gray-500 mt-6">
-            Butuh bantuan?
-            <a href="/contact" class="text-blue-600 hover:text-blue-700 font-medium">
-                Hubungi support
-            </a>
-        </p>
     </div>
 </div>
