@@ -26,7 +26,7 @@
                focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
             </div>
 
-            <x-normal-button :href="route('venues.create')" class="w-full sm:w-auto">
+            <x-normal-button :href="route('dashboard.venues.create')" class="w-full sm:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -72,12 +72,23 @@
                             </td>
 
                             <td class="px-6 py-4 text-xs flex gap-2 justify-center">
-                                <x-square-button :href="route('venues.edit', $venue->id)"
+                                <x-square-button :href="route('dashboard.venues.edit', $venue->id)"
                                     class="bg-orange-100 text-orange-600 hover:bg-orange-200 focus:ring-orange-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                    </svg>
+                                </x-square-button>
+
+                                <x-square-button :href="route('dashboard.venues.show', $venue->id)"
+                                    class="bg-gray-100 text-gray-600 hover:bg-gray-200 focus:ring-gray-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="size-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                     </svg>
                                 </x-square-button>
 
@@ -118,9 +129,7 @@
                                         </svg>
                                     </span>
                                 </x-square-button>
-
                             </td>
-
                         </tr>
                     @empty
                         <tr>

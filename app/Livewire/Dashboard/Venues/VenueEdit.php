@@ -8,7 +8,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-#[Layout('layouts.dashboard', ['title' => 'Edit Tempat'])]
+#[Layout('layouts.dashboard', ['title' => 'Ubah Tempat'])]
 class VenueEdit extends Component
 {
     use WithFileUploads;
