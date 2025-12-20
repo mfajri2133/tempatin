@@ -25,7 +25,7 @@
                     </button>
                 @endif
 
-                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama atau email"
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari kategori"
                     class="w-full pl-10 pr-10 py-2 text-sm rounded border border-blue-200 bg-white text-gray-700
                            focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
             </div>
