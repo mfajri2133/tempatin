@@ -14,6 +14,7 @@ use App\Livewire\Dashboard\Admin;
 use App\Livewire\Dashboard\Categories;
 use App\Livewire\Dashboard\Transactions;
 use App\Livewire\Dashboard\Venues\VenueCreate;
+use App\Livewire\Dashboard\Venues\VenueDetail;
 use App\Livewire\Dashboard\Venues\Venues;
 use App\Livewire\User\Venues as UserVenues;
 use App\Livewire\Welcome;
@@ -43,7 +44,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('venues')->name('venues.')->group(function () {
         Route::get('/', Venues::class)->name('index');
         Route::get('/create', VenueCreate::class)->name('create');
-        Route::get('/{venue}/edit', VenueEdit::class)->name('edit');
+        Route::get('/{id}/edit', VenueEdit::class)->name('edit');
+        Route::get('/{id}/detail', VenueDetail::class)->name('show');
     });
 
     Route::get('/set-password', SetPassword::class)->name('password.setup');
