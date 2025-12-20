@@ -44,8 +44,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('venues')->name('venues.')->group(function () {
         Route::get('/', Venues::class)->name('index');
         Route::get('/create', VenueCreate::class)->name('create');
-        Route::get('/{id}/edit', VenueEdit::class)->name('edit');
-        Route::get('/{id}/detail', VenueDetail::class)->name('show');
+        Route::get('/{venue}/edit', VenueEdit::class)->name('edit');
+        Route::get('/{venue}/detail', VenueDetail::class)->name('show');
     });
 
     Route::get('/set-password', SetPassword::class)->name('password.setup');
