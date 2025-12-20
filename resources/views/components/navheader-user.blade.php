@@ -27,6 +27,15 @@
                     Home
                 </a>
 
+                <a href="{{ route('user-venues') }}"
+                    class="relative text-sm font-medium transition-colors
+                               {{ request()->is('/') ? 'text-white after:w-full' : 'text-gray-300 hover:text-white' }}
+                               after:absolute after:left-0 after:-bottom-1 after:h-0.5
+                               after:bg-indigo-500 after:transition-all hover:after:w-full
+                               {{ request()->is('/') ? 'after:w-full' : 'after:w-0' }}">
+                    Cari Tempat
+                </a>
+
                 <a href="/about"
                     class="relative text-sm font-medium transition-colors
                                {{ request()->is('about') ? 'text-white after:w-full' : 'text-gray-300 hover:text-white' }}
@@ -199,6 +208,14 @@
                                    ? 'bg-indigo-500/10 text-indigo-400'
                                    : 'text-gray-300 hover:bg-[#2a2a2a] hover:text-white' }}">
                     <span>Home</span>
+                </a>
+
+                <a href="/"
+                    class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
+                               {{ request()->is('/')
+                                   ? 'bg-indigo-500/10 text-indigo-400'
+                                   : 'text-gray-300 hover:bg-[#2a2a2a] hover:text-white' }}">
+                    <span>Carii Tempat</span>
                 </a>
 
                 <a href="/about"

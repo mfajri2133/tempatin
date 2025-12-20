@@ -14,6 +14,7 @@ use App\Livewire\Dashboard\Admin;
 use App\Livewire\Dashboard\Categories;
 use App\Livewire\Dashboard\Venues\VenueCreate;
 use App\Livewire\Dashboard\Venues\Venues;
+use App\Livewire\User\Venues as UserVenues;
 use App\Livewire\Welcome;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Welcome::class)->name('welcome');
 Route::get('/login', Login::class)->name('login');
 Route::get('/about', About::class)->name('about');
+Route::get('/user-venues', UserVenues::class)->name('user-venues');
 Route::get('/register', Register::class)->name('register');
 Route::get('/profile-user', UserProfile::class)->name('user.profile');
 
