@@ -183,8 +183,10 @@
         </header>
 
         <!-- Content -->
-        <main class="flex-1 p-6 overflow-y-auto bg-gray-100">
-            {{ $slot }}
+        <main class="flex-1 bg-gray-100 p-6 overflow-x-hidden max-w-screen">
+            <div class="w-full max-w-full overflow-hidden">
+                {{ $slot }}
+            </div>
         </main>
     </div>
 
