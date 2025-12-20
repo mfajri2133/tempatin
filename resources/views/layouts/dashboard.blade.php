@@ -23,13 +23,13 @@
 
         <!-- Sidebar Header -->
         <div class="px-4 py-5.5 border-b border-blue-400 text-center">
-            <a href="{{ route('welcome') }}" class="text-xl font-bold text-white">Tempat<span
+            <a href="{{ route('welcome') }}" wire:navigate class="text-xl font-bold text-white">Tempat<span
                     class="text-blue-400">IN</span></a>
         </div>
 
         <!-- Sidebar Navigation -->
         <nav class="flex-1 p-4 space-y-2 text-white overflow-y-auto text-xs">
-            <x-nav-item :href="route('dashboard')" :active="request()->is('dashboard')">
+            <x-nav-item :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -38,7 +38,7 @@
                 <span>Dashboard</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('admin-users')" :active="request()->is('admin-users*')">
+            <x-nav-item :href="route('dashboard.admin-users')" :active="request()->routeIs('dashboard.admin-users')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     class="size-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-user-shield">
@@ -50,7 +50,7 @@
                 <span>Admin</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('users')" :active="request()->is('users*')">
+            <x-nav-item :href="route('dashboard.users')" :active="request()->routeIs('dashboard.users')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -59,7 +59,7 @@
                 <span>Pengguna</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('categories')" :active="request()->is('categories*')">
+            <x-nav-item :href="route('dashboard.categories')" :active="request()->routeIs('dashboard.categories')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -68,7 +68,7 @@
                 <span>Kategori</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('venues.index')" :active="request()->routeIs('venues.*')">
+            <x-nav-item :href="route('dashboard.venues.index')" :active="request()->routeIs('dashboard.venues.*')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -77,7 +77,7 @@
                 <span>Tempat</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('transactions')" :active="request()->is('transactions.*')">
+            <x-nav-item :href="route('dashboard.transactions')" :active="request()->routeIs('dashbord.transactions*')">
                 <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-dollar">
@@ -143,7 +143,7 @@
                                 <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email ?? '' }}</p>
                             </div>
 
-                            <a href="{{ route('admin.profile') }}"
+                            <a href="{{ route('dashboard.profile') }}" wire:navigate
                                 class="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -174,7 +174,8 @@
 
             <!-- Breadcrumb -->
             <div class="px-4 py-2 bg-white text-sm border-b border-blue-400">
-                <a href="/dashboard" class="text-blue-500 hover:text-blue-600 transition-colors">Dashboard</a>
+                <a href="{{ route('dashboard.index') }}" wire:navigate
+                    class="text-blue-500 hover:text-blue-600 transition-colors">Dashboard</a>
                 @if ($title && $title !== 'Dashboard')
                     <span class="mx-2 text-gray-400">›</span>
                     <span class="text-gray-700">{{ $title }}</span>

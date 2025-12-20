@@ -26,7 +26,7 @@
                focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
             </div>
 
-            <x-normal-button :href="route('venues.create')" class="w-full sm:w-auto">
+            <x-normal-button :href="route('dashboard.venues.create')" class="w-full sm:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -72,7 +72,7 @@
                             </td>
 
                             <td class="px-6 py-4 text-xs flex gap-2 justify-center">
-                                <x-square-button :href="route('venues.edit', $venue->id)"
+                                <x-square-button :href="route('dashboard.venues.edit', $venue->id)"
                                     class="bg-orange-100 text-orange-600 hover:bg-orange-200 focus:ring-orange-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -81,7 +81,7 @@
                                     </svg>
                                 </x-square-button>
 
-                                <x-square-button :href="route('venues.show', $venue->id)"
+                                <x-square-button :href="route('dashboard.venues.show', $venue->id)"
                                     class="bg-gray-100 text-gray-600 hover:bg-gray-200 focus:ring-gray-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-5">
