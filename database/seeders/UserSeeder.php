@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         if (!User::where('email', 'admin@gmail.com')->exists()) {
             User::create([
-                'name' => 'Super Admin',
+                'name' => 'Superadmin',
                 'email' => 'admin@gmail.com',
                 'password' => 'Pasuntix2025!',
                 'role' => 'admin',
