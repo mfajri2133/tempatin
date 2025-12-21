@@ -17,7 +17,8 @@ use App\Livewire\Dashboard\Transactions\TransactionDetail;
 use App\Livewire\Dashboard\Transactions\Transactions;
 use App\Livewire\User\About;
 use App\Livewire\User\Profile as UserProfile;
-use App\Livewire\User\Venues as UserVenues;
+use App\Livewire\User\Venues\VenueDetail as UserVenueDetail;
+use App\Livewire\User\Venues\Venues as UserVenues;
 use App\Livewire\Welcome;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,10 @@ use Illuminate\Support\Facades\Route;
 // Public Route
 Route::get('/', Welcome::class)->name('welcome');
 Route::get('/about', About::class)->name('about');
-Route::get('/venues', UserVenues::class)->name('venues');
+Route::prefix('venues')->name('venues.')->group(function () {
+    Route::get('/', UserVenues::class)->name('index');
+    Route::get('/{venue}/detail', UserVenueDetail::class)->name('show');
+});
 
 // Auth
 Route::middleware('guest')->group(function () {

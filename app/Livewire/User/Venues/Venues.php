@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire\User\Venues;
 
 use App\Models\Venue;
 use Livewire\Attributes\Layout;
@@ -27,6 +27,6 @@ class Venues extends Component
             ->latest()
             ->paginate(9);
 
-        return view('livewire.user.venues', compact('venues'));
+        return view('livewire.user.venues.venues', compact('venues'));
     }
 }
