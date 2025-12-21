@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Throwable;
 
 #[Layout('layouts.dashboard', ['title' => 'Ubah Venue'])]
 class VenueEdit extends Component
@@ -79,8 +80,7 @@ class VenueEdit extends Component
                     ->values()
                     ->toArray();
             }
-        } catch (\Throwable $e) {
-            // silent
+        } catch (Throwable $e) {
         }
 
         return [];
@@ -127,6 +127,19 @@ class VenueEdit extends Component
         ]);
 
         return redirect()->route('dashboard.venues.index');
+    }
+
+    public function updated($property)
+    {
+        $this->validateOnly($property, [
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'address' => 'required|string',
+            'city_code' => 'required|string|max:10',
+            'capacity' => 'required|integer|min:1',
+            'price_per_hour' => 'required|numeric|min:0',
+            'status' => 'required|in:available,unavailable',
+        ]);
     }
 
     public function updatedPriceDisplay($value)

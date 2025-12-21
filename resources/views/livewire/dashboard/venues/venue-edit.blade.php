@@ -49,12 +49,12 @@
             <!-- KOTA -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Kota</label>
-                <select wire:model.defer="city_code"
+                <select wire:model.live="city_code"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300 bg-white
            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
            @error('city_code') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror">
 
-                    <option value="">-- Pilih Kota (Jawa Barat) --</option>
+                    <option value="">-- Pilih Kota --</option>
 
                     @foreach ($cities as $city)
                         <option value="{{ $city['code'] }}">
@@ -106,7 +106,7 @@
 
             <div class="col-span-full">
                 <label class="text-sm font-medium text-gray-700">Alamat</label>
-                <textarea wire:model.defer="address" rows="3" placeholder="Masukkan alamat lengkap venue"
+                <textarea wire:model.live="address" rows="3" placeholder="Masukkan alamat lengkap venue"
                     class="w-full px-3 py-2 text-sm rounded-md border border-gray-300
                        resize-none
                        focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
