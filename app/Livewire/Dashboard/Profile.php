@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -12,19 +13,19 @@ use Livewire\WithFileUploads;
 class Profile extends Component
 {
     use WithFileUploads;
-
+    public $user;
+    public $photo;
     public $name;
     public $email;
-    public $photo;
-    public $currentPhoto;
+    public $current_password;
+    public $new_password;
+    public $new_password_confirmation;
 
     public function mount()
     {
-        $user = Auth::user();
-
-        $this->name = $user->name;
-        $this->email = $user->email;
-        $this->currentPhoto = $user->avatar;
+        $this->user = Auth::user();
+        $this->name = $this->user->name;
+        $this->email = $this->user->email;
     }
 
     public function saveProfile()
@@ -37,21 +38,38 @@ class Profile extends Component
         $user = Auth::user();
 
         if ($this->photo) {
-            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+            if ($user->avatar) {
                 Storage::disk('public')->delete($user->avatar);
             }
 
-            $path = $this->photo->store('avatars', 'public');
-            $user->avatar = $path;
-            $this->currentPhoto = $path;
+            $photoPath = $this->photo->store('avatars', 'public');
+            $user->avatar = $photoPath;
         }
 
-        $user->update([
-            'name' => $this->name,
-            'avatar' => $user->avatar,
+        $user->name = $this->name;
+        $user->save();
+
+        $this->user = $user;
+
+        session()->flash('success', 'Profil berhasil diperbarui!');
+        return redirect()->route('dashboard.profile');
+    }
+
+    public function updatePassword()
+    {
+        $this->validate([
+            'current_password' => 'required|current_password',
+            'new_password' => 'required|min:8|confirmed',
         ]);
 
-        session()->flash('success', 'Profil berhasil diperbarui.');
+        Auth::user()->update([
+            'password' => Hash::make($this->new_password)
+        ]);
+
+        $this->reset(['current_password', 'new_password', 'new_password_confirmation']);
+
+        session()->flash('success', 'Kata sandi berhasil diubah!');
+        return redirect()->route('dashboard.profile');
     }
 
     public function render()

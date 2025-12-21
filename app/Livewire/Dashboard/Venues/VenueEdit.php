@@ -96,6 +96,7 @@ class VenueEdit extends Component
             'capacity' => 'required|integer|min:1',
             'price_per_hour' => 'required|numeric|min:0',
             'status' => 'required|in:available,unavailable',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $city = collect($this->cities)

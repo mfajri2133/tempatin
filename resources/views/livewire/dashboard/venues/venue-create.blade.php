@@ -13,6 +13,10 @@
     <!-- FORM -->
     <form wire:submit.prevent="save" class="p-6" autocomplete="off">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="col-span-full">
+                <x-image-upload wireModel="image" type="default" />
+            </div>
+
             <div>
                 <label class="text-sm font-medium text-gray-700">Nama</label>
                 <input type="text" wire:model.live.debounce.300ms="name" placeholder="Masukkan nama venue"
@@ -110,11 +114,6 @@
                 @error('address')
                     <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                 @enderror
-            </div>
-
-            <!-- IMAGE UPLOAD (FULL ROW) -->
-            <div class="col-span-full">
-                <x-image-upload wireModel="image" />
             </div>
         </div>
 

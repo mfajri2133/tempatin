@@ -13,6 +13,10 @@
     <!-- FORM -->
     <form wire:submit.prevent="update" class="p-6" autocomplete="off">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="col-span-full">
+                <x-image-upload wireModel="image" type="default" :preview="$existingImage ? asset('storage/' . $existingImage) : null" />
+            </div>
+
             <!-- NAMA -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Nama</label>
@@ -114,10 +118,6 @@
                 @error('address')
                     <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                 @enderror
-            </div>
-
-            <div class="col-span-full">
-                <x-image-upload wireModel="image" :preview="$existingImage ? asset('storage/' . $existingImage) : null" />
             </div>
         </div>
 
