@@ -1,9 +1,7 @@
 <footer class="bg-[#0f0f0f] border-t border-[#333] mt-auto">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Main Footer Content -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
 
-            <!-- Brand Section -->
             <div class="space-y-4">
                 <a href="/" class="inline-block">
                     <h3 class="text-2xl font-bold tracking-tight text-white">
@@ -11,16 +9,15 @@
                     </h3>
                 </a>
                 <p class="text-sm text-gray-400 leading-relaxed">
-                    Platform terpercaya untuk menemukan dan memesan tempat acara terbaik di Indonesia.
+                    Platform terpercaya untuk menemukan dan memesan venue acara terbaik di Indonesia.
                 </p>
             </div>
 
-            <!-- Quick Links -->
             <div>
                 <h4 class="text-sm font-semibold text-white mb-4">Navigasi</h4>
                 <ul class="space-y-3">
                     <li>
-                        <a href="/"
+                        <a href="{{ route('welcome') }}"
                             class="text-sm text-gray-400 hover:text-indigo-400 transition-colors inline-flex items-center group">
                             <svg class="w-4 h-4 mr-2 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,7 +28,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/about"
+                        <a href="{{ route('about') }}"
                             class="text-sm text-gray-400 hover:text-indigo-400 transition-colors inline-flex items-center group">
                             <svg class="w-4 h-4 mr-2 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,7 +39,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/venues"
+                        <a href="{{ route('venues.index') }}"
                             class="text-sm text-gray-400 hover:text-indigo-400 transition-colors inline-flex items-center group">
                             <svg class="w-4 h-4 mr-2 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +63,6 @@
                 </ul>
             </div>
 
-            <!-- Support -->
             <div>
                 <h4 class="text-sm font-semibold text-white mb-4">Bantuan</h4>
                 <ul class="space-y-3">
@@ -117,7 +113,6 @@
                 </ul>
             </div>
 
-            <!-- Contact Info -->
             <div>
                 <h4 class="text-sm font-semibold text-white mb-4">Hubungi Kami</h4>
                 <ul class="space-y-3">
@@ -130,7 +125,7 @@
                                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         <span class="text-sm text-gray-400 leading-relaxed">
-                            Jl. Contoh No. 123<br>
+                            Jl. Setiabudhi No. 123<br>
                             Bandung, Jawa Barat 40123
                         </span>
                     </li>
@@ -140,16 +135,15 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
-                        <a href="mailto:info@tempatin.com"
+                        <a href="mailto:tempatin@gmail.com"
                             class="text-sm text-gray-400 hover:text-indigo-400 transition-colors">
-                            info@tempatin.com
+                            tempatin@gmail.com
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <!-- Bottom Bar -->
         <div class="mt-12 pt-8 border-t border-[#333] text-center">
             <p class="text-sm text-gray-400">
                 © {{ date('Y') }} <span class="text-white font-medium">TempatIN</span>.
@@ -158,7 +152,6 @@
         </div>
     </div>
 
-    <!-- Back to Top Button -->
     <button x-data="{ show: false }" x-init="window.addEventListener('scroll', () => { show = window.scrollY > 500 })" x-show="show"
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4"
         x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200"

@@ -17,7 +17,7 @@ class Venues extends Component
 
     public string $searchInput = '';
     public string $search = '';
-    public string $city = '';
+    public string $city_code = '';
     public string $capacity = '';
     public string $category = '';
 
@@ -26,7 +26,7 @@ class Venues extends Component
 
     protected $queryString = [
         'search',
-        'city',
+        'city_code',
         'capacity',
         'category'
     ];
@@ -78,8 +78,8 @@ class Venues extends Component
             ->when($this->category, function ($q) {
                 $q->where('category_id', $this->category);
             })
-            ->when($this->city, function ($q) {
-                $q->where('city_id', $this->city);
+            ->when($this->city_code, function ($q) {
+                $q->where('city_code', $this->city_code);
             })
             ->when($this->capacity, function ($q) {
                 match ($this->capacity) {
@@ -87,10 +87,10 @@ class Venues extends Component
                     '26-50'  => $q->whereBetween('capacity', [26, 50]),
                     '51-75'  => $q->whereBetween('capacity', [51, 75]),
                     '76-100' => $q->whereBetween('capacity', [76, 100]),
+                    '100+'   => $q->where('capacity', '>=', 101),
                     default  => null,
                 };
             })
-
             ->latest()
             ->paginate(9);
 

@@ -17,6 +17,7 @@ use App\Livewire\Dashboard\Transactions\TransactionDetail;
 use App\Livewire\Dashboard\Transactions\Transactions;
 use App\Livewire\User\About;
 use App\Livewire\User\Profile as UserProfile;
+use App\Livewire\User\TransactionHistories;
 use App\Livewire\User\Venues\VenueDetail as UserVenueDetail;
 use App\Livewire\User\Venues\Venues as UserVenues;
 use App\Livewire\Welcome;
@@ -49,7 +50,7 @@ Route::prefix('auth')->name('socialite.')->group(function () {
 // Auth User (Admin + User)
 Route::middleware(['auth', 'force.profile'])->group(function () {
     Route::get('/profile', UserProfile::class)->name('user.profile');
-
+    Route::get('/transaction-histories', TransactionHistories::class)->name('user.transaction-histories');
     Route::get('/set-profile', SetProfile::class)->name('profile.setup');
 
     Route::post('/logout', function () {

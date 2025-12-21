@@ -8,6 +8,10 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Throwable;
 
 class SocialiteController extends Controller
 {
@@ -15,6 +19,35 @@ class SocialiteController extends Controller
     public function redirectToProvider($provider)
     {
         return Socialite::driver($provider)->redirect();
+    }
+
+    private function storeAvatarFromUrl(?string $avatarUrl): ?string
+    {
+        if (!$avatarUrl) {
+            return null;
+        }
+
+        try {
+            $response = Http::timeout(10)->get($avatarUrl);
+
+            if (!$response->successful()) {
+                return null;
+            }
+
+            $extension = 'jpg';
+
+            if ($contentType = $response->header('Content-Type')) {
+                $extension = str_contains($contentType, 'png') ? 'png' : 'jpg';
+            }
+
+            $filename = 'avatars/' . Str::uuid() . '.' . $extension;
+
+            Storage::disk('public')->put($filename, $response->body());
+
+            return $filename;
+        } catch (Throwable $e) {
+            return null;
+        }
     }
 
     public function handleProviderCallback($provider)
@@ -30,7 +63,8 @@ class SocialiteController extends Controller
         $name = $socialUser->getName()
             ?: $socialUser->getNickname()
             ?: 'User';
-        $avatar = $socialUser->getAvatar();
+        $avatarUrl = $socialUser->getAvatar();
+        $avatarPath = $this->storeAvatarFromUrl($avatarUrl);
 
         $account = SocialAccount::where('provider', $provider)
             ->where('provider_id', $providerId)
@@ -54,7 +88,7 @@ class SocialiteController extends Controller
             $user = User::create([
                 'name'  => $name,
                 'email' => $email,
-                'avatar' => $avatar,
+                'avatar' => $avatarPath,
                 'role' => 'user',
                 'password' => null,
             ]);
