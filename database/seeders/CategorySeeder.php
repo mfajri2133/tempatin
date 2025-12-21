@@ -17,14 +17,9 @@ class CategorySeeder extends Seeder
             'Ruang Meeting',
             'Co-Working Space',
             'Gedung Serbaguna',
-            'Ruang Training',
-            'Tempat Acara',
-            'Lapangan Futsal',
-            'Lapangan Badminton',
-            'Lapangan Basket',
-            'Lapangan Tenis',
-            'Studio Yoga & Dance',
-            'Gym / Fitness Studio',
+            'Event Space',
+            'Ballroom',
+            'Outdoor Venu'
         ];
 
         foreach ($categories as $name) {

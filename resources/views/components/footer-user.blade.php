@@ -165,9 +165,8 @@
         x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-4"
         @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
         class="fixed bottom-6 right-6 w-12 h-12 bg-indigo-600 hover:bg-indigo-700
-                   text-white rounded-full shadow-lg hover:shadow-indigo-500/50
-                   flex items-center justify-center transition-all duration-200 z-40
-                   focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#0f0f0f]"
+                   text-white rounded-full shadow-lg
+                   flex items-center justify-center transition-all duration-200 z-40"
         style="display: none;" aria-label="Back to top">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />

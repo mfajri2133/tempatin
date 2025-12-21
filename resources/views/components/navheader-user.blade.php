@@ -2,7 +2,7 @@
     mobileMenuOpen: false,
     scrolled: false
 }" x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 20 })"
-    :class="scrolled ? 'shadow-2xl bg-[#1a1a1a]/95 backdrop-blur-lg' : 'bg-[#1a1a1a]'"
+    :class="scrolled ? 'shadow-2xl bg-[#0f0f0f]/95 backdrop-blur-lg' : 'bg-[#0f0f0f]'"
     class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-[#333]">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,13 +27,13 @@
                     Home
                 </a>
 
-                <a href="{{ route('venues') }}" wire:navigate
+                <a href="{{ route('venues.index') }}" wire:navigate
                     class="relative text-sm font-medium transition-colors
-                        {{ request()->routeIs('venues') ? 'text-white' : 'text-gray-300 hover:text-white' }}
+                        {{ request()->routeIs('venues.index') ? 'text-white' : 'text-gray-300 hover:text-white' }}
                         after:absolute after:left-0 after:-bottom-1 after:h-0.5
                         after:bg-indigo-500 after:transition-all
-                        {{ request()->routeIs('venues') ? 'after:w-full' : 'after:w-0 hover:after:w-full' }}">
-                    Cari Tempat
+                        {{ request()->routeIs('venues.index') ? 'after:w-full' : 'after:w-0 hover:after:w-full' }}">
+                    Cari Venue
                 </a>
 
                 <a href="{{ route('about') }}" wire:navigate
@@ -46,24 +46,8 @@
                 </a>
             </div>
 
-            <!-- DESKTOP: SEARCH + AUTH -->
+            <!-- DESKTOP: AUTH -->
             <div class="hidden md:flex items-center gap-4">
-
-                <!-- Search Bar -->
-                <div class="relative">
-                    <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
-                    </svg>
-
-                    <input type="text" placeholder="Cari tempat acara"
-                        class="w-56 pl-9 pr-4 py-2 text-sm rounded-lg border border-[#333]
-                                      bg-[#0f0f0f] text-gray-200 placeholder-gray-500
-                                      focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
-                                      transition-all" />
-                </div>
-
                 @auth
                     <!-- User Dropdown -->
                     <div x-data="{ open: false }" class="relative">
@@ -185,21 +169,6 @@
             x-transition:leave-end="opacity-0 -translate-y-2" class="md:hidden py-4 border-t border-[#333]"
             style="display: none;">
 
-            <!-- Mobile Search -->
-            <div class="px-2 mb-4">
-                <div class="relative">
-                    <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
-                    </svg>
-                    <input type="text" placeholder="Cari tempat acara"
-                        class="w-full pl-9 pr-4 py-2.5 text-sm rounded-lg border border-[#333]
-                                      bg-[#0f0f0f] text-gray-200 placeholder-gray-500
-                                      focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-                </div>
-            </div>
-
             <!-- Mobile Navigation -->
             <div class="space-y-1 px-2">
                 <a href="{{ route('welcome') }}" wire:navigate
@@ -210,12 +179,12 @@
                     <span>Home</span>
                 </a>
 
-                <a href="{{ route('venues') }}" wire:navigate
+                <a href="{{ route('venues.index') }}" wire:navigate
                     class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
-                               {{ request()->routeIs('venues')
+                               {{ request()->routeIs('venues.index')
                                    ? 'bg-indigo-500/10 text-indigo-400'
                                    : 'text-gray-300 hover:bg-[#2a2a2a] hover:text-white' }}">
-                    <span>Carii Tempat</span>
+                    <span>Cari Venue</span>
                 </a>
 
                 <a href="{{ route('about') }}" wire:navigate
