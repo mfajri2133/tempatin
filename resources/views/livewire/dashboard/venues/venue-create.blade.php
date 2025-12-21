@@ -11,7 +11,7 @@
     </div>
 
     <!-- FORM -->
-    <form wire:submit.prevent="save" class="p-6" autocomplete="off">
+    <form wire:submit.prevent="save" enctype="multipart" class="p-6" autocomplete="off">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
                 <label class="text-sm font-medium text-gray-700">Nama</label>
