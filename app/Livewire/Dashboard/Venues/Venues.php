@@ -40,8 +40,7 @@ class Venues extends Component
             'status'
         )
             ->when($this->search, function ($query) {
-                $query->where('name', 'like', "%{$this->search}%")
-                    ->orWhere('city', 'like', "%{$this->search}%");
+                $query->where('name', 'like', "%{$this->search}%");
             })
             ->latest()
             ->paginate(10);
