@@ -18,7 +18,6 @@ class VenueCreate extends Component
     public string $name = '';
     public string $address = '';
     public string $city = '';
-    public string $province = '';
     public int|string $capacity = '';
     public string $price_display = '';
     public int|string $price_per_hour = '';
@@ -30,7 +29,6 @@ class VenueCreate extends Component
         'name.required' => 'Nama tempat wajib diisi',
         'address.required' => 'Alamat wajib diisi',
         'city.required' => 'Kota wajib diisi',
-        'province.required' => 'Provinsi wajib diisi',
         'capacity.required' => 'Kapasitas wajib diisi',
         'capacity.integer' => 'Kapasitas harus angka',
         'price_per_hour.required' => 'Harga wajib diisi',
@@ -48,7 +46,6 @@ class VenueCreate extends Component
             'name' => 'required|string|max:255',
             'address' => 'required|string',
             'city' => 'required|string|max:100',
-            'province' => 'required|string|max:100',
             'capacity' => 'required|integer|min:1',
             'price_per_hour' => 'required|numeric|min:0',
             'status' => 'required|in:available,unavailable',
@@ -66,7 +63,6 @@ class VenueCreate extends Component
             'name' => $this->name,
             'address' => $this->address,
             'city' => $this->city,
-            'province' => $this->province,
             'capacity' => $this->capacity,
             'price_per_hour' => $this->price_per_hour,
             'status' => $this->status,
@@ -78,7 +74,7 @@ class VenueCreate extends Component
             'message' => 'Tempat berhasil ditambahkan',
         ]);
 
-        return redirect()->route('venues.index');
+        return redirect()->route('dashboard.venues.index');
     }
 
     public function updated($property)
@@ -88,7 +84,6 @@ class VenueCreate extends Component
             'name' => 'required|string|max:255',
             'address' => 'required|string',
             'city' => 'required|string|max:100',
-            'province' => 'required|string|max:100',
             'capacity' => 'required|integer|min:1',
             'price_per_hour' => 'required|numeric|min:0',
             'status' => 'required|in:available,unavailable',

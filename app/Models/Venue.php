@@ -14,7 +14,6 @@ class Venue extends Model
         'name',
         'address',
         'city',
-        'province',
         'capacity',
         'price_per_hour',
         'status',
