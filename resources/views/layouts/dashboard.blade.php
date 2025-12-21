@@ -19,7 +19,7 @@
 
     <!-- Sidebar -->
     <aside x-bind:class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-        class="fixed inset-y-0 left-0 z-30 w-64 bg-tp-black shadow-lg transform transition-transform duration-300 lg:static lg:translate-x-0 flex flex-col">
+        class="fixed inset-y-0 left-0 z-30 w-64 flex-shrink-0 bg-tp-black shadow-lg transform transition-transform duration-300 lg:static lg:translate-x-0 flex flex-col">
 
         <!-- Sidebar Header -->
         <div class="px-4 py-5.5 border-b border-blue-400 text-center">
@@ -77,7 +77,7 @@
                 <span>Tempat</span>
             </x-nav-item>
 
-            <x-nav-item :href="route('dashboard.transactions')" :active="request()->routeIs('dashbord.transactions*')">
+            <x-nav-item :href="route('dashboard.transactions.index')" :active="request()->routeIs('dashboard.transactions*')">
                 <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-dollar">
@@ -100,7 +100,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col min-h-screen">
+    <div class="flex-1 flex flex-col min-h-screen min-w-0">
         <!-- Header -->
         <header class="bg-white border-b border-gray-200 shadow-sm">
             <div class="flex items-center border-b border-blue-400">
@@ -183,7 +183,7 @@
         </header>
 
         <!-- Content -->
-        <main class="flex-1 bg-gray-100 p-6 overflow-x-hidden max-w-screen">
+        <main class="flex-1 bg-gray-100 p-6 overflow-x-hidden max-w-full">
             <div class="w-full max-w-full overflow-hidden">
                 {{ $slot }}
             </div>
