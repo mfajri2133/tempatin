@@ -28,7 +28,7 @@
 
     <!-- Table -->
     <div class="overflow-x-auto">
-        <table class="w-full text-sm whitespace-nowrap">
+        <table class="w-full text-sm">
             <thead class="bg-blue-100">
                 <tr>
                     <th class="px-6 py-3 text-left font-semibold">

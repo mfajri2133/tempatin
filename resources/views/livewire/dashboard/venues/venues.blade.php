@@ -36,7 +36,7 @@
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full text-sm whitespace-nowrap">
+            <table class="w-full text-sm">
                 <thead class="bg-blue-100">
                     <tr>
                         <th class="px-6 py-3 text-left font-semibold text-black">Nama Venue</th>
@@ -56,7 +56,9 @@
                             </td>
 
                             <td class="px-6 py-4 text-xs text-gray-600">
-                                {{ $venue->address }}
+                                <div class="w-[250px] line-clamp-3 break-all">
+                                    {{ $venue->address }}
+                                </div>
                             </td>
 
                             <td class="px-6 py-4 text-xs text-gray-600 text-center">
@@ -68,9 +70,10 @@
                             </td>
 
                             <td class="px-6 py-4 text-xs text-gray-600 text-center">
-                                <span class="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full
+                                <span
+                                    class="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full
                                     {{ $venue->status === 'available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                                    {{($venue->status) }}
+                                    {{ $venue->status }}
                                 </span>
                             </td>
 

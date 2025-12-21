@@ -12,8 +12,7 @@
 
     <!-- FORM -->
     <form wire:submit.prevent="update" class="p-6" autocomplete="off">
-        <div class="grid grid-cols-4 gap-4">
-
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <!-- NAMA -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Nama</label>
@@ -47,14 +46,14 @@
                 @enderror
             </div>
 
-            <!-- KAPASITAS -->
+            <!-- KOTA -->
             <div>
-                <label class="text-sm font-medium text-gray-700">Kapasitas</label>
-                <input type="number" wire:model.live.debounce.300ms="capacity" placeholder="Masukkan kapasitas"
+                <label class="text-sm font-medium text-gray-700">Kota</label>
+                <input type="text" wire:model.live.debounce.300ms="city" placeholder="Masukkan kota"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
                            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-                           @error('capacity') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
-                @error('capacity')
+                           @error('city') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                @error('city')
                     <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                 @enderror
             </div>
@@ -72,38 +71,14 @@
                 @enderror
             </div>
 
-            <!-- ALAMAT -->
+            <!-- KAPASITAS -->
             <div>
-                <label class="text-sm font-medium text-gray-700">Alamat</label>
-                <input type="text" wire:model.live.debounce.300ms="address" placeholder="Masukkan alamat"
+                <label class="text-sm font-medium text-gray-700">Kapasitas</label>
+                <input type="number" wire:model.live.debounce.300ms="capacity" placeholder="Masukkan kapasitas"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
                            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-                           @error('address') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
-                @error('address')
-                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- KOTA -->
-            <div>
-                <label class="text-sm font-medium text-gray-700">Kota</label>
-                <input type="text" wire:model.live.debounce.300ms="city" placeholder="Masukkan kota"
-                    class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
-                           focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-                           @error('city') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
-                @error('city')
-                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- PROVINSI -->
-            <div>
-                <label class="text-sm font-medium text-gray-700">Provinsi</label>
-                <input type="text" wire:model.live.debounce.300ms="province" placeholder="Masukkan provinsi"
-                    class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
-                           focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-                           @error('province') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
-                @error('province')
+                           @error('capacity') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                @error('capacity')
                     <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                 @enderror
             </div>
@@ -119,9 +94,21 @@
                 </select>
             </div>
 
-            <!-- IMAGE UPLOAD (PREVIEW GAMBAR LAMA) -->
-            <x-image-upload wireModel="image" :preview="$existingImage ? asset('storage/' . $existingImage) : null" />
+            <div class="col-span-full">
+                <label class="text-sm font-medium text-gray-700">Alamat</label>
+                <textarea wire:model.defer="address" rows="3" placeholder="Masukkan alamat lengkap venue"
+                    class="w-full px-3 py-2 text-sm rounded-md border border-gray-300
+                       resize-none
+                       focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+                       @error('address') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror"></textarea>
+                @error('address')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
+            <div class="col-span-full">
+                <x-image-upload wireModel="image" :preview="$existingImage ? asset('storage/' . $existingImage) : null" />
+            </div>
         </div>
 
         <!-- ACTION -->
