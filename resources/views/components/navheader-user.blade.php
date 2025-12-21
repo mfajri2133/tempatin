@@ -82,7 +82,9 @@
 
                             <!-- Menu Items -->
                             <div class="py-2">
-                                <a href="{{ route('user.profile') }}" wire:navigate
+
+                                <a href="{{ auth()->user()->role === 'admin' ? route('dashboard.profile') : route('user.profile') }}"
+                                    wire:navigate
                                     class="flex items-center gap-3 px-4 py-2.5 transition-colors text-sm
                                                {{ request()->routeIs('user.profile')
                                                    ? 'bg-indigo-500/10 text-indigo-400'
