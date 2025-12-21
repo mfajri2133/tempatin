@@ -21,7 +21,7 @@
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
                 </svg>
 
-                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama venue..."
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama venue"
                     class="w-full pl-10 pr-10 py-2 text-sm rounded border border-blue-200 bg-white text-gray-700
                focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
             </div>
@@ -50,7 +50,7 @@
 
                 <tbody class="divide-y">
                     @forelse ($venues as $venue)
-                        <tr wire:key="venue-{{ $venue->id }}" class="hover:bg-blue-50">
+                        <tr wire:key="venue-{{ $venue->id }}" class="hover:bg-blue-50/70 transition">
                             <td class="px-6 py-4 text-xs font-medium text-gray-800">
                                 {{ $venue->name }}
                             </td>
