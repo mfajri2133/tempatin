@@ -34,7 +34,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div
-                    class="group bg-gradient-to-br from-indigo-50 to-white p-8 rounded-2xl border border-indigo-100 hover:border-indigo-300 transition-all duration-300 hover:shadow-xl">
+                    class="group bg-gradient-to-br from-indigo-50 to-white p-8 rounded-2xl border border-indigo-100 hover:border-indigo-300 transition-all duration-300 hover:shadow-xl grid place-items-center text-center">
                     <div
                         class="w-14 h-14 bg-indigo-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,14 +43,14 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Misi Kami</h3>
-                    <p class="text-gray-600 leading-relaxed">
+                    <p class="text-gray-600 text-sm leading-relaxed">
                         Membuat proses pencarian dan booking venue menjadi cepat, transparan, dan efisien untuk semua
                         orang.
                     </p>
                 </div>
 
                 <div
-                    class="group bg-gradient-to-br from-purple-50 to-white p-8 rounded-2xl border border-purple-100 hover:border-purple-300 transition-all duration-300 hover:shadow-xl">
+                    class="group bg-gradient-to-br from-purple-50 to-white p-8 rounded-2xl border border-purple-100 hover:border-purple-300 transition-all duration-300 hover:shadow-xl grid place-items-center text-center">
                     <div
                         class="w-14 h-14 bg-purple-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,14 +62,14 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Visi Kami</h3>
-                    <p class="text-gray-600 leading-relaxed">
+                    <p class="text-gray-600 text-sm leading-relaxed">
                         Menjadi platform #1 di Indonesia yang menghubungkan penyedia venue dengan pengguna melalui
                         pengalaman terbaik.
                     </p>
                 </div>
 
                 <div
-                    class="group bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl border border-blue-100 hover:border-blue-300 transition-all duration-300 hover:shadow-xl">
+                    class="group bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl border border-blue-100 hover:border-blue-300 transition-all duration-300 hover:shadow-xl grid place-items-center text-center">
                     <div
                         class="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,7 +79,7 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Yang Kami Tawarkan</h3>
-                    <p class="text-gray-600 leading-relaxed">
+                    <p class="text-gray-600 text-sm leading-relaxed">
                         Akses ke berbagai jenis venue: gedung serbaguna, ruang meeting, co-working space, dan lainnya.
                     </p>
                 </div>
@@ -98,7 +98,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {{-- Ruang Meeting --}}
                 <div
-                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-lg transition-all duration-300">
+                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-lg transition-all duration-300 grid place-items-center text-center">
                     <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -113,7 +113,7 @@
 
                 {{-- Co-Working Space --}}
                 <div
-                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all duration-300">
+                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all duration-300 grid place-items-center text-center">
                     <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -128,7 +128,7 @@
 
                 {{-- Gedung Serbaguna --}}
                 <div
-                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300">
+                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300 grid place-items-center text-center">
                     <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -143,7 +143,7 @@
 
                 {{-- Event Space --}}
                 <div
-                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-green-300 hover:shadow-lg transition-all duration-300">
+                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-green-300 hover:shadow-lg transition-all duration-300 grid place-items-center text-center">
                     <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -158,7 +158,7 @@
 
                 {{-- Ballroom --}}
                 <div
-                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-pink-300 hover:shadow-lg transition-all duration-300">
+                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-pink-300 hover:shadow-lg transition-all duration-300 grid place-items-center text-center">
                     <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -173,7 +173,7 @@
 
                 {{-- Outdoor Venue --}}
                 <div
-                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-teal-300 hover:shadow-lg transition-all duration-300">
+                    class="bg-white p-6 rounded-xl border border-gray-200 hover:border-teal-300 hover:shadow-lg transition-all duration-300 grid place-items-center text-center">
                     <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -199,7 +199,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div
-                    class="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl transition-all duration-300 group">
+                    class="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl transition-all duration-300 group grid place-items-center text-center">
                     <div class="relative mb-6">
                         <div
                             class="h-20 w-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold group-hover:scale-110 transition-transform">
@@ -211,7 +211,7 @@
                 </div>
 
                 <div
-                    class="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl transition-all duration-300 group">
+                    class="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl transition-all duration-300 group grid place-items-center text-center">
                     <div class="relative mb-6">
                         <div
                             class="h-20 w-20 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white text-2xl font-bold group-hover:scale-110 transition-transform">
@@ -223,7 +223,7 @@
                 </div>
 
                 <div
-                    class="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl transition-all duration-300 group">
+                    class="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl transition-all duration-300 group grid place-items-center text-center">
                     <div class="relative mb-6">
                         <div
                             class="h-20 w-20 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white text-2xl font-bold group-hover:scale-110 transition-transform">
@@ -235,7 +235,7 @@
                 </div>
 
                 <div
-                    class="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl transition-all duration-300 group">
+                    class="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl transition-all duration-300 group grid place-items-center text-center">
                     <div class="relative mb-6">
                         <div
                             class="h-20 w-20 rounded-full bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center text-white text-2xl font-bold group-hover:scale-110 transition-transform">
@@ -258,7 +258,7 @@
                     <h2 class="text-3xl md:text-4xl font-bold mb-4">
                         Siap Menemukan Venue Sempurna?
                     </h2>
-                    <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+                    <p class="text-md sm:text-lg mb-8 text-white/90 max-w-2xl mx-auto">
                         Jelajahi ratusan venue berkualitas dan booking dengan mudah. Ciptakan momen tak terlupakan
                         bersama TempatIN.
                     </p>
