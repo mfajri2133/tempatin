@@ -16,7 +16,6 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-
                         <div class="bg-white rounded-sm flex items-center px-4 py-2">
                             <div class="mr-3">
                                 <svg class="size-4 text-gray-400" fill="none" stroke="currentColor"
@@ -53,7 +52,7 @@
                             </div>
                             <div class="w-full">
                                 <label class="block text-xs text-gray-400 uppercase font-bold">Kota</label>
-                                <select wire:model.defer="city"
+                                <select wire:model.defer="city_code"
                                     class="w-full p-0 border-none focus:ring-0 text-sm font-semibold text-gray-700 bg-transparent">
                                     <option value="">Semua Kota</option>
                                     @foreach ($cities as $city)
@@ -83,6 +82,7 @@
                                     <option value="26-50">26 – 50 orang</option>
                                     <option value="51-75">51 – 75 orang</option>
                                     <option value="76-100">76 – 100 orang</option>
+                                    <option value="100+">100+ orang</option>
                                 </select>
                             </div>
                         </div>
@@ -97,50 +97,95 @@
         </div>
     </section>
 
-    {{-- Content --}}
     <div class="bg-tp-black">
         <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6">
             @if ($venues->count() > 0)
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     @foreach ($venues as $venue)
                         <a href="{{ route('venues.show', $venue->id) }}" wire:navigate
-                            class="bg-white shadow-sm rounded-lg overflow-hidden hover:shadow-md transition group cursor-pointer">
-                            <div class="h-48 bg-gray-200 w-full relative overflow-hidden">
+                            class="group block bg-white rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-indigo-200">
+                            <div class="relative h-52 bg-gray-100 overflow-hidden">
                                 @if ($venue->venue_img)
                                     <img src="{{ asset('storage/' . $venue->venue_img) }}"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                        alt="{{ $venue->name }}">
                                 @else
-                                    <div class="flex items-center justify-center h-full bg-gray-200 text-gray-400">
-                                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    <div
+                                        class="flex items-center justify-center h-full bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+                                        <svg class="w-16 h-16 text-indigo-200" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
                                             </path>
                                         </svg>
                                     </div>
                                 @endif
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold text-gray-800 mb-1">{{ $venue->name }}</h3>
-                                <div class="flex items-center text-sm text-gray-500 mb-3">
-                                    <svg class="w-4 h-4 mr-1 text-indigo-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                    {{ $venue->city }}
+
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 </div>
-                                <div class="flex justify-between items-center pt-3 border-t border-gray-100">
-                                    <div
-                                        class="text-xs font-medium text-gray-500 uppercase flex justify-center items-center gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="size-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                        </svg>
-                                        {{ $venue->capacity }}
+                            </div>
+
+                            <div class="p-5">
+                                <div class="flex items-start justify-between gap-3 mb-3">
+                                    <h3
+                                        class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition line-clamp-2 flex-1">
+                                        {{ $venue->name }}
+                                    </h3>
+                                </div>
+
+                                <div class="space-y-2 mb-4">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="size-6 rounded-full bg-indigo-50 flex items-center justify-center flex-shrink-0">
+                                            <svg class="size-3.5 text-indigo-600" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <span class="text-sm text-gray-700 font-medium">
+                                            {{ $venue->category->name }}
+                                        </span>
                                     </div>
-                                    <div class="text-md font-bold text-yellow-600">Rp
-                                        {{ number_format($venue->price_per_hour, 0, ',', '.') }}/jam
+
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="size-6 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
+                                            <svg class="size-3.5 text-green-600" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <span
+                                            class="text-sm text-gray-700 line-clamp-1">{{ $venue->city_name }}</span>
+                                    </div>
+
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="size-6 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
+                                            <svg class="size-3.5 text-blue-600" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                            </svg>
+                                        </div>
+                                        <span class="text-sm text-gray-700">{{ $venue->capacity }} orang</span>
+                                    </div>
+                                </div>
+
+                                <div class="pt-4 border-t border-gray-100">
+                                    <div class="flex items-baseline justify-between">
+                                        <span class="text-xs text-gray-500 uppercase tracking-wide">Harga</span>
+                                        <div class="text-right">
+                                            <span class="text-xl font-bold text-indigo-600">
+                                                Rp {{ number_format($venue->price_per_hour, 0, ',', '.') }}
+                                            </span>
+                                            <span class="text-sm text-gray-500 ml-1">/ jam</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
