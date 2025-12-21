@@ -49,11 +49,21 @@
             <!-- KOTA -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Kota</label>
-                <input type="text" wire:model.live.debounce.300ms="city" placeholder="Masukkan kota"
-                    class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
-                           focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-                           @error('city') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
-                @error('city')
+                <select wire:model.defer="city_code"
+                    class="w-full h-10 px-3 text-sm rounded-md border border-gray-300 bg-white
+           focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+           @error('city_code') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror">
+
+                    <option value="">-- Pilih Kota (Jawa Barat) --</option>
+
+                    @foreach ($cities as $city)
+                        <option value="{{ $city['code'] }}">
+                            {{ $city['name'] }}
+                        </option>
+                    @endforeach
+                </select>
+
+                @error('city_code')
                     <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                 @enderror
             </div>

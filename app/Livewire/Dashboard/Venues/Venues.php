@@ -7,7 +7,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-#[Layout('layouts.dashboard', ['title' => 'Tempat'])]
+#[Layout('layouts.dashboard', ['title' => 'Venue'])]
 class Venues extends Component
 {
     use WithPagination;

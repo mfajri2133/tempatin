@@ -1,11 +1,11 @@
 <div class="bg-white rounded shadow-md border border-gray-200 overflow-hidden">
     <!-- Header -->
     <div class="flex flex-col gap-4 sm:flex-row items-center justify-between p-4 bg-white border-b border-gray-200">
-        <h2 class="text-lg font-semibold text-gray-700">Informasi Tempat</h2>
+        <h2 class="text-base font-semibold text-gray-700">Informasi Venue</h2>
         <a href="{{ route('dashboard.venues.index') }}" wire:navigate
             class="bg-blue-100 text-blue-600 hover:bg-blue-200 focus:ring-blue-300 inline-flex items-center gap-2 px-4 py-2 rounded text-sm transition whitespace-nowrap text-center justify-center w-full sm:w-auto">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="size-5">
+                stroke="currentColor" class="size-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
             </svg>
             Kembali
@@ -13,7 +13,7 @@
     </div>
 
     <!-- Image -->
-    <div class="w-full h-100 sm:h-80 md:h-96 overflow-hidden">
+    <div class="w-full h-64 sm:h-72 overflow-hidden">
         @if ($venue->venue_img)
             <img src="{{ asset('storage/' . $venue->venue_img) }}" alt="{{ $venue->name }}"
                 class="w-full h-full object-cover">
@@ -29,47 +29,42 @@
     </div>
 
     <!-- Nama dan Harga -->
-    <div class="flex flex-col sm:flex-row justify-between items-start gap-5 p-5">
+    <div class="flex flex-col sm:flex-row justify-between items-start gap-4 p-5 bg-gray-50">
         <div class="flex-1">
-            <p class="text-m font-semibold text-gray-600">Nama Tempat</p>
-            <h2 class="text-2xl font-extrabold text-gray-800 mb-2">{{ $venue->name }}</h2>
+            <p class="text-xs font-medium text-gray-500 mb-1">Nama Tempat</p>
+            <h2 class="text-xl font-bold text-gray-800 mb-2">{{ $venue->name }}</h2>
             <span
-                class="inline-flex items-center px-3 py-1 text-xs rounded-full {{ $venue->status === 'available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                {{ $venue->status }}
+                class="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full {{ $venue->status === 'available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                {{ ucfirst($venue->status) }}
             </span>
         </div>
 
-        <div class="text-left mr-8 sm:text-right">
-            <p class="text-m font-semibold text-gray-400">Harga per Jam</p>
-            <p class="text-2xl font-black text-blue-600">Rp {{ number_format($venue->price_per_hour, 0, ',', '.') }}</p>
+        <div class="text-left sm:text-right">
+            <p class="text-xs font-medium text-gray-500 mb-1">Harga per Jam</p>
+            <p class="text-xl font-bold text-blue-600">Rp {{ number_format($venue->price_per_hour, 0, ',', '.') }}</p>
         </div>
     </div>
 
     <!-- Detail Informasi -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-4 border-t border-gray-200">
-        <div>
-            <p class="text-m font-semibold text-gray-400">Kategori</p>
-            <p class="font-semibold text-gray-800 text-lg">{{ $venue->category->name ?? '-' }}</p>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5">
+        <div class="space-y-1">
+            <p class="text-xs font-medium text-gray-500">Kategori</p>
+            <p class="text-sm font-semibold text-gray-800">{{ $venue->category->name ?? '-' }}</p>
         </div>
 
-        <div>
-            <p class="text-m font-semibold text-gray-400">Kapasitas</p>
-            <p class="font-semibold text-gray-800 text-lg">{{ $venue->capacity }} Orang</p>
+        <div class="space-y-1">
+            <p class="text-xs font-medium text-gray-500">Kapasitas</p>
+            <p class="text-sm font-semibold text-gray-800">{{ $venue->capacity }} Orang</p>
         </div>
 
-        <div>
-            <p class="text-m font-semibold text-gray-400">Kota</p>
-            <p class="font-semibold text-gray-800 text-lg">{{ $venue->city }}</p>
+        <div class="space-y-1">
+            <p class="text-xs font-medium text-gray-500">Kota</p>
+            <p class="text-sm font-semibold text-gray-800">{{ $venue->city_name }}</p>
         </div>
 
-        <div>
-            <p class="text-m font-semibold text-gray-400">Provinsi</p>
-            <p class="font-semibold text-gray-800 text-lg">{{ $venue->province }}</p>
-        </div>
-
-        <div class="sm:col-span-2">
-            <p class="text-m font-semibold text-gray-400">Alamat</p>
-            <p class="font-semibold text-gray-800 text-lg">{{ $venue->address }}</p>
+        <div class="sm:col-span-3 space-y-1">
+            <p class="text-xs font-medium text-gray-500">Alamat</p>
+            <p class="text-sm font-semibold text-gray-800 leading-relaxed">{{ $venue->address }}</p>
         </div>
     </div>
 </div>

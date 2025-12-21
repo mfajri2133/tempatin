@@ -6,7 +6,7 @@ use App\Models\Venue;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.dashboard', ['title' => 'Detail Tempat'])]
+#[Layout('layouts.dashboard', ['title' => 'Detail Venue'])]
 class VenueDetail extends Component
 {
     public Venue $venue;
