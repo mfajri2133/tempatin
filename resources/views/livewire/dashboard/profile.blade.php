@@ -1,111 +1,96 @@
-<div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-            <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-                <form wire:submit.prevent="saveProfile" class="space-y-5">
+<div class="grid grid-cols-1 gap-4 p-0 sm:p-6">
+    <div class="bg-white shadow-md border border-indigo-100 overflow-hidden p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Informasi Profil</h3>
+        <form wire:submit.prevent="saveProfile" class="space-y-5">
+            <x-image-upload wireModel="photo" label="Foto Profil" type="profile" :preview="$user->avatar ? asset('storage/' . $user->avatar) : null" />
 
-                    <div class="space-y-2">
-                        <label class="text-sm font-medium text-gray-700">
-                            Foto Profil
-                        </label>
-
-                        <input type="file" wire:model="photo" accept="image/*"
-                            class="block w-full text-sm text-gray-500
-                                   file:mr-4 file:py-2 file:px-4
-                                   file:rounded-md file:border-0
-                                   file:text-sm file:font-semibold
-                                   file:bg-blue-50 file:text-blue-700
-                                   hover:file:bg-blue-100" />
-
-                        <div wire:loading wire:target="photo" class="text-xs text-gray-400">
-                            Uploading...
-                        </div>
-
-                        @if ($photo)
-                            <img src="{{ $photo->temporaryUrl() }}" class="w-24 h-24 rounded-full object-cover border">
-                        @elseif ($currentPhoto)
-                            <img src="{{ asset('storage/' . $currentPhoto) }}"
-                                class="w-24 h-24 rounded-full object-cover border">
-                        @endif
-
-                        @error('photo')
-                            <p class="text-xs text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">
-                            Nama
-                        </label>
-                        <x-input wire:model.defer="name" required />
-                        @error('name')
-                            <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">
-                            Email
-                        </label>
-                        <x-input type="email" wire:model.defer="email" disabled
-                            class="bg-gray-100 cursor-not-allowed" />
-                    </div>
-
-                    <div class="pt-4">
-                        <button type="submit" wire:loading.attr="disabled" wire:target="saveProfile"
-                            class="w-full h-10 bg-tp-blue hover:bg-[#93BFEF]
-                                   text-white text-sm font-medium
-                                   rounded-md transition
-                                   disabled:opacity-60 disabled:cursor-not-allowed">
-
-                            <span wire:loading.remove wire:target="saveProfile">
-                                SIMPAN
-                            </span>
-                            <span wire:loading wire:target="saveProfile">
-                                Menyimpan...
-                            </span>
-                        </button>
-                    </div>
-
-                </form>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Nama
+                </label>
+                <x-input wire:model.defer="name" required />
+                @error('name')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
             </div>
-        </div>
 
-        <div>
-            <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-                <div class="space-y-5">
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">
-                            Kata Sandi Saat Ini
-                        </label>
-                        <x-input type="password" />
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">
-                            Kata Sandi Baru
-                        </label>
-                        <x-input type="password" />
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">
-                            Konfirmasi Kata Sandi
-                        </label>
-                        <x-input type="password" />
-                    </div>
-
-                    <div class="pt-4">
-                        <button
-                            class="w-full h-10 bg-tp-blue hover:bg-[#93BFEF]
-                                   text-white text-sm font-medium
-                                   rounded-md transition">
-                            SIMPAN
-                        </button>
-                    </div>
-                </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Email
+                    <span class="text-xs text-gray-500">
+                        (Email tidak dapat diubah)
+                    </span>
+                </label>
+                <x-input type="email" wire:model.defer="email" disabled
+                    class="bg-gray-100 text-gray-500 cursor-not-allowed opacity-75" />
             </div>
-        </div>
+
+            <div class="pt-4">
+                <button type="submit" wire:loading.attr="disabled" wire:target="saveProfile, photo"
+                    class="w-full h-10 bg-indigo-600 hover:bg-[#93BFEF]
+                                text-white text-sm font-medium
+                                rounded-md transition
+                                disabled:opacity-60 disabled:cursor-not-allowed">
+
+                    <span wire:loading.remove wire:target="saveProfile, photo">
+                        SIMPAN PERUBAHAN
+                    </span>
+                    <span wire:loading wire:target="saveProfile, photo">
+                        Menyimpan...
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-white shadow-md border border-indigo-100 overflow-hidden p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Ubah Kata Sandi</h3>
+        <form wire:submit.prevent="updatePassword" class="space-y-5">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Kata Sandi Saat Ini
+                </label>
+                <x-input type="password" wire:model.defer="current_password" required />
+                @error('current_password')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Kata Sandi Baru
+                </label>
+                <x-input type="password" wire:model.defer="new_password" required />
+                @error('new_password')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Konfirmasi Kata Sandi
+                </label>
+                <x-input type="password" wire:model.defer="new_password_confirmation" required />
+                @error('new_password_confirmation')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" wire:loading.attr="disabled" wire:target="updatePassword"
+                    class="w-full h-10 bg-indigo-600 hover:bg-[#93BFEF]
+                                text-white text-sm font-medium
+                                rounded-md transition
+                                disabled:opacity-60 disabled:cursor-not-allowed">
+
+                    <span wire:loading.remove wire:target="updatePassword">
+                        UBAH KATA SANDI
+                    </span>
+                    <span wire:loading wire:target="updatePassword">
+                        Mengubah...
+                    </span>
+                </button>
+            </div>
+        </form>
     </div>
 </div>

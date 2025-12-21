@@ -13,9 +13,13 @@
     <!-- FORM -->
     <form wire:submit.prevent="save" enctype="multipart" class="p-6" autocomplete="off">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="col-span-full">
+                <x-image-upload wireModel="image" type="default" />
+            </div>
+
             <div>
                 <label class="text-sm font-medium text-gray-700">Nama</label>
-                <input type="text" wire:model.defer="name" placeholder="Masukkan nama venue"
+                <input type="text" wire:model.live.debounce.300ms="name" placeholder="Masukkan nama venue"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
                        focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
                        @error('name') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
@@ -27,7 +31,7 @@
             <!-- KATEGORI -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Kategori</label>
-                <select wire:model.defer="category_id"
+                <select wire:model.live="category_id"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300 bg-white
                        focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
                        @error('category_id') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror">
@@ -44,7 +48,7 @@
             <!-- KOTA -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Kota</label>
-                <select wire:model.defer="city_code"
+                <select wire:model.live="city_code"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300 bg-white
            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
            @error('city_code') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror">
@@ -66,7 +70,8 @@
             <!-- HARGA -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Harga per Jam</label>
-                <input type="text" wire:model.defer="price_display" inputmode="numeric" placeholder="Rp 0"
+                <input type="text" wire:model.live.debounce.300ms="price_display" inputmode="numeric"
+                    placeholder="Rp 0"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300 bg-white
                        focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
                        @error('price_per_hour') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
@@ -78,7 +83,7 @@
             <!-- KAPASITAS -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Kapasitas</label>
-                <input type="number" wire:model.defer="capacity" placeholder="Masukkan kapasitas"
+                <input type="number" wire:model.live.debounce.300ms="capacity" placeholder="Masukkan kapasitas"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
                        focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
                        @error('capacity') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
@@ -90,7 +95,7 @@
             <!-- STATUS -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Status</label>
-                <select wire:model.defer="status"
+                <select wire:model.live="status"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
                        focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
                     <option value="available">Available</option>
@@ -101,7 +106,7 @@
             <!-- ALAMAT (FULL ROW) -->
             <div class="col-span-full">
                 <label class="text-sm font-medium text-gray-700">Alamat</label>
-                <textarea wire:model.defer="address" rows="3" placeholder="Masukkan alamat lengkap venue"
+                <textarea wire:model.live="address" rows="3" placeholder="Masukkan alamat lengkap venue"
                     class="w-full px-3 py-2 text-sm rounded-md border border-gray-300
                        resize-none
                        focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
@@ -109,11 +114,6 @@
                 @error('address')
                     <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                 @enderror
-            </div>
-
-            <!-- IMAGE UPLOAD (FULL ROW) -->
-            <div class="col-span-full">
-                <x-image-upload wireModel="image" />
             </div>
         </div>
 
