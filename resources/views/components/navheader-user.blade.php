@@ -50,10 +50,15 @@
                     <div x-data="{ open: false }" class="relative">
                         <button @click="open = !open" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
                             <div
-                                class="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-600
-                                            rounded-full flex items-center justify-center text-white
-                                            font-semibold text-sm shadow-lg">
-                                {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                                class="w-9 h-9 rounded-full flex items-center justify-center shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600">
+                                @if (auth()->user()->avatar)
+                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="Avatar"
+                                        class="w-full h-full object-cover" />
+                                @else
+                                    <span class="text-white font-semibold text-sm">
+                                        {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                                    </span>
+                                @endif
                             </div>
                             <svg class="size-4 text-gray-400 transition-transform" :class="open ? 'rotate-180' : ''"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
