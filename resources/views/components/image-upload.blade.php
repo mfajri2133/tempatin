@@ -10,7 +10,7 @@
     </label>
 
     <input type="file" wire:model="{{ $wireModel }}" accept="image/*"
-        class="block w-full text-sm text-gray-500
+        class="block w-full text-sm text-gray-500 border border-gray-300 rounded-md
                file:mr-4 file:py-2 file:px-4
                file:rounded-md file:border-0
                file:text-sm file:font-semibold
