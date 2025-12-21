@@ -7,19 +7,19 @@
                 <div class="max-w-7xl mx-auto space-y-3">
 
                     <div class="w-full bg-white rounded-sm flex items-center px-4 py-3">
-                        <svg class="w-6 h-6 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="size-4 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
-                        <input wire:model="search" type="text" placeholder="Masukan nama tempat"
-                            class="w-full bg-transparent border-none focus:ring-0 text-gray-700 placeholder-gray-400 text-sm">
+                        <input wire:model.defer="searchInput" type="text" placeholder="Masukan nama venue"
+                            class="w-full bg-transparent border-none focus:ring-0 text-gray-700 text-sm" />
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
 
                         <div class="bg-white rounded-sm flex items-center px-4 py-2">
                             <div class="mr-3">
-                                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor"
+                                <svg class="size-4 text-gray-400" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
@@ -28,19 +28,21 @@
                             </div>
                             <div class="w-full">
                                 <label class="block text-xs text-gray-400 uppercase font-bold">Kategori</label>
-                                <select wire:model.live="category"
-                                    class="w-full p-0 border-none focus:ring-0 text-sm font-semibold text-gray-700 bg-transparent cursor-pointer">
+                                <select wire:model.defer="category"
+                                    class="w-full p-0 border-none focus:ring-0 text-sm font-semibold text-gray-700 bg-transparent">
                                     <option value="">Semua Kategori</option>
-                                    {{-- @foreach ($categories as $cat)
-                                            <option value="{{ $cat }}">{{ $cat }}</option>
-                                        @endforeach --}}
+                                    @foreach ($categories as $cat)
+                                        <option value="{{ $cat->id }}">
+                                            {{ $cat->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
 
                         <div class="bg-white rounded-sm flex items-center px-4 py-2">
                             <div class="mr-3">
-                                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor"
+                                <svg class="size-4 text-gray-400" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
@@ -51,12 +53,14 @@
                             </div>
                             <div class="w-full">
                                 <label class="block text-xs text-gray-400 uppercase font-bold">Kota</label>
-                                <select wire:model.live="city"
-                                    class="w-full p-0 border-none focus:ring-0 text-sm font-semibold text-gray-700 bg-transparent cursor-pointer">
+                                <select wire:model.defer="city"
+                                    class="w-full p-0 border-none focus:ring-0 text-sm font-semibold text-gray-700 bg-transparent">
                                     <option value="">Semua Kota</option>
-                                    {{-- @foreach ($cities as $cityName)
-                                            <option value="{{ $cityName }}">{{ $cityName }}</option>
-                                        @endforeach --}}
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city['code'] }}">
+                                            {{ $city['name'] }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -72,19 +76,20 @@
                             </div>
                             <div class="w-full">
                                 <label class="block text-xs text-gray-400 uppercase font-bold">Kapasitas</label>
-                                <select wire:model.live="city"
-                                    class="w-full p-0 border-none focus:ring-0 text-sm font-semibold text-gray-700 bg-transparent cursor-pointer">
+                                <select wire:model.defer="capacity"
+                                    class="w-full p-0 border-none focus:ring-0 text-sm font-semibold text-gray-700 bg-transparent">
                                     <option value="">Semua Kapasitas</option>
-                                    {{-- @foreach ($cities as $cityName)
-                                            <option value="{{ $cityName }}">{{ $cityName }}</option>
-                                        @endforeach --}}
+                                    <option value="1-25">1 – 25 orang</option>
+                                    <option value="26-50">26 – 50 orang</option>
+                                    <option value="51-75">51 – 75 orang</option>
+                                    <option value="76-100">76 – 100 orang</option>
                                 </select>
                             </div>
                         </div>
 
-                        <button wire:click="$refresh"
-                            class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-sm transition duration-150 uppercase tracking-wide text-sm flex justify-center items-center h-full shadow-sm">
-                            CARI TEMPAT
+                        <button wire:click="applyFilter" type="button"
+                            class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-sm uppercase">
+                            CARI
                         </button>
                     </div>
                 </div>
@@ -147,7 +152,7 @@
                 </div>
             @else
                 <div class="text-center py-20">
-                    <p class="text-gray-500 text-lg">Tempat tidak ditemukan.</p>
+                    <p class="text-gray-500 text-lg">Tidak ada data venue</p>
                 </div>
             @endif
         </div>
