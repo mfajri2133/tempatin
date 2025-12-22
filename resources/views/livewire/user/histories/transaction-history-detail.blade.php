@@ -7,14 +7,14 @@
                 <p class="text-sm text-tp-white/75 mt-1">Ringkasan transaksi, booking, dan pembayaran.</p>
             </div>
 
-            <a href="{{ route('transaction-histories.index') }}" wire:navigate
+            <x-normal-button href="{{ route('transaction-histories.index') }}"
                 class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm transition w-full sm:w-auto bg-tp-white text-tp-black hover:bg-tp-white/90">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
                 </svg>
                 Kembali
-            </a>
+            </x-normal-button>
         </div>
 
         {{-- Main Card --}}
