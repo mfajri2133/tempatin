@@ -74,6 +74,6 @@ class Profile extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.profile');
+        return view('livewire.user.profile');
     }
 }
