@@ -9,59 +9,55 @@
             <div class="space-y-4">
                 @foreach ($orders as $order)
                     @php
-                        $statusRaw = $order->payment?->payment_status ?? $order->status;
-                        $statusText = $statusRaw ? ucfirst(str_replace('_', ' ', $statusRaw)) : '-';
-
-                        $badgeClass = 'bg-gray-100 text-gray-700';
-                        $statusKey = strtolower((string) $statusRaw);
-                        if (in_array($statusKey, ['paid', 'settlement', 'capture', 'success'], true)) {
-                            $badgeClass = 'bg-green-100 text-green-700';
-                        } elseif (in_array($statusKey, ['pending', 'process', 'processing'], true)) {
-                            $badgeClass = 'bg-yellow-100 text-yellow-800';
-                        } elseif (
-                            in_array($statusKey, ['failed', 'expire', 'expired', 'cancel', 'canceled', 'deny'], true)
-                        ) {
-                            $badgeClass = 'bg-red-100 text-red-700';
-                        }
-
-                        $bookingCode = $order->booking?->booking_code ?? ($order->order_code ?? '-');
-                        $venueName = $order->booking?->venue?->name;
-                        $venueCity = $order->booking?->venue?->city_name;
-                        $venueText = $venueName ? trim($venueName . ($venueCity ? ' · ' . $venueCity : '')) : '-';
-
-                        $amount = $order->total_amount ?? $order->booking?->total_price;
+                        $statusBadge = $this->getStatusBadge($order);
+                        $bookingInfo = $this->getBookingInfo($order);
+                        $amount = $order->total_amount;
                     @endphp
 
-                    <div class="bg-tp-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
-                        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                    <div
+                        class="bg-tp-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow">
+                        <div
+                            class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 pb-4 border-b border-gray-100">
                             <div>
-                                <div class="text-xs uppercase tracking-wide text-tp-black">Booking Code</div>
-                                <div class="text-sm font-semibold text-tp-black">{{ $bookingCode }}</div>
+                                <div class="text-xs uppercase tracking-wide text-gray-500 font-medium">Kode Booking</div>
+                                <div class="text-base font-bold text-tp-black mt-1">{{ $bookingInfo['code'] }}</div>
                             </div>
 
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full {{ $badgeClass }}">
-                                    {{ $statusText }}
+                            <div class="flex flex-col items-start sm:items-end gap-2">
+                                <span
+                                    class="text-xs font-semibold px-3 py-1.5 rounded-full {{ $statusBadge['class'] }}">
+                                    {{ $statusBadge['text'] }}
                                 </span>
                             </div>
                         </div>
 
                         <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             <div>
-                                <div class="text-xs uppercase tracking-wide text-tp-black">Tanggal Order</div>
-                                <div class="text-sm font-medium text-tp-black">
-                                    {{ optional($order->created_at)->format('d-m-Y') ?? '-' }}
+                                <div class="text-xs uppercase tracking-wide text-gray-500 font-medium mb-1">Tanggal
+                                    Order</div>
+                                <div class="text-sm font-semibold text-tp-black">
+                                    {{ optional($order->created_at)->format('d M Y') ?? '-' }}
                                 </div>
                             </div>
 
                             <div>
-                                <div class="text-xs uppercase tracking-wide text-tp-black">Tempat</div>
-                                <div class="text-sm font-medium text-tp-black">{{ $venueText }}</div>
+                                <div class="text-xs uppercase tracking-wide text-gray-500 font-medium mb-1">Venue</div>
+                                <div class="text-sm font-semibold text-tp-black">{{ $bookingInfo['venue'] }}</div>
                             </div>
 
                             <div>
-                                <div class="text-xs uppercase tracking-wide text-tp-black">Jumlah</div>
-                                <div class="text-sm font-semibold text-tp-black">
+                                <div class="text-xs uppercase tracking-wide text-gray-500 font-medium mb-1">Jadwal Sewa
+                                </div>
+                                <div class="text-sm font-semibold text-tp-black">{{ $bookingInfo['date'] }}</div>
+                                @if ($bookingInfo['time'])
+                                    <div class="text-xs text-gray-500 mt-0.5">{{ $bookingInfo['time'] }}</div>
+                                @endif
+                            </div>
+
+                            <div>
+                                <div class="text-xs uppercase tracking-wide text-gray-500 font-medium mb-1">Total
+                                    Pembayaran</div>
+                                <div class="text-sm font-bold text-tp-black">
                                     @if (!is_null($amount))
                                         Rp {{ number_format((float) $amount, 0, ',', '.') }}
                                     @else
@@ -69,6 +65,20 @@
                                     @endif
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end gap-2">
+                            @if (in_array($statusBadge['key'], ['pending', 'waiting'], true))
+                                <x-normal-button href="{{ route('user.profile') }}"
+                                    class="text-xs font-medium text-blue-600 hover:text-blue-700 px-3 py-1.5 rounded border border-blue-600 hover:bg-blue-50 transition-colors bg-transparent">
+                                    Bayar Sekarang
+                                </x-normal-button>
+                            @endif
+
+                            <x-normal-button href="{{ route('transaction-histories.show', $order->id) }}"
+                                class="text-xs font-medium text-tp-black hover:text-gray-700 px-3 py-1.5 rounded border border-gray-300 hover:bg-gray-50 transition-colors bg-transparent">
+                                Lihat Detail
+                            </x-normal-button>
                         </div>
                     </div>
                 @endforeach
@@ -81,7 +91,13 @@
             @endif
         @else
             <div class="text-center py-20">
-                <p class="text-tp-white text-lg">Belum ada histori transaksi</p>
+                <svg class="mx-auto h-12 w-12 text-tp-white/50 mb-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <p class="text-tp-white text-lg font-medium">Belum ada histori transaksi</p>
+                <p class="text-tp-white/75 text-sm mt-2">Transaksi Anda akan muncul di sini</p>
             </div>
         @endif
     </div>
