@@ -55,7 +55,7 @@ Route::middleware(['auth', 'force.profile'])->group(function () {
 
     Route::prefix('transaction-histories')->name('transaction-histories.')->group(function () {
         Route::get('/', TransactionHistories::class)->name('index');
-        Route::get('/{transaction}/detail', TransactionHistoryDetail::class)->name('show');
+        Route::get('/{id}/detail', TransactionHistoryDetail::class)->name('show');
     });
 
     Route::post('/logout', function () {
