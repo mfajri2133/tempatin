@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire\User\Histories;
 
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +25,7 @@ class TransactionHistories extends Component
             ->latest()
             ->paginate(10);
 
-        return view('livewire.user.transaction-histories', [
+        return view('livewire.user.histories.transaction-histories', [
             'orders' => $orders,
         ]);
     }
