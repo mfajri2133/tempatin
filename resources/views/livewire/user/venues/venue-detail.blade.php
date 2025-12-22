@@ -9,7 +9,7 @@
             <div>
                 <h2 class="text-2xl font-semibold">Hotel Cihuy</h2>
                 <p class="text-gray-500 text-sm mt-1 flex items-center gap-1">
-                    {{ $venue->city_name }}, Jawa Barat
+                    {{ $venue->name }}, Jawa Barat
                 </p>
             </div>
 
