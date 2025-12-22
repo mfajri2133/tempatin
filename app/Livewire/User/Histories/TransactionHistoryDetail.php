@@ -26,7 +26,7 @@ class TransactionHistoryDetail extends Component
             'booking' => function ($query) {
                 $query->with([
                     'venue' => function ($q) {
-                        $q->select('id', 'name', 'address', 'city', 'capacity', 'price_per_hour', 'status', 'venue_img')
+                        $q->select('id', 'name', 'address', 'city_name', 'capacity', 'price_per_hour', 'status', 'venue_img')
                             ->with('category:id,name');
                     },
                     'user:id,name,email,avatar'
