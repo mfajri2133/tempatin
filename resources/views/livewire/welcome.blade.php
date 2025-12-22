@@ -63,4 +63,46 @@
             </div>
         </div>
     </section>
+
+    <section class="bg-white py-15 gap-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-6">
+                <h2 class="text-3xl md:text-5xl font-black text-gray-500 text-bold italic uppercase tracking-tighter">Destinasi
+                <span class="text-indigo-600 non-italic">Terpopuler</span>
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="md:col-span-2 h-80 relative rounded-xl overflow-hidden group cursor-pointer shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1590476355683-96c1859f4658?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <h3 class="text-white text-3xl font-black uppercase italic">Bandung</h3>
+                        <p class="text-gray-400 text-sm mt-1">68 Venue Tersedia</p>
+                    </div>
+                </div>
+
+                <div class="h-80 relative rounded-xl overflow-hidden group shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1670555384851-11a28337f9b8?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <h3 class="text-white text-xl font-black uppercase italic">Bogor</h3>
+                        <p class="text-gray-400 text-xs">42 Venue</p>
+                    </div>
+                </div>
+
+                <div class="h-80 relative rounded-xl overflow-hidden group cursor-pointer shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1555043722-4523972f07ee?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <h3 class="text-white text-xl font-black uppercase italic">Bekasi</h3>
+                        <p class="text-gray-400 text-xs">25 Venue</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
