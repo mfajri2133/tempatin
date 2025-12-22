@@ -95,9 +95,9 @@
                                 </a>
 
                                 @if (auth()->user()->role === 'user')
-                                    <a href="{{ route('user.transaction-histories') }}" wire:navigate
+                                    <a href="{{ route('transaction-histories.index') }}" wire:navigate
                                         class="flex items-center gap-3 px-4 py-2.5 transition-colors text-sm
-                                                   {{ request()->routeIs('user.transaction-histories')
+                                                   {{ request()->routeIs('transaction-histories.index')
                                                        ? 'bg-indigo-500/10 text-indigo-400'
                                                        : 'text-gray-300 hover:bg-[#2a2a2a] hover:text-white' }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -238,9 +238,9 @@
                         </a>
 
                         @if (auth()->user()->role === 'user')
-                            <a href="{{ route('user.transaction-histories') }}" wire:navigate
+                            <a href="{{ route('transaction-histories.index') }}" wire:navigate
                                 class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors
-                                           {{ request()->routeIs('user.transaction-histories')
+                                           {{ request()->routeIs('transaction-histories.index')
                                                ? 'bg-indigo-500/10 text-indigo-400'
                                                : 'text-gray-300 hover:bg-[#2a2a2a] hover:text-white' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

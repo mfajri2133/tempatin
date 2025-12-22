@@ -11,7 +11,7 @@
     </div>
 
     <!-- FORM -->
-    <form wire:submit.prevent="save" class="p-6" autocomplete="off">
+    <form wire:submit.prevent="save" class="p-6" enctype="multipart/form-data" autocomplete="off">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div class="col-span-full">
                 <x-image-upload wireModel="image" type="default" />
@@ -119,7 +119,7 @@
 
         <!-- ACTION -->
         <div class="flex justify-end gap-2 pt-6">
-            <x-normal-button href="{{ route('dashboard.venues.index') }}" wire:navigate
+            <x-normal-button href="{{ route('dashboard.venues.index') }}"
                 class="h-9 px-4 text-sm rounded-md border border-gray-300 bg-gray-100
                    text-gray-700 hover:bg-gray-200 transition">
                 Batal
