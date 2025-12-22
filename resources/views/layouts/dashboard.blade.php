@@ -123,8 +123,15 @@
                             </div>
 
                             <div
-                                class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                                {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                                class="w-9 h-9 rounded-full flex items-center justify-center shadow-lg overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600">
+                                @if (!empty(auth()->user()->avatar))
+                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
+                                        alt="Avatar {{ auth()->user()->name }}" class="w-full h-full object-cover" />
+                                @else
+                                    <span class="text-white font-semibold text-sm">
+                                        {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                                    </span>
+                                @endif
                             </div>
                         </button>
 
