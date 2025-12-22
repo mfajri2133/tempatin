@@ -199,7 +199,7 @@
 
                 @if ($order->payment?->payment_url)
                     <div class="pt-2">
-                        <a href="{{ $order->payment->payment_url }}" target="_blank" rel="noopener"
+                        <x-normal-button href="{{ $order->payment->payment_url }}" target="_blank" rel="noopener"
                             class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm transition bg-tp-black text-tp-white hover:bg-tp-black/90">
                             Lanjutkan Pembayaran
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -207,7 +207,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-7.5 0H21m0 0-3.75-3.75M21 10.5l-3.75 3.75" />
                             </svg>
-                        </a>
+                        </x-normal-button>
                     </div>
                 @endif
             </div>
