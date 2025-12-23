@@ -15,6 +15,8 @@ use App\Livewire\Dashboard\Admin;
 use App\Livewire\Dashboard\Categories;
 use App\Livewire\Dashboard\Transactions\TransactionDetail;
 use App\Livewire\Dashboard\Transactions\Transactions;
+use App\Livewire\ForgotPassword;
+use App\Livewire\ResetPassword;
 use App\Livewire\User\About;
 use App\Livewire\User\Histories\TransactionHistories;
 use App\Livewire\User\Histories\TransactionHistoryDetail;
@@ -37,6 +39,8 @@ Route::prefix('venues')->name('venues.')->group(function () {
 Route::middleware('guest')->group(function () {
     Route::get('/login', Login::class)->name('login');
     Route::get('/register', Register::class)->name('register');
+    Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
+    Route::get('/reset-password', ResetPassword::class)->name('reset-password');
 });
 
 // Socialite
