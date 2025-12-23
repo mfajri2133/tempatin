@@ -291,4 +291,43 @@
         </div>
     </section>
 
+    <!-- Testimonial Section -->
+    <section class="py-16 bg-[#0f0f0f]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter">
+                    Kata <span class="text-indigo-600">Mereka</span>
+                </h2>
+                <p class="text-gray-400 mt-4">Pengalaman pelanggan yang puas dengan layanan kami</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @for ($i = 0; $i < 3; $i++)
+                    <div
+                        class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 border border-gray-700 hover:border-indigo-600/50 hover:shadow-2xl hover:shadow-indigo-600/20 transition-all duration-300">
+                        <div class="flex items-center gap-1 mb-4">
+                            @for ($j = 0; $j < 5; $j++)
+                                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                    <path
+                                        d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                </svg>
+                            @endfor
+                        </div>
+                        <p class="text-gray-300 mb-6 italic">"Proses booking sangat mudah dan venue-nya sesuai
+                            ekspektasi. Pelayanan ramah dan profesional!"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">A</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Andi Pratama</h4>
+                                <p class="text-gray-400 text-sm">Event Organizer</p>
+                            </div>
+                        </div>
+                    </div>
+                @endfor
+            </div>
+        </div>
+    </section>
+
 </main>
