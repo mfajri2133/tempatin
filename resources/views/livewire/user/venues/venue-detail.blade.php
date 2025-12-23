@@ -7,15 +7,37 @@
 
             <!-- ===== JUDUL & LOKASI ===== -->
             <div>
-                <h2 class="text-2xl font-semibold">Hotel Cihuy</h2>
+                <h2 class="text-2xl font-semibold flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-yellow-500" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M10 22v-5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v5" />
+                        <path d="M2 22h20" />
+                        <path d="M4 22V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v17" />
+                        <path d="M12 7h2" />
+                        <path d="M12 11h2" />
+                        <path d="M12 15h2" />
+                        <path d="M7 7h2" />
+                        <path d="M7 11h2" />
+                        <path d="M7 15h2" />
+                    </svg>
+                    {{ $venue->name }}
+                </h2>
+
                 <p class="text-gray-500 text-sm mt-1 flex items-center gap-1">
-                    {{ $venue->name }}, Jawa Barat
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <path d="M9 13v-4h6v4" />
+                        <path d="M12 9v4" />
+                    </svg>
+
+                    {{ $venue->city_name }}, Jawa Barat
                 </p>
             </div>
 
             <div class="relative overflow-hidden rounded-xl group shadow-lg">
-                <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=1200"
-                    alt="Meeting Room Hotel Cihuy"
+                <img src="{{ asset('storage/' . $venue->venue_img) }}" alt="{{ $venue->name }}"
                     class="w-full h-[300px] md:h-[450px] object-cover transition-transform duration-500 group-hover:scale-105">
             </div>
 
@@ -27,13 +49,33 @@
 
                 <div class="grid grid-cols-2 md:grid-cols-2 gap-6 text-sm">
                     <div>
-                        <p class="text-gray-400">Kapasitas</p>
-                        <p class="font-medium">10 Orang</p>
+                        <p class="text-gray-400 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            Kapasitas
+                        </p>
+
+                        <p class="font-medium">{{ $venue->capacity }} Orang</p>
                     </div>
 
                     <div>
-                        <p class="text-gray-400">Kategori</p>
-                        <p class="font-medium">Hotel</p>
+                        <p class="text-gray-400 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" />
+                                <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" />
+                                <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" />
+                            </svg>
+                            Kategori
+                        </p>
+
+                        <p class="font-medium">{{ $venue->category->name }}</p>
                     </div>
                 </div>
             </div>
