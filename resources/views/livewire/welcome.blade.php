@@ -330,4 +330,25 @@
         </div>
     </section>
 
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-indigo-600 to-purple-700">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tighter">
+                Siap Booking Venue Impianmu?
+            </h2>
+            <p class="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+                Daftar sekarang dan dapatkan pengalaman terbaik untuk booking pertama kamu!
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{{ route('register') }}"
+                    class="bg-white text-indigo-600 px-8 py-4 rounded-xl font-black text-lg hover:bg-gray-100 transition-colors shadow-xl">
+                    Daftar Gratis
+                </a>
+                <a href="{{ route('venues.index') }}"
+                    class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-white/10 transition-colors">
+                    Lihat Venue
+                </a>
+            </div>
+        </div>
+    </section>
 </main>
