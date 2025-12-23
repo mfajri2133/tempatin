@@ -207,4 +207,27 @@
         </div>
     </section>
 
+    <!-- Stats Section -->
+    <section class="py-12 bg-[#0f0f0f] border-y border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <span class="block text-4xl md:text-5xl font-black text-white">150+</span>
+                    <span class="text-gray-500 text-xs uppercase tracking-[0.2em] mt-2 block font-bold">Venue
+                        Aktif</span>
+                </div>
+                <div class="text-center">
+                    <span class="block text-4xl md:text-5xl font-black text-indigo-600">27</span>
+                    <span class="text-gray-500 text-xs uppercase tracking-[0.2em] mt-2 block font-bold">Kota &
+                        Kabupaten</span>
+                </div>
+                <div class="text-center col-span-2 md:col-span-1">
+                    <span class="block text-4xl md:text-5xl font-black text-white">10k+</span>
+                    <span class="text-gray-500 text-xs uppercase tracking-[0.2em] mt-2 block font-bold">Booking
+                        Sukses</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </main>
