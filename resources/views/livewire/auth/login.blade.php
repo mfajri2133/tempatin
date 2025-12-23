@@ -98,7 +98,7 @@
                 </div>
 
                 <div class="flex items-center justify-end">
-                    <a href="/forgot-password"
+                    <a href="{{ route('forgot-password') }}" wire:navigate
                         class="text-xs text-blue-600 hover:text-blue-700 font-medium hover:underline">
                         Lupa password?
                     </a>
