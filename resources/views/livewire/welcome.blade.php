@@ -1,4 +1,4 @@
-<main class="w-full"> 
+<main class="w-full">
     <!-- Hero Section -->
     <section class="w-full min-h-screen bg-cover bg-center flex items-center justify-center relative"
         style="background-image: url('{{ asset('image/hotel1.2.webp') }}');">
@@ -98,6 +98,62 @@
                             <img src="https://images.unsplash.com/photo-1715333157357-a8e4acdd7992?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cara Booking Section -->
+    <section class="py-16 bg-[#0f0f0f]" id="cara-booking">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter">
+                    Cara <span class="text-indigo-600">Booking</span>
+                </h2>
+                <p class="text-gray-400 mt-4">Hanya 3 langkah mudah untuk menyewa venue impianmu</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="relative group">
+                    <div
+                        class="bg-gradient-to-br from-indigo-600/10 to-purple-600/10 rounded-2xl p-8 border border-indigo-600/20 hover:border-indigo-600/50 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-600/20">
+                        <div
+                            class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="text-white text-2xl font-black">1</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Cari Venue</h3>
+                        <p class="text-gray-400 text-sm">Temukan venue sesuai kebutuhanmu dengan filter lokasi,
+                            kapasitas, dan harga</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative group">
+                    <div
+                        class="bg-gradient-to-br from-indigo-600/10 to-purple-600/10 rounded-2xl p-8 border border-indigo-600/20 hover:border-indigo-600/50 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-600/20">
+                        <div
+                            class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="text-white text-2xl font-black">2</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Pilih Jadwal</h3>
+                        <p class="text-gray-400 text-sm">Pilih tanggal dan waktu yang tersedia, lalu lakukan pembayaran
+                            dengan aman</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative group">
+                    <div
+                        class="bg-gradient-to-br from-indigo-600/10 to-purple-600/10 rounded-2xl p-8 border border-indigo-600/20 hover:border-indigo-600/50 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-600/20">
+                        <div
+                            class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="text-white text-2xl font-black">3</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Nikmati Acaramu</h3>
+                        <p class="text-gray-400 text-sm">Datang sesuai jadwal dan nikmati venue dengan fasilitas lengkap
+                        </p>
                     </div>
                 </div>
             </div>
