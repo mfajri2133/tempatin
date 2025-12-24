@@ -66,5 +66,10 @@
             <p class="text-xs font-medium text-gray-500">Alamat</p>
             <p class="text-sm font-semibold text-gray-800 leading-relaxed">{{ $venue->address }}</p>
         </div>
+
+        <div class="sm:col-span-3 space-y-1">
+            <p class="text-xs font-medium text-gray-500">Deskripsi</p>
+            <p class="text-sm font-semibold text-gray-800 leading-relaxed">{{ $venue->description }}</p>
+        </div>
     </div>
 </div>
