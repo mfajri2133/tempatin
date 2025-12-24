@@ -13,6 +13,7 @@ class Venue extends Model
         'category_id',
         'name',
         'address',
+        'description',
         'city_code',
         'city_name',
         'capacity',
