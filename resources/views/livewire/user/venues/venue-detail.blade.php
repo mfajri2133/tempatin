@@ -70,7 +70,7 @@
                 </h3>
 
                 <p class="text-sm text-gray-700 leading-relaxed">
-                    {!! nl2br(e($venue->description)) !!}
+                    {{ $venue->description }}
                 </p>
             </div>
         </div>
