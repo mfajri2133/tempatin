@@ -8,19 +8,6 @@
             <!-- ===== JUDUL & LOKASI ===== -->
             <div>
                 <h2 class="text-2xl font-semibold flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-yellow-500" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M10 22v-5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v5" />
-                        <path d="M2 22h20" />
-                        <path d="M4 22V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v17" />
-                        <path d="M12 7h2" />
-                        <path d="M12 11h2" />
-                        <path d="M12 15h2" />
-                        <path d="M7 7h2" />
-                        <path d="M7 11h2" />
-                        <path d="M7 15h2" />
-                    </svg>
                     {{ $venue->name }}
                 </h2>
 
@@ -87,10 +74,7 @@
                 </h3>
 
                 <p class="text-sm text-gray-700 leading-relaxed">
-                    Hotel Cihuy adalah ruangan meeting eksklusif dengan setup boardroom
-                    yang nyaman untuk diskusi strategis, interview, maupun pelatihan.
-                    Dilengkapi pencahayaan optimal dan desain interior modern yang
-                    menciptakan suasana profesional. lorem100
+                    {!! nl2br(e($venue->description)) !!}
                 </p>
             </div>
         </div>
@@ -100,7 +84,6 @@
         <div class="bg-white border rounded-lg overflow-hidden h-fit sticky top-10 shadow-sm w-full max-w-[400px]">
 
             <div class="bg-indigo-400 text-white p-4 flex items-center justify-center gap-2">
-                <span class="text-yellow-500">🏆</span>
                 <p class="text-xl text-black font-bold">{{ number_format($venue->price_per_hour, 0, ',', '.') }}/ jam
                 </p>
             </div>
@@ -140,13 +123,6 @@
                     </select>
                 </div>
 
-                <div class="flex items-center justify-between py-2 border-y border-dashed mt-4">
-                    <span class="text-xs font-bold text-gray-600 uppercase">Tambah Hari Pemesanan</span>
-                    <button
-                        class="bg-gray-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center font-bold">
-                        +
-                    </button>
-                </div>
 
                 <div class="space-y-1">
                     <p class="text-xs text-gray-500">Rincian Harga</p>
