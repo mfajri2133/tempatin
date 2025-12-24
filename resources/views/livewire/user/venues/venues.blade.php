@@ -1,6 +1,6 @@
 <div>
     <section class="w-full h-[500px] bg-cover bg-center flex items-center justify-center"
-        style="background-image: url('{{ asset('image/hotel1.1.webp') }}');">
+        style="background-image: url('{{ asset('images/hotel1.1.webp') }}');">
 
         <div class="relative z-20 w-full max-w-5xl px-6 text-center text-white">
             <div class="bg-[#0f0f0f]/50 py-6 px-4 sm:px-6 shadow-md rounded-md">
