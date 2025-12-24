@@ -109,7 +109,7 @@
             </div>
 
 
-            <div class="col-span-1">
+            <div class="sm:col-span-1">
                 <label class="text-sm font-medium text-gray-700">Alamat</label>
                 <textarea wire:model.live="address" rows="3" placeholder="Masukkan alamat lengkap venue"
                     class="w-full px-3 py-2 text-sm rounded-md border border-gray-300
@@ -121,7 +121,7 @@
                 @enderror
             </div>
 
-            <div class="col-span-2">
+            <div class="sm:col-span-2">
                 <label class="text-sm font-medium text-gray-700">Deskripsi</label>
                 <textarea wire:model.live="description" rows="3" placeholder="Masukkan deskripsi venue"
                     class="w-full px-3 py-2 text-sm rounded-md border border-gray-300
