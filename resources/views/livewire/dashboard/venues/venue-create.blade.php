@@ -12,12 +12,12 @@
 
     <!-- FORM -->
     <form wire:submit.prevent="save" class="p-6" enctype="multipart/form-data" autocomplete="off">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="col-span-full">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="col-span-3">
                 <x-image-upload wireModel="image" type="default" />
             </div>
 
-            <div>
+            <div class="col-span-3 sm:col-span-1">
                 <label class="text-sm font-medium text-gray-700">Nama</label>
                 <input type="text" wire:model.live.debounce.300ms="name" placeholder="Masukkan nama venue"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
@@ -29,7 +29,7 @@
             </div>
 
             <!-- KATEGORI -->
-            <div>
+            <div class="col-span-3 sm:col-span-1">
                 <label class="text-sm font-medium text-gray-700">Kategori</label>
                 <select wire:model.live="category_id"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300 bg-white
@@ -46,7 +46,7 @@
             </div>
 
             <!-- KOTA -->
-            <div>
+            <div class="col-span-3 sm:col-span-1">
                 <label class="text-sm font-medium text-gray-700">Kota</label>
                 <select wire:model.live="city_code"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300 bg-white
@@ -68,7 +68,7 @@
             </div>
 
             <!-- HARGA -->
-            <div>
+            <div class="col-span-3 sm:col-span-1">
                 <label class="text-sm font-medium text-gray-700">Harga per Jam</label>
                 <input type="text" wire:model.live.debounce.300ms="price_display" inputmode="numeric"
                     placeholder="Rp 0"
@@ -81,7 +81,7 @@
             </div>
 
             <!-- KAPASITAS -->
-            <div>
+            <div class="col-span-3 sm:col-span-1">
                 <label class="text-sm font-medium text-gray-700">Kapasitas</label>
                 <input type="number" wire:model.live.debounce.300ms="capacity" placeholder="Masukkan kapasitas"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
@@ -93,7 +93,7 @@
             </div>
 
             <!-- STATUS -->
-            <div>
+            <div class="col-span-3 sm:col-span-1">
                 <label class="text-sm font-medium text-gray-700">Status</label>
                 <select wire:model.live="status"
                     class="w-full h-10 px-3 text-sm rounded-md border border-gray-300
@@ -104,7 +104,7 @@
             </div>
 
             <!-- ALAMAT (FULL ROW) -->
-            <div class="col-span-1">
+            <div class="col-span-3 sm:col-span-1">
                 <label class="text-sm font-medium text-gray-700">Alamat</label>
                 <textarea wire:model.live="address" rows="3" placeholder="Masukkan alamat lengkap venue"
                     class="w-full px-3 py-2 text-sm rounded-md border border-gray-300
@@ -116,7 +116,7 @@
                 @enderror
             </div>
 
-            <div class="col-span-2">
+            <div class="col-span-3 sm:col-span-2">
                 <label class="text-sm font-medium text-gray-700">Deskripsi</label>
                 <textarea wire:model.live="description" rows="3" placeholder="Masukkan deskripsi venue"
                     class="w-full px-3 py-2 text-sm rounded-md border border-gray-300
