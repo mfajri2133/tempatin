@@ -1,7 +1,7 @@
 <main class="w-full">
     <!-- Hero Section -->
     <section class="w-full min-h-screen bg-cover bg-center flex items-center justify-center relative"
-        style="background-image: url('{{ asset('image/hotel1.2.webp') }}');">
+        style="background-image: url('{{ asset('images/hotel1.2.webp') }}');">
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black/70 z-0"></div>
 

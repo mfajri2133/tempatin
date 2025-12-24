@@ -3,6 +3,7 @@
 namespace App\Livewire\User\Venues;
 
 use App\Models\Venue;
+use App\Models\Booking;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -13,18 +14,112 @@ class VenueDetail extends Component
     public string $booking_date = '';
     public string $start_time = '';
     public string $end_time = '';
-    public function getTotalHoursProperty()
+    public int $total_hours = 0;
+    public int $total_price = 0;
+    public bool $show_availability = false;
+
+    public function calculatePrice()
     {
         if ($this->start_time && $this->end_time) {
-            $hours = (strtotime($this->end_time) - strtotime($this->start_time)) / 3600;
-            return $hours > 0 ? (int)$hours : 0;
+            $start = strtotime($this->start_time);
+            $end = strtotime($this->end_time);
+            $hours = ($end - $start) / 3600;
+
+            if ($hours > 0) {
+                $this->total_hours = (int)$hours;
+                $this->total_price = $hours * $this->venue->price_per_hour;
+            } else {
+                $this->total_hours = 0;
+                $this->total_price = 0;
+            }
+        } else {
+            $this->total_hours = 0;
+            $this->total_price = 0;
         }
-        return 0;
     }
 
-    public function getTotalPriceProperty()
+    public function updated($property)
     {
-        return $this->total_hours * $this->venue->price_per_hour;
+        if (in_array($property, ['start_time', 'end_time'])) {
+            $this->calculatePrice();
+        }
+
+        if ($property === 'booking_date') {
+            $this->show_availability = false;
+            $this->start_time = '';
+            $this->end_time = '';
+        }
+
+        if ($property === 'start_time') {
+            $this->end_time = '';
+        }
+    }
+
+    public function toggleAvailability()
+    {
+        if (!$this->booking_date) {
+            session()->flash('error', 'Pilih tanggal terlebih dahulu');
+            return;
+        }
+
+        $this->show_availability = !$this->show_availability;
+    }
+
+    public function getAvailableHoursProperty()
+    {
+        if (!$this->booking_date) {
+            return [];
+        }
+
+        $bookings = Booking::where('venue_id', $this->venue->id)
+            ->where('booking_date', $this->booking_date)
+            ->whereIn('status', ['waiting', 'progress'])
+            ->get(['start_time', 'end_time']);
+
+        $bookedHours = [];
+
+        foreach ($bookings as $booking) {
+            $start = (int) substr($booking->start_time, 0, 2);
+            $end   = (int) substr($booking->end_time, 0, 2);
+
+            for ($hour = $start; $hour < $end; $hour++) {
+                $bookedHours[] = $hour;
+            }
+        }
+
+        $bookedHours = array_unique($bookedHours);
+
+        $availableHours = [];
+
+        for ($hour = 6; $hour <= 22; $hour++) {
+            $availableHours[] = [
+                'hour'      => $hour,
+                'time'      => sprintf('%02d:00', $hour),
+                'is_booked' => in_array($hour, $bookedHours),
+            ];
+        }
+
+        return $availableHours;
+    }
+
+
+    public function getEndTimeOptionsProperty()
+    {
+        if (!$this->start_time) {
+            return [];
+        }
+
+        $startHour = (int)substr($this->start_time, 0, 2);
+        $options = [];
+
+        for ($i = $startHour + 1; $i <= 22; $i++) {
+            $options[] = [
+                'value' => sprintf('%02d:00', $i),
+                'label' => sprintf('%02d:00', $i)
+            ];
+        }
+
+        return $options;
     }
 
     public function mount(Venue $venue)

@@ -1,11 +1,8 @@
 <div class="bg-indigo-50">
-    <!-- ================= CONTENT ================= -->
     <section class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
 
-        <!-- ===== LEFT CONTENT ===== -->
-        <div class="lg:col-span-2 space-y-10 text-black">
+        <div class="lg:col-span-2 space-y-6 text-black">
 
-            <!-- ===== JUDUL & LOKASI ===== -->
             <div>
                 <h2 class="text-2xl font-semibold flex items-center gap-2">
                     {{ $venue->name }}
@@ -24,10 +21,9 @@
 
             <div class="relative overflow-hidden rounded-xl group shadow-lg">
                 <img src="{{ asset('storage/' . $venue->venue_img) }}" alt="{{ $venue->name }}"
-                    class="w-full h-[300px] md:h-[450px] object-cover transition-transform duration-500 group-hover:scale-105">
+                    class="w-full h-[300px] md:h-[450px] object-bottom transition-transform duration-500 group-hover:scale-105">
             </div>
 
-            <!-- ===== UKURAN / LAYOUT / KAPASITAS ===== -->
             <div class="border rounded-lg p-5">
                 <h3 class="text-sm font-semibold text-gray-500 mb-4">
                     Kapasitas & kategori
@@ -63,7 +59,6 @@
                 </div>
             </div>
 
-            <!-- ===== DESKRIPSI ===== -->
             <div>
                 <h3 class="text-sm font-semibold text-gray-500 mb-3">
                     Deskripsi
@@ -78,11 +73,15 @@
         <div class="bg-white border rounded-lg overflow-hidden h-fit sticky top-10 shadow-sm w-full max-w-[400px]">
             <div class="bg-indigo-400 text-white p-4 flex items-center justify-center gap-2">
                 <p class="text-xl text-black font-bold">
-                    {{ number_format($venue->price_per_hour, 0, ',', '.') }}/ jam
+                    Rp {{ number_format($venue->price_per_hour, 0, ',', '.') }} / jam
                 </p>
             </div>
 
             <form wire:submit.prevent="bookNow" class="bg-indigo-50 p-5 space-y-4">
+                @if (session()->has('error'))
+                    <p class="text-red-500 text-xs">{{ session('error') }}</p>
+                @endif
+
                 @error('booking_date')
                     <p class="text-red-500 text-xs">{{ $message }}</p>
                 @enderror
@@ -93,8 +92,15 @@
                     <p class="text-red-500 text-xs">{{ $message }}</p>
                 @enderror
 
-                <div class="flex items-center justify-between text-sm">
-                    <div class="flex items-center gap-2 text-gray-600">
+                <div>
+                    <label class="text-[11px] uppercase font-bold text-gray-500 mb-2 block">Tanggal</label>
+                    <input type="date" wire:model.live="booking_date" min="{{ now()->toDateString() }}"
+                        class="w-full border border-gray-400 rounded px-3 py-2 text-sm text-black focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <button type="button" wire:click="toggleAvailability"
+                    class="w-full flex items-center justify-between px-4 py-3 bg-transparent border border-gray-400 rounded text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <div class="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round">
@@ -103,57 +109,87 @@
                             <line x1="8" y1="2" x2="8" y2="6" />
                             <line x1="3" y1="10" x2="21" y2="10" />
                         </svg>
-                        <span>Ketersediaan Jam</span>
+                        <span class="font-medium">Ketersediaan Jam</span>
                     </div>
-                </div>
+                    <svg class="w-5 h-5 transition-transform {{ $show_availability ? 'rotate-180' : '' }}"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
 
-                <div class="grid grid-cols-3 gap-2 text-[11px] uppercase font-bold text-gray-500">
-                    <span>Tanggal</span>
-                    <span>Mulai</span>
-                    <span>Sampai</span>
-                </div>
+                @if ($show_availability)
+                    <div class="bg-white border border-gray-300 rounded-lg p-4 space-y-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="text-xs font-semibold text-gray-600 uppercase">Jam Operasional</h4>
+                            <div class="flex gap-3 text-[10px]">
+                                <div class="flex items-center gap-1">
+                                    <div class="w-3 h-3 bg-green-500 rounded"></div>
+                                    <span class="text-gray-600">Tersedia</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <div class="w-3 h-3 bg-red-500 rounded"></div>
+                                    <span class="text-gray-600">Terboking</span>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="grid grid-cols-3 gap-2">
-                    <input type="date" wire:model="booking_date" min="{{ now()->toDateString() }}"
-                        class="border border-gray-400 rounded px-2 py-2 text-sm text-black focus:outline-none focus:border-indigo-500">
+                        <div class="grid grid-cols-4 gap-2 max-h-64 overflow-y-auto">
+                            @foreach ($this->available_hours as $slot)
+                                <div
+                                    class="flex items-center justify-center px-3 py-2 rounded text-xs font-medium
+                                    {{ $slot['is_booked'] ? 'bg-red-100 text-red-700 cursor-not-allowed' : 'bg-green-100 text-green-700' }}">
+                                    {{ $slot['time'] }}
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
 
-                    <select wire:model="start_time"
-                        class="border border-gray-400 rounded px-2 py-2 text-sm text-black focus:outline-none">
-                        <option value="">--</option>
-                        @for ($i = 6; $i <= 22; $i++)
-                            <option value="{{ sprintf('%02d:00', $i) }}">
-                                {{ sprintf('%02d:00', $i) }}
-                            </option>
-                        @endfor
-                    </select>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-[11px] uppercase font-bold text-gray-500 mb-2 block">Jam Mulai</label>
+                        <select wire:model.live="start_time"
+                            class="w-full border border-gray-400 rounded px-3 py-2 text-sm text-black focus:outline-none focus:border-indigo-500">
+                            <option value="">Pilih</option>
+                            @for ($i = 6; $i <= 22; $i++)
+                                <option value="{{ sprintf('%02d:00', $i) }}">
+                                    {{ sprintf('%02d:00', $i) }}
+                                </option>
+                            @endfor
+                        </select>
+                    </div>
 
-                    <select wire:model="end_time"
-                        class="border border-gray-400 rounded px-2 py-2 text-sm text-black focus:outline-none">
-                        <option value="">--</option>
-                        @for ($i = 7; $i <= 23; $i++)
-                            <option value="{{ sprintf('%02d:00', $i) }}">
-                                {{ sprintf('%02d:00', $i) }}
-                            </option>
-                        @endfor
-                    </select>
+                    <div>
+                        <label class="text-[11px] uppercase font-bold text-gray-500 mb-2 block">Jam Selesai</label>
+                        <select wire:model.live="end_time" {{ !$start_time ? 'disabled' : '' }}
+                            class="w-full border border-gray-400 rounded px-3 py-2 text-sm text-black focus:outline-none focus:border-indigo-500 disabled:bg-gray-100 disabled:cursor-not-allowed">
+                            <option value="">{{ $start_time ? 'Pilih' : 'Pilih jam mulai dulu' }}</option>
+                            @foreach ($this->end_time_options as $option)
+                                <option value="{{ $option['value'] }}">
+                                    {{ $option['label'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
                 <div class="space-y-1 pt-2 border-t">
                     <p class="text-xs text-gray-500">Rincian Harga</p>
                     <div class="flex justify-between text-sm font-medium">
                         <span class="text-gray-500">
-                            {{ $this->total_hours }} jam x
-                            Rp{{ number_format($venue->price_per_hour, 0, ',', '.') }}
+                            {{ $total_hours }} jam x
+                            Rp {{ number_format($venue->price_per_hour, 0, ',', '.') }}
                         </span>
                         <span class="text-gray-700">
-                            Rp{{ number_format($this->total_price, 0, ',', '.') }}
+                            Rp {{ number_format($total_price, 0, ',', '.') }}
                         </span>
                     </div>
                 </div>
 
-                <button type="submit" wire:loading.attr="disabled" @disabled(!$booking_date || !$start_time || !$end_time || $this->total_hours <= 0)
-                    class="w-full bg-indigo-400 hover:bg-indigo-500 disabled:bg-gray-300
-           text-black font-bold py-4 rounded shadow-md transition-colors uppercase tracking-wider">
+                <!-- Button Book -->
+                <button type="submit" wire:loading.attr="disabled" @disabled(!$booking_date || !$start_time || !$end_time || $total_hours <= 0)
+                    class="w-full bg-indigo-400 hover:bg-indigo-500 disabled:bg-gray-300 disabled:cursor-not-allowed
+                           text-black font-bold py-4 rounded shadow-md transition-colors uppercase tracking-wider">
                     <span wire:loading.remove>Book Now</span>
                     <span wire:loading>Processing...</span>
                 </button>
