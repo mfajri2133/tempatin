@@ -104,7 +104,7 @@
             </div>
 
             <!-- ALAMAT (FULL ROW) -->
-            <div class="col-span-full">
+            <div class="col-span-1">
                 <label class="text-sm font-medium text-gray-700">Alamat</label>
                 <textarea wire:model.live="address" rows="3" placeholder="Masukkan alamat lengkap venue"
                     class="w-full px-3 py-2 text-sm rounded-md border border-gray-300
@@ -112,6 +112,18 @@
                        focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
                        @error('address') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror"></textarea>
                 @error('address')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="col-span-2">
+                <label class="text-sm font-medium text-gray-700">Deskripsi</label>
+                <textarea wire:model.live="description" rows="3" placeholder="Masukkan deskripsi venue"
+                    class="w-full px-3 py-2 text-sm rounded-md border border-gray-300
+                       resize-none
+                       focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+                       @error('description') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror"></textarea>
+                @error('description')
                     <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                 @enderror
             </div>
