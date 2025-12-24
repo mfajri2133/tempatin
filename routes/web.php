@@ -18,6 +18,7 @@ use App\Livewire\Dashboard\Transactions\Transactions;
 use App\Livewire\ForgotPassword;
 use App\Livewire\ResetPassword;
 use App\Livewire\User\About;
+use App\Livewire\User\BookingReviews;
 use App\Livewire\User\Histories\TransactionHistories;
 use App\Livewire\User\Histories\TransactionHistoryDetail;
 use App\Livewire\User\Profile as UserProfile;
@@ -56,6 +57,7 @@ Route::prefix('auth')->name('socialite.')->group(function () {
 Route::middleware(['auth', 'force.profile'])->group(function () {
     Route::get('/profile', UserProfile::class)->name('user.profile');
     Route::get('/set-profile', SetProfile::class)->name('profile.setup');
+    Route::get('/booking/review', BookingReviews::class)->name('booking.review');
 
     Route::prefix('transaction-histories')->name('transaction-histories.')->group(function () {
         Route::get('/', TransactionHistories::class)->name('index');

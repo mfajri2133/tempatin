@@ -75,16 +75,24 @@
             </div>
         </div>
 
-
-        <!-- ===== SIDEBAR RIGHT BOOKING ===== -->
         <div class="bg-white border rounded-lg overflow-hidden h-fit sticky top-10 shadow-sm w-full max-w-[400px]">
-
             <div class="bg-indigo-400 text-white p-4 flex items-center justify-center gap-2">
-                <p class="text-xl text-black font-bold">{{ number_format($venue->price_per_hour, 0, ',', '.') }}/ jam
+                <p class="text-xl text-black font-bold">
+                    {{ number_format($venue->price_per_hour, 0, ',', '.') }}/ jam
                 </p>
             </div>
 
-            <div class="bg-indigo-50 p-5 space-y-4">
+            <form wire:submit.prevent="bookNow" class="bg-indigo-50 p-5 space-y-4">
+                @error('booking_date')
+                    <p class="text-red-500 text-xs">{{ $message }}</p>
+                @enderror
+                @error('start_time')
+                    <p class="text-red-500 text-xs">{{ $message }}</p>
+                @enderror
+                @error('end_time')
+                    <p class="text-red-500 text-xs">{{ $message }}</p>
+                @enderror
+
                 <div class="flex items-center justify-between text-sm">
                     <div class="flex items-center gap-2 text-gray-600">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
@@ -97,10 +105,6 @@
                         </svg>
                         <span>Ketersediaan Jam</span>
                     </div>
-                    <button
-                        class="text-indigo-600 border border-indigo-600 px-3 py-1 rounded-full text-xs font-medium hover:bg-indigo-100">
-                        Lihat Ketersediaan
-                    </button>
                 </div>
 
                 <div class="grid grid-cols-3 gap-2 text-[11px] uppercase font-bold text-gray-500">
@@ -108,32 +112,52 @@
                     <span>Mulai</span>
                     <span>Sampai</span>
                 </div>
+
                 <div class="grid grid-cols-3 gap-2">
-                    <input type="date" value="2025-12-21"
-                        class="border border-gray-400 rounded px-2 py-2 text-sm text-black focus:outline-none focus:border-yellow-500">
-                    <select class="border border-gray-400 rounded px-2 py-2 text-sm text-black focus:outline-none">
-                        <option>--</option>
+                    <input type="date" wire:model="booking_date" min="{{ now()->toDateString() }}"
+                        class="border border-gray-400 rounded px-2 py-2 text-sm text-black focus:outline-none focus:border-indigo-500">
+
+                    <select wire:model="start_time"
+                        class="border border-gray-400 rounded px-2 py-2 text-sm text-black focus:outline-none">
+                        <option value="">--</option>
+                        @for ($i = 6; $i <= 22; $i++)
+                            <option value="{{ sprintf('%02d:00', $i) }}">
+                                {{ sprintf('%02d:00', $i) }}
+                            </option>
+                        @endfor
                     </select>
-                    <select class="border border-gray-400 rounded px-2 py-2 text-sm text-black focus:outline-none">
-                        <option>--</option>
+
+                    <select wire:model="end_time"
+                        class="border border-gray-400 rounded px-2 py-2 text-sm text-black focus:outline-none">
+                        <option value="">--</option>
+                        @for ($i = 7; $i <= 23; $i++)
+                            <option value="{{ sprintf('%02d:00', $i) }}">
+                                {{ sprintf('%02d:00', $i) }}
+                            </option>
+                        @endfor
                     </select>
                 </div>
 
-
-                <div class="space-y-1">
+                <div class="space-y-1 pt-2 border-t">
                     <p class="text-xs text-gray-500">Rincian Harga</p>
                     <div class="flex justify-between text-sm font-medium">
-                        <span class="text-gray-500">0 jam x Rp300.000,-</span>
-                        <span class="text-gray-500">Rp0</span>
+                        <span class="text-gray-500">
+                            {{ $this->total_hours }} jam x
+                            Rp{{ number_format($venue->price_per_hour, 0, ',', '.') }}
+                        </span>
+                        <span class="text-gray-700">
+                            Rp{{ number_format($this->total_price, 0, ',', '.') }}
+                        </span>
                     </div>
                 </div>
 
-                <button
-                    class="w-full bg-indigo-400 hover:bg-indigo-500 text-black font-bold py-4 rounded shadow-md transition-colors uppercase tracking-wider">
-                    Book Now
+                <button type="submit" wire:loading.attr="disabled" @disabled(!$booking_date || !$start_time || !$end_time || $this->total_hours <= 0)
+                    class="w-full bg-indigo-400 hover:bg-indigo-500 disabled:bg-gray-300
+           text-black font-bold py-4 rounded shadow-md transition-colors uppercase tracking-wider">
+                    <span wire:loading.remove>Book Now</span>
+                    <span wire:loading>Processing...</span>
                 </button>
-            </div>
+            </form>
         </div>
     </section>
-    {{-- In work, do what you enjoy. --}}
 </div>
