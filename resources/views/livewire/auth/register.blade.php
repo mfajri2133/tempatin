@@ -59,8 +59,8 @@
                                    bg-white text-gray-900
                                    placeholder:text-gray-400
                                    focus:outline-none
-                                   focus:border-blue-500
-                                   focus:ring-1 focus:ring-blue-500
+                                   focus:border-indigo-500
+                                   focus:ring-1 focus:ring-indigo-500
                                    transition
                                    @error('name') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
                     </div>
@@ -96,8 +96,8 @@
                                    bg-white text-gray-900
                                    placeholder:text-gray-400
                                    focus:outline-none
-                                   focus:border-blue-500
-                                   focus:ring-1 focus:ring-blue-500
+                                   focus:border-indigo-500
+                                   focus:ring-1 focus:ring-indigo-500
                                    transition
                                    @error('email') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
                     </div>
@@ -133,8 +133,8 @@
                                    bg-white text-gray-900
                                    placeholder:text-gray-400
                                    focus:outline-none
-                                   focus:border-blue-500
-                                   focus:ring-1 focus:ring-blue-500
+                                   focus:border-indigo-500
+                                   focus:ring-1 focus:ring-indigo-500
                                    transition
                                    @error('password') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
                         <button type="button" @click="showPassword = !showPassword"
@@ -186,8 +186,8 @@
                                    bg-white text-gray-900
                                    placeholder:text-gray-400
                                    focus:outline-none
-                                   focus:border-blue-500
-                                   focus:ring-1 focus:ring-blue-500
+                                   focus:border-indigo-500
+                                   focus:ring-1 focus:ring-indigo-500
                                    transition
                                    @error('password_confirmation') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
                         <button type="button" @click="showPasswordConfirm = !showPasswordConfirm"
@@ -222,10 +222,10 @@
                 <div class="pt-2">
                     <button type="submit" wire:loading.attr="disabled" wire:target="register"
                         class="w-full h-10 px-4 text-sm font-medium rounded-md
-                               bg-blue-600 text-white
-                               hover:bg-blue-700
+                               bg-indigo-600 text-white
+                               hover:bg-indigo-700
                                focus:outline-none
-                               focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+                               focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
                                transition
                                disabled:opacity-60 disabled:cursor-not-allowed">
                         <span wire:loading.remove wire:target="register">
@@ -255,7 +255,7 @@
                 <a href="{{ route('socialite.redirect', 'google') }}"
                     class="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300
                           bg-white hover:bg-gray-50 hover:border-gray-400 transition-all
-                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                          focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     title="Daftar dengan Google">
                     <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google" />
                 </a>
@@ -263,7 +263,7 @@
                 <a href="{{ route('socialite.redirect', 'github') }}"
                     class="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300
                           bg-white hover:bg-gray-50 hover:border-gray-400 transition-all
-                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                          focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     title="Daftar dengan GitHub">
                     <img src="https://www.svgrepo.com/show/512317/github-142.svg" class="w-6 h-6" alt="GitHub" />
                 </a>
@@ -271,9 +271,9 @@
         </div>
 
         <!-- Login Link -->
-        <p class="text-center text-xs text-gray-500 mt-6">
+        <p class="text-center text-xs text-gray-400 mt-6">
             Sudah punya akun?
-            <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-700 font-medium hover:underline">
+            <a href="{{ route('login') }}" class="text-indigo-500 hover:text-indigo-600 font-medium hover:underline">
                 Login sekarang
             </a>
         </p>
