@@ -19,6 +19,7 @@ class VenueCreate extends Component
     public int|string $category_id = '';
     public string $name = '';
     public string $address = '';
+    public string $description = '';
     public string $city_code = '';
     public array $cities = [];
     public int|string $capacity = '';
@@ -31,6 +32,7 @@ class VenueCreate extends Component
         'category_id.exists' => 'Kategori tidak valid',
         'name.required' => 'Nama venue wajib diisi',
         'address.required' => 'Alamat wajib diisi',
+        'description.required' => 'Deskripsi wajib diisi',
         'city_code.required' => 'Kota wajib dipilih',
         'capacity.required' => 'Kapasitas wajib diisi',
         'capacity.integer' => 'Kapasitas harus angka',
@@ -74,6 +76,7 @@ class VenueCreate extends Component
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'address' => 'required|string',
+            'description' => 'required|string',
             'city_code' => 'required|string|max:10',
             'capacity' => 'required|integer|min:1',
             'price_per_hour' => 'required|numeric|min:0',
@@ -94,6 +97,7 @@ class VenueCreate extends Component
             'category_id' => $this->category_id,
             'name' => $this->name,
             'address' => $this->address,
+            'description' => $this->description,
             'city_code' => $city['code'] ?? null,
             'city_name' => $city['name'] ?? null,
             'capacity' => $this->capacity,
@@ -116,6 +120,7 @@ class VenueCreate extends Component
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'address' => 'required|string',
+            'description' => 'required|string',
             'city_code' => 'required|string|max:10',
             'capacity' => 'required|integer|min:1',
             'price_per_hour' => 'required|numeric|min:0',
