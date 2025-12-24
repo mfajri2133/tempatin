@@ -73,30 +73,35 @@ class VenueDetail extends Component
 
         $bookings = Booking::where('venue_id', $this->venue->id)
             ->where('booking_date', $this->booking_date)
-            ->whereIn('status', ['pending', 'confirmed'])
-            ->get();
+            ->whereIn('status', ['waiting', 'progress'])
+            ->get(['start_time', 'end_time']);
 
         $bookedHours = [];
-        foreach ($bookings as $booking) {
-            $start = (int)substr($booking->start_time, 0, 2);
-            $end = (int)substr($booking->end_time, 0, 2);
 
-            for ($i = $start; $i < $end; $i++) {
-                $bookedHours[] = $i;
+        foreach ($bookings as $booking) {
+            $start = (int) substr($booking->start_time, 0, 2);
+            $end   = (int) substr($booking->end_time, 0, 2);
+
+            for ($hour = $start; $hour < $end; $hour++) {
+                $bookedHours[] = $hour;
             }
         }
 
+        $bookedHours = array_unique($bookedHours);
+
         $availableHours = [];
-        for ($i = 6; $i <= 22; $i++) {
+
+        for ($hour = 6; $hour <= 22; $hour++) {
             $availableHours[] = [
-                'hour' => $i,
-                'time' => sprintf('%02d:00', $i),
-                'is_booked' => in_array($i, $bookedHours)
+                'hour'      => $hour,
+                'time'      => sprintf('%02d:00', $hour),
+                'is_booked' => in_array($hour, $bookedHours),
             ];
         }
 
         return $availableHours;
     }
+
 
     public function getEndTimeOptionsProperty()
     {
