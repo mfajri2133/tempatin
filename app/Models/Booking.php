@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Booking extends Model
 {
     protected $fillable = [
         'user_id',
         'venue_id',
-        'parent_booking_id',
         'booking_date',
         'start_time',
         'end_time',
@@ -20,6 +20,19 @@ class Booking extends Model
         'checkin_at',
     ];
 
+    protected static function booted()
+    {
+        static::creating(function ($booking) {
+            if (!$booking->booking_code) {
+                $booking->booking_code = self::generateBookingCode();
+            }
+        });
+    }
+
+    private static function generateBookingCode(): string
+    {
+        return 'BK-' . now()->format('Ymd') . '-' . strtoupper(Str::random(5));
+    }
 
     public function user()
     {
@@ -29,16 +42,6 @@ class Booking extends Model
     public function venue()
     {
         return $this->belongsTo(Venue::class);
-    }
-
-    public function parent()
-    {
-        return $this->belongsTo(Booking::class, 'parent_booking_id');
-    }
-
-    public function children()
-    {
-        return $this->hasMany(Booking::class, 'parent_booking_id');
     }
 
     public function order()
