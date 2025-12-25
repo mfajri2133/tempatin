@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\SocialiteController;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
@@ -21,6 +22,7 @@ use App\Livewire\User\About;
 use App\Livewire\User\BookingReviews;
 use App\Livewire\User\Histories\TransactionHistories;
 use App\Livewire\User\Histories\TransactionHistoryDetail;
+use App\Livewire\User\OrderPayment;
 use App\Livewire\User\Profile as UserProfile;
 use App\Livewire\User\Venues\VenueDetail as UserVenueDetail;
 use App\Livewire\User\Venues\Venues as UserVenues;
@@ -53,16 +55,20 @@ Route::prefix('auth')->name('socialite.')->group(function () {
         ->name('callback');
 });
 
+Route::post('/midtrans/callback', [MidtransController::class, 'handle'])->name('midtrans.callback');
+
 // Auth User (Admin + User)
 Route::middleware(['auth', 'force.profile'])->group(function () {
     Route::get('/profile', UserProfile::class)->name('user.profile');
     Route::get('/set-profile', SetProfile::class)->name('profile.setup');
     Route::get('/booking/review', BookingReviews::class)->name('booking.review');
+    Route::get('/orders/{order}/pay', OrderPayment::class)->name('orders.pay');
 
     Route::prefix('transaction-histories')->name('transaction-histories.')->group(function () {
         Route::get('/', TransactionHistories::class)->name('index');
         Route::get('/{id}/detail', TransactionHistoryDetail::class)->name('show');
     });
+
 
     Route::post('/logout', function () {
         Auth::logout();

@@ -68,9 +68,9 @@
                         </div>
 
                         <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end gap-2">
-                            @if (in_array($statusBadge['key'], ['pending', 'waiting'], true))
-                                <x-normal-button href="{{ route('user.profile') }}"
-                                    class="text-xs font-medium text-blue-600 hover:text-blue-700 px-3 py-1.5 rounded border border-blue-600 hover:bg-blue-50 transition-colors bg-transparent">
+                            @if ($order->status === 'pending')
+                                <x-normal-button href="{{ route('orders.pay', $order->id) }}"
+                                    class="text-xs font-medium text-indigo-600 hover:text-indigo-700 px-3 py-1.5 rounded border border-indigo-600 hover:bg-indigo-50 transition-colors bg-transparent">
                                     Bayar Sekarang
                                 </x-normal-button>
                             @endif
