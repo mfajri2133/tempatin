@@ -27,6 +27,7 @@ use App\Livewire\User\Profile as UserProfile;
 use App\Livewire\User\Venues\VenueDetail as UserVenueDetail;
 use App\Livewire\User\Venues\Venues as UserVenues;
 use App\Livewire\Welcome;
+use Illuminate\Auth\Events\PasswordResetLinkSent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,7 +44,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', Login::class)->name('login');
     Route::get('/register', Register::class)->name('register');
     Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
-    Route::get('/reset-password', ResetPassword::class)->name('reset-password');
+    Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
 });
 
 // Socialite

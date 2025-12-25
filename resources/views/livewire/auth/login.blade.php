@@ -7,7 +7,7 @@
             </div>
             @if (session('error'))
                 <div
-                    class="mb-6 p-3 bg-red-50 border border-red-200 text-red-800 text-sm rounded-md flex items-start gap-2">
+                    class="mb-6 p-3 bg-red-50 border border-red-200 text-red-800 text-sm rounded-md flex items-center gap-2">
                     <svg class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -19,7 +19,7 @@
 
             @if (session('success'))
                 <div
-                    class="mb-6 p-3 bg-green-50 border border-green-200 text-green-800 text-sm rounded-md flex items-start gap-2">
+                    class="mb-6 p-3 bg-green-50 border border-green-200 text-green-800 text-sm rounded-md flex items-center gap-2">
                     <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -157,7 +157,8 @@
 
         <p class="text-center text-xs text-gray-400 mt-6">
             Belum punya akun?
-            <a href="{{ route('register') }}" class="text-indigo-500 hover:text-indigo-600 font-medium hover:underline">
+            <a href="{{ route('register') }}"
+                class="text-indigo-500 hover:text-indigo-600 font-medium hover:underline">
                 Daftar sekarang
             </a>
         </p>
