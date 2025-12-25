@@ -14,6 +14,7 @@ use Throwable;
 class Venues extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'tailwind';
 
     public string $searchInput = '';
     public string $search = '';
