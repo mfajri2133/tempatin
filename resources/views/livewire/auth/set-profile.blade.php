@@ -49,8 +49,8 @@
                                    bg-white text-gray-900
                                    placeholder:text-gray-400
                                    focus:outline-none
-                                   focus:border-blue-500
-                                   focus:ring-1 focus:ring-blue-500
+                                   focus:border-indigo-500
+                                   focus:ring-1 focus:ring-indigo-500
                                    transition
                                    @error('name') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
                     </div>
@@ -84,8 +84,8 @@
                                    bg-white text-gray-900
                                    placeholder:text-gray-400
                                    focus:outline-none
-                                   focus:border-blue-500
-                                   focus:ring-1 focus:ring-blue-500
+                                   focus:border-indigo-500
+                                   focus:ring-1 focus:ring-indigo-500
                                    transition
                                    @error('password') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
                         <button type="button" @click="showPassword = !showPassword"
@@ -136,8 +136,8 @@
                                    bg-white text-gray-900
                                    placeholder:text-gray-400
                                    focus:outline-none
-                                   focus:border-blue-500
-                                   focus:ring-1 focus:ring-blue-500
+                                   focus:border-indigo-500
+                                   focus:ring-1 focus:ring-indigo-500
                                    transition
                                    @error('password_confirmation') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
                         <button type="button" @click="showPasswordConfirm = !showPasswordConfirm"
@@ -171,10 +171,10 @@
                 <div class="pt-2">
                     <button type="submit" wire:loading.attr="disabled" wire:target="save"
                         class="w-full h-10 px-4 text-sm font-medium rounded-md
-               bg-blue-600 text-white
-               hover:bg-blue-700
+               bg-indigo-600 text-white
+               hover:bg-indigo-700
                focus:outline-none
-               focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+               focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
                transition
                disabled:opacity-60 disabled:cursor-not-allowed">
 
