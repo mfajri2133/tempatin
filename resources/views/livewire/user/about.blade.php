@@ -243,7 +243,7 @@
                         </div>
                     </div>
                     <h3 class="text-md font-bold text-gray-900 mb-1">Arya</h3>
-                    <p class="text-xs text-green-600 font-semibold mb-2">Frontend Developer</p>
+                    <p class="text-xs text-blue-600 font-semibold mb-2">Frontend Developer</p>
                 </div>
             </div>
         </div>
