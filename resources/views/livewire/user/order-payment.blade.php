@@ -67,21 +67,27 @@
 
     </div>
 </div>
+
 <script src="https://app.sandbox.midtrans.com/snap/snap.js"
     data-client-key="{{ config('services.midtrans.client_key') }}"></script>
-
 <script>
     document.addEventListener('livewire:init', () => {
         Livewire.on('open-midtrans', (data) => {
             window.snap.pay(data.token, {
                 onSuccess: function(result) {
-                    window.location.href = "/transaction-histories";
+                    window.location.href = "/orders/{{ $order->id }}/result";
                 },
+
                 onPending: function(result) {
-                    window.location.href = "/transaction-histories";
+                    window.location.href = "/orders/{{ $order->id }}/result";
                 },
+
                 onError: function(result) {
-                    alert('Pembayaran gagal');
+                    alert('Pembayaran gagal: ' + (result.status_message ||
+                        'Terjadi kesalahan'));
+                },
+                onClose: function() {
+                    alert('Anda menutup popup pembayaran tanpa menyelesaikan pembayaran.');
                 }
             });
         });

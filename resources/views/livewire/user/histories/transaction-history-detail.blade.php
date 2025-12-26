@@ -196,7 +196,7 @@
                         </p>
                     </div>
                 </div>
-
+                {{--
                 @if ($order->payment?->payment_url)
                     <div class="pt-2">
                         <x-normal-button href="{{ $order->payment->payment_url }}" target="_blank" rel="noopener"
@@ -209,7 +209,7 @@
                             </svg>
                         </x-normal-button>
                     </div>
-                @endif
+                @endif --}}
             </div>
 
             {{-- Timeline --}}

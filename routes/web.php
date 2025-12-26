@@ -24,6 +24,7 @@ use App\Livewire\User\Histories\TransactionHistories;
 use App\Livewire\User\Histories\TransactionHistoryDetail;
 use App\Livewire\User\OrderPayment;
 use App\Livewire\User\Profile as UserProfile;
+use App\Livewire\User\TransactionResult;
 use App\Livewire\User\Venues\VenueDetail as UserVenueDetail;
 use App\Livewire\User\Venues\Venues as UserVenues;
 use App\Livewire\Welcome;
@@ -44,7 +45,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', Login::class)->name('login');
     Route::get('/register', Register::class)->name('register');
     Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
-    Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
+    Route::get('/reset-password/{token}', ResetPassword::class)->name('p');
 });
 
 // Socialite
@@ -64,6 +65,7 @@ Route::middleware(['auth', 'force.profile'])->group(function () {
     Route::get('/set-profile', SetProfile::class)->name('profile.setup');
     Route::get('/booking/review', BookingReviews::class)->name('booking.review');
     Route::get('/orders/{order}/pay', OrderPayment::class)->name('orders.pay');
+    Route::get('/orders/{order}/result', TransactionResult::class)->name('transactions.result');
 
     Route::prefix('transaction-histories')->name('transaction-histories.')->group(function () {
         Route::get('/', TransactionHistories::class)->name('index');

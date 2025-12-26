@@ -19,7 +19,7 @@
     @livewireStyles
 </head>
 
-<body class="min-h-screen flex flex-col bg-ptx-black text-[#EDEDEC] antialiased">
+<body class="min-h-screen flex flex-col bg-tp-black text-[#EDEDEC] antialiased">
     <x-navheader-user />
 
     <main class="flex-grow pt-16">
