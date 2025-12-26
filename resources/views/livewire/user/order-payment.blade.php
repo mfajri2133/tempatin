@@ -44,7 +44,7 @@
                 <hr>
 
                 <div class="flex justify-between text-base font-bold">
-                    <span>Total Pembayaran</span>
+                    <span class="text-black">Total Pembayaran</span>
                     <span class="text-indigo-600">
                         Rp {{ number_format($order->total_amount, 0, ',', '.') }}
                     </span>
