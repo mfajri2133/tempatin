@@ -113,13 +113,6 @@
                     <div class="relative">
                         <input type="date" wire:model.live="booking_date" min="{{ now()->toDateString() }}"
                             class="w-full border-2 border-gray-300 focus:border-indigo-600 rounded-lg px-4 py-3 text-sm text-black focus:outline-none transition-colors">
-                        <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-                            <line x1="16" y1="2" x2="16" y2="6" />
-                            <line x1="8" y1="2" x2="8" y2="6" />
-                            <line x1="3" y1="10" x2="21" y2="10" />
-                        </svg>
                     </div>
                 </div>
 
