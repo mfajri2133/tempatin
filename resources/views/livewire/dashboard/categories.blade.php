@@ -6,12 +6,22 @@
         <!-- SEARCH -->
         <div class="flex flex-col gap-4 sm:flex-row items-center justify-between p-4 bg-white">
             <div class="relative w-full sm:w-64">
+
                 <!-- icon -->
                 <svg xmlns="http://www.w3.org/2000/svg"
                     class="size-5 text-blue-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
                     fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m21 21-5.197-5.197a7.5 7.5 0 1 0-10.607-10.607 7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+
+                <!-- loading -->
+                <svg wire:loading wire:target="search"
+                    class="size-4 animate-spin text-blue-400 absolute right-3 top-1/2 -translate-y-1/2"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                        stroke-width="4" />
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
                 </svg>
 
                 <!-- clear -->
@@ -24,6 +34,7 @@
                         </svg>
                     </button>
                 @endif
+
 
                 <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari kategori"
                     class="w-full pl-10 pr-10 py-2 text-sm rounded border border-blue-200 bg-white text-gray-700
