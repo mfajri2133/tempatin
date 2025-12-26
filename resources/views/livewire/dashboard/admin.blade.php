@@ -15,16 +15,14 @@
                 </svg>
 
                 <!-- loading -->
-                @if ($search)
-                    <button wire:click="$set('search','')"
-                        class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                @endif
-                
+                <svg wire:loading wire:target="search"
+                    class="size-4 animate-spin text-blue-400 absolute right-3 top-1/2 -translate-y-1/2"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                        stroke-width="4" />
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                </svg>
+
                 <!-- clear -->
                 @if ($search)
                     <button wire:click="$set('search','')"
