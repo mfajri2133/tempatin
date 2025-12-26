@@ -14,6 +14,17 @@
                         d="m21 21-5.197-5.197a7.5 7.5 0 1 0-10.607-10.607 7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
 
+                <!-- loading -->
+                @if ($search)
+                    <button wire:click="$set('search','')"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                @endif
+                
                 <!-- clear -->
                 @if ($search)
                     <button wire:click="$set('search','')"
