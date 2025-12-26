@@ -8,6 +8,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 #[Layout('layouts.dashboard', ['title' => 'Tambah Venue'])]
@@ -136,6 +137,12 @@ class VenueCreate extends Component
         $this->price_display = $numeric
             ? 'Rp ' . number_format($numeric, 0, ',', '.')
             : '';
+    }
+
+    public function deletePhoto()
+    {
+        Storage::disk('public')->delete($this->image);
+        $this->image = null;
     }
 
     public function render()

@@ -3,6 +3,7 @@
     'label' => 'Foto Venue',
     'preview' => null,
     'type' => 'default',
+    'allowDelete' => true,
 ])
 
 <div class="space-y-3">
@@ -24,7 +25,8 @@
                     alt="Preview" />
 
                 <button type="button" wire:click="$set('{{ $wireModel }}', null)"
-                    class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition shadow-lg z-10">
+                    class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition shadow-lg z-10"
+                    title="Batalkan gambar baru">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -46,13 +48,19 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                 </svg>
-
             </div>
         @endif
     </div>
 
     @if ($hasNewImage)
-        <p class="text-xs text-center text-blue-600 font-medium">Gambar baru (belum disimpan)</p>
+        <p class="text-xs text-center text-blue-600 font-medium flex items-center justify-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Gambar baru (belum disimpan)
+        </p>
     @elseif ($hasExistingPreview)
         <p class="text-xs text-center text-gray-500">Gambar saat ini</p>
     @endif
@@ -71,7 +79,19 @@
             </span>
         </label>
 
-        <div wire:loading wire:target="{{ $wireModel }}" class="text-xs text-blue-600 font-medium">
+        @if ($hasExistingPreview && $allowDelete)
+            <button type="button" wire:click="deletePhoto"
+                class="inline-flex items-center gap-2 px-4 py-2 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition text-sm font-medium border border-red-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Hapus Foto
+            </button>
+        @endif
+
+        <div wire:loading wire:target="{{ $wireModel }}" class="text-xs text-blue-600 font-medium ">
             Mengupload gambar...
         </div>
     </div>

@@ -2,7 +2,7 @@
     <div class="bg-white shadow-md border border-indigo-100 overflow-hidden p-6">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">Informasi Profil</h3>
         <form wire:submit.prevent="saveProfile" class="space-y-5">
-            <x-image-upload wireModel="photo" label="Foto Profil" type="profile" :preview="$user->avatar ? asset('storage/' . $user->avatar) : null" />
+            <x-image-upload wireModel="photo" label="Foto Profil" type="profile" :preview="$user->avatar ? asset('storage/' . $user->avatar) : null" :allow-delete="true" />
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">

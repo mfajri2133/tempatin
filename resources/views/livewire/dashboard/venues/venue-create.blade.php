@@ -14,7 +14,7 @@
     <form wire:submit.prevent="save" class="p-6" enctype="multipart/form-data" autocomplete="off">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div class="col-span-full">
-                <x-image-upload wireModel="image" type="default" />
+                <x-image-upload wireModel="image" type="default" :allow-delete="true" />
             </div>
 
             <div>

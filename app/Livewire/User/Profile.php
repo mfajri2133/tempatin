@@ -72,6 +72,22 @@ class Profile extends Component
         return redirect()->route('user.profile');
     }
 
+    public function deletePhoto()
+    {
+        $user = Auth::user();
+
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+            $user->avatar = null;
+            $user->save();
+            $this->user = $user;
+
+            session()->flash('success', 'Foto profil berhasil dihapus!');
+        }
+
+        return redirect()->route('user.profile');
+    }
+
     public function render()
     {
         return view('livewire.user.profile');

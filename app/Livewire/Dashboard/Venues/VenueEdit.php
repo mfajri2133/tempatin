@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard\Venues;
 use App\Models\Category;
 use App\Models\Venue;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -28,7 +29,6 @@ class VenueEdit extends Component
     public array $cities = [];
 
     public int|string $capacity = '';
-    public string $price_display = '';
     public int|string $price_per_hour = '';
     public string $status = 'available';
 
@@ -42,6 +42,7 @@ class VenueEdit extends Component
         'capacity.integer' => 'Kapasitas harus angka',
         'price_per_hour.required' => 'Harga wajib diisi',
         'price_per_hour.numeric' => 'Harga harus angka',
+        'image.required_if' => 'Gambar venue wajib diupload',
     ];
 
     public function mount(Venue $venue)
@@ -57,9 +58,6 @@ class VenueEdit extends Component
         $this->city_code = $venue->city_code ?? '';
         $this->capacity = $venue->capacity;
         $this->price_per_hour = $venue->price_per_hour;
-        $this->price_display = $venue->price_per_hour
-            ? 'Rp ' . number_format($venue->price_per_hour, 0, ',', '.')
-            : '';
         $this->status = $venue->status;
         $this->existingImage = $venue->venue_img;
     }
@@ -96,7 +94,13 @@ class VenueEdit extends Component
             'capacity' => 'required|integer|min:1',
             'price_per_hour' => 'required|numeric|min:0',
             'status' => 'required|in:available,unavailable',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048',
+                'required_if:existingImage,null',
+            ],
         ]);
 
         $city = collect($this->cities)
@@ -145,14 +149,17 @@ class VenueEdit extends Component
         ]);
     }
 
-    public function updatedPriceDisplay($value)
+    public function deletePhoto()
     {
-        $numeric = preg_replace('/[^0-9]/', '', $value);
+        if ($this->existingImage) {
+            Storage::disk('public')->delete($this->existingImage);
 
-        $this->price_per_hour = $numeric;
-        $this->price_display = $numeric
-            ? 'Rp ' . number_format($numeric, 0, ',', '.')
-            : '';
+            $this->existingImage = null;
+
+            $this->venue->update([
+                'venue_img' => null,
+            ]);
+        }
     }
 
     public function render()
