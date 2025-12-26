@@ -21,6 +21,17 @@
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
                 </svg>
 
+                <!-- clear -->
+                @if ($search)
+                    <button wire:click="$set('search','')"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                @endif
+
                 <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama venue"
                     class="w-full pl-10 pr-10 py-2 text-sm rounded border border-blue-200 bg-white text-gray-700
                focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
