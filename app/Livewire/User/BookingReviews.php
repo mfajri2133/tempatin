@@ -60,7 +60,7 @@ class BookingReviews extends Component
     public function confirmBooking()
     {
         $booking = Booking::create([
-            'user_id'      => auth()->user()->id(),
+            'user_id'      => auth()->id(),
             'venue_id'     => $this->venue->id,
             'booking_date' => $this->booking_date,
             'start_time'   => $this->start_time,
@@ -72,14 +72,14 @@ class BookingReviews extends Component
         ]);
 
         $order = Order::create([
-            'user_id'     => auth()->user()->id(),
+            'user_id'     => auth()->id(),
             'booking_id'  => $booking->id,
             'order_code'  => 'ORD-' . strtoupper(uniqid()),
             'total_amount' => $this->total_price,
             'status'      => 'pending',
         ]);
 
-        return redirect()->route('orders.show', $order);
+        return redirect()->route('orders.pay', $order);
     }
 
     public function render()
