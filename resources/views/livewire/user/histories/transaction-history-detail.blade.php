@@ -98,14 +98,14 @@
                                 {{ $order->booking?->venue?->category?->name ?? '-' }}</p>
                         </div>
                         <div>
-                            <p class="text-xs font-medium text-gray-500 mb-1">Alamat</p>
-                            <p class="text-sm font-semibold text-gray-900">
-                                {{ $order->booking?->venue?->address ?? '-' }}</p>
-                        </div>
-                        <div>
                             <p class="text-xs font-medium text-gray-500 mb-1">Kota</p>
                             <p class="text-sm font-semibold text-gray-900">
                                 {{ $order->booking?->venue?->city_name ?? '-' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 mb-1">Alamat</p>
+                            <p class="text-sm font-semibold text-gray-900">
+                                {{ $order->booking?->venue?->address ?? '-' }}</p>
                         </div>
                         <div>
                             <p class="text-xs font-medium text-gray-500 mb-1">Kapasitas</p>

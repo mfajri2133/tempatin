@@ -3,6 +3,7 @@
 namespace App\Livewire\User;
 
 use App\Models\Order;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -26,8 +27,8 @@ class OrderPayment extends Component
     {
         Config::$serverKey = config('services.midtrans.server_key');
         Config::$isProduction = config('services.midtrans.is_production');
-        Config::$isSanitized = config('services.midtrans.sanitized');
-        Config::$is3ds = config('services.midtrans.3ds');
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
 
         $params = [
             'transaction_details' => [
@@ -38,21 +39,17 @@ class OrderPayment extends Component
                 'first_name' => Auth::user()->name,
                 'email' => Auth::user()->email,
             ],
-            'item_details' => [
-                [
-                    'id' => $this->order->booking->venue->id,
-                    'price' => (int) $this->order->booking->venue->price_per_hour,
-                    'quantity' => (int) $this->order->booking->total_hours,
-                    'name' => $this->order->booking->venue->name,
-                ],
-            ],
         ];
 
         $snapToken = Snap::getSnapToken($params);
 
-        $this->order->update([
-            'snap_token' => $snapToken,
-        ]);
+        Payment::updateOrCreate(
+            ['order_id' => $this->order->id],
+            [
+                'snap_token'     => $snapToken,
+                'payment_status' => 'pending',
+            ]
+        );
 
         $this->dispatch('open-midtrans', token: $snapToken);
     }

@@ -109,15 +109,21 @@
                         </p>
                     </div>
                     <div>
-                        <p class="text-xs font-medium text-gray-500 mb-1">Alamat Lengkap</p>
+                        <p class="text-xs font-medium text-gray-500 mb-1">Kategori</p>
                         <p class="text-sm font-semibold text-gray-800">
-                            {{ $transaction->booking?->venue?->address ?? '-' }}
+                            {{ $transaction->booking?->venue?->category?->name ?? '-' }}
                         </p>
                     </div>
                     <div>
                         <p class="text-xs font-medium text-gray-500 mb-1">Kota</p>
                         <p class="text-sm font-semibold text-gray-800">
                             {{ $transaction->booking?->venue?->city_name ?? '-' }}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-500 mb-1">Alamat Lengkap</p>
+                        <p class="text-sm font-semibold text-gray-800">
+                            {{ $transaction->booking?->venue?->address ?? '-' }}
                         </p>
                     </div>
                 </div>
