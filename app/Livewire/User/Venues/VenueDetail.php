@@ -48,10 +48,12 @@ class VenueDetail extends Component
             $this->show_availability = false;
             $this->start_time = '';
             $this->end_time = '';
+            $this->calculatePrice();
         }
 
         if ($property === 'start_time') {
             $this->end_time = '';
+            $this->calculatePrice();
         }
     }
 
@@ -71,13 +73,13 @@ class VenueDetail extends Component
             return [];
         }
 
+        // Hanya cek booking yang masih aktif (bukan cancelled atau finished)
         $bookings = Booking::where('venue_id', $this->venue->id)
             ->where('booking_date', $this->booking_date)
             ->whereIn('status', ['waiting', 'progress'])
             ->get(['start_time', 'end_time']);
 
         $bookedHours = [];
-
         foreach ($bookings as $booking) {
             $start = (int) substr($booking->start_time, 0, 2);
             $end   = (int) substr($booking->end_time, 0, 2);
@@ -90,7 +92,6 @@ class VenueDetail extends Component
         $bookedHours = array_unique($bookedHours);
 
         $availableHours = [];
-
         for ($hour = 6; $hour <= 22; $hour++) {
             $availableHours[] = [
                 'hour'      => $hour,
@@ -102,6 +103,40 @@ class VenueDetail extends Component
         return $availableHours;
     }
 
+    public function getStartTimeOptionsProperty()
+    {
+        if (!$this->booking_date) {
+            return [];
+        }
+
+        $bookings = Booking::where('venue_id', $this->venue->id)
+            ->where('booking_date', $this->booking_date)
+            ->whereIn('status', ['waiting', 'progress'])
+            ->get(['start_time', 'end_time']);
+
+        $bookedHours = [];
+        foreach ($bookings as $booking) {
+            $start = (int) substr($booking->start_time, 0, 2);
+            $end   = (int) substr($booking->end_time, 0, 2);
+
+            for ($hour = $start; $hour < $end; $hour++) {
+                $bookedHours[] = $hour;
+            }
+        }
+
+        $options = [];
+        for ($hour = 6; $hour <= 22; $hour++) {
+            $isBooked = in_array($hour, $bookedHours);
+
+            $options[] = [
+                'value' => sprintf('%02d:00', $hour),
+                'label' => sprintf('%02d:00', $hour),
+                'disabled' => $isBooked
+            ];
+        }
+
+        return $options;
+    }
 
     public function getEndTimeOptionsProperty()
     {
@@ -110,12 +145,35 @@ class VenueDetail extends Component
         }
 
         $startHour = (int)substr($this->start_time, 0, 2);
-        $options = [];
 
-        for ($i = $startHour + 1; $i <= 22; $i++) {
+        $bookings = Booking::where('venue_id', $this->venue->id)
+            ->where('booking_date', $this->booking_date)
+            ->whereIn('status', ['waiting', 'progress'])
+            ->get(['start_time', 'end_time']);
+
+        $maxEndHour = 23; // Default maksimal jam 23:00
+
+        foreach ($bookings as $booking) {
+            $bookingStartHour = (int) substr($booking->start_time, 0, 2);
+            $bookingEndHour   = (int) substr($booking->end_time, 0, 2);
+
+            // Jika ada booking yang dimulai setelah start_time kita
+            // Maka end_time maksimal adalah saat booking tersebut dimulai
+            if ($bookingStartHour > $startHour && $bookingStartHour < $maxEndHour) {
+                $maxEndHour = $bookingStartHour;
+            }
+
+            // Safety check
+            if ($startHour >= $bookingStartHour && $startHour < $bookingEndHour) {
+                return [];
+            }
+        }
+
+        $options = [];
+        for ($hour = $startHour + 1; $hour <= $maxEndHour; $hour++) {
             $options[] = [
-                'value' => sprintf('%02d:00', $i),
-                'label' => sprintf('%02d:00', $i)
+                'value' => sprintf('%02d:00', $hour),
+                'label' => sprintf('%02d:00', $hour)
             ];
         }
 
@@ -135,6 +193,24 @@ class VenueDetail extends Component
             'start_time'   => ['required'],
             'end_time'     => ['required', 'after:start_time'],
         ]);
+
+        // Double check availability
+        $conflict = Booking::where('venue_id', $this->venue->id)
+            ->where('booking_date', $this->booking_date)
+            ->whereIn('status', ['waiting', 'progress'])
+            ->where(function ($q) {
+                $q->where('start_time', '<', $this->end_time)
+                    ->where('end_time', '>', $this->start_time);
+            })
+            ->exists();
+
+        if ($conflict) {
+            session()->flash('error', 'Jadwal sudah dibooking oleh pengguna lain');
+            $this->start_time = '';
+            $this->end_time = '';
+            $this->calculatePrice();
+            return;
+        }
 
         return redirect()->route('booking.review', [
             'venue'        => $this->venue->id,

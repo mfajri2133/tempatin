@@ -33,7 +33,7 @@ class TransactionHistoryDetail extends Component
                 ]);
             },
             'payment' => function ($query) {
-                $query->select('id', 'order_id', 'payment_status', 'invoice_id', 'external_id', 'payment_url', 'paid_at', 'expired_at', 'created_at');
+                $query->select('id', 'order_id', 'payment_status', 'invoice_id', 'external_id', 'paid_at', 'expired_at', 'created_at');
             },
             'user:id,name,email,avatar'
         ])
