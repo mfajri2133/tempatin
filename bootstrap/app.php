@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\ExpireOrders;
 use App\Http\Middleware\ForceCompleteProfile;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Application;
@@ -12,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
+    ->withCommands([
+        ExpireOrders::class,
+    ])
     ->withMiddleware(function (Middleware $middleware): void {
         //
         $middleware->alias([
