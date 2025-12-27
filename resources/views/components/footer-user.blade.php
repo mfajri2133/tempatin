@@ -46,11 +46,11 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 5l7 7-7 7" />
                             </svg>
-                            Daftar Tempat
+                            Cari Venue
                         </a>
                     </li>
                     <li>
-                        <a href="/contact"
+                        <a href="{{ route('contact') }}"
                             class="text-sm text-gray-400 hover:text-indigo-400 transition-colors inline-flex items-center group">
                             <svg class="w-4 h-4 mr-2 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@
                 <h4 class="text-sm font-semibold text-white mb-4">Bantuan</h4>
                 <ul class="space-y-3">
                     <li>
-                        <a href="/faq"
+                        <a href="{{ route('faq') }}"
                             class="text-sm text-gray-400 hover:text-indigo-400 transition-colors inline-flex items-center group">
                             <svg class="w-4 h-4 mr-2 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,7 +78,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/how-to-book"
+                        <a href="{{ route('welcome') }}/#cara-booking"
                             class="text-sm text-gray-400 hover:text-indigo-400 transition-colors inline-flex items-center group">
                             <svg class="w-4 h-4 mr-2 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,7 +89,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/terms"
+                        <a href="{{ route('tnc') }}"
                             class="text-sm text-gray-400 hover:text-indigo-400 transition-colors inline-flex items-center group">
                             <svg class="w-4 h-4 mr-2 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -97,17 +97,6 @@
                                     d="M9 5l7 7-7 7" />
                             </svg>
                             Syarat & Ketentuan
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/privacy"
-                            class="text-sm text-gray-400 hover:text-indigo-400 transition-colors inline-flex items-center group">
-                            <svg class="w-4 h-4 mr-2 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 5l7 7-7 7" />
-                            </svg>
-                            Kebijakan Privasi
                         </a>
                     </li>
                 </ul>
@@ -137,7 +126,7 @@
                         </svg>
                         <a href="mailto:tempatin@gmail.com"
                             class="text-sm text-gray-400 hover:text-indigo-400 transition-colors">
-                            tempatin@gmail.com
+                            tempatin.web@gmail.com
                         </a>
                     </li>
                 </ul>

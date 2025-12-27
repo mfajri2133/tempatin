@@ -5,6 +5,7 @@ use App\Http\Controllers\SocialiteController;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\SetProfile;
+use App\Livewire\Contact;
 use App\Livewire\Dashboard;
 use App\Livewire\Dashboard\Profile as DashboardProfile;
 use App\Livewire\Dashboard\Venues\VenueEdit;
@@ -16,8 +17,10 @@ use App\Livewire\Dashboard\Admin;
 use App\Livewire\Dashboard\Categories;
 use App\Livewire\Dashboard\Transactions\TransactionDetail;
 use App\Livewire\Dashboard\Transactions\Transactions;
+use App\Livewire\Faq;
 use App\Livewire\ForgotPassword;
 use App\Livewire\ResetPassword;
+use App\Livewire\Tnc;
 use App\Livewire\User\About;
 use App\Livewire\User\BookingReviews;
 use App\Livewire\User\Histories\TransactionHistories;
@@ -35,6 +38,10 @@ use Illuminate\Support\Facades\Route;
 // Public Route
 Route::get('/', Welcome::class)->name('welcome');
 Route::get('/about', About::class)->name('about');
+Route::get('/contact', Contact::class)->name('contact');
+Route::get('/faq', Faq::class)->name('faq');
+Route::get('/tnc', Tnc::class)->name('tnc');
+
 Route::prefix('venues')->name('venues.')->group(function () {
     Route::get('/', UserVenues::class)->name('index');
     Route::get('/{venue}/detail', UserVenueDetail::class)->name('show');

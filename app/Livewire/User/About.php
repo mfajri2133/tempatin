@@ -10,6 +10,6 @@ class About extends Component
 {
     public function render()
     {
-        return view('livewire.user.about');
+        return view('livewire.about');
     }
 }
