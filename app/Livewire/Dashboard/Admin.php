@@ -12,7 +12,7 @@ use Livewire\Component;
 class Admin extends Component
 {
     public string $search = '';
-
+    public ?int $userLoggedId = null;
     public ?int $userId = null;
     public string $name = '';
     public string $email = '';
@@ -126,6 +126,11 @@ class Admin extends Component
                 ? 'nullable|min:8'
                 : 'required|min:8',
         ]);
+    }
+
+    public function mount()
+    {
+        $this->userLoggedId = auth()->id();
     }
 
     public function render()
