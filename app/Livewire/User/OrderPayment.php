@@ -72,10 +72,10 @@ class OrderPayment extends Component
             'expiry' => [
                 'start_time' => now()->format('Y-m-d H:i:s O'),
                 'unit'       => 'minutes',
-                'duration'   => 6,
+                'duration'   => 1,
             ],
             'callbacks' => [
-                'finish' => route('transactions.result', $this->order),
+                'finish' => route('transactions.result', ['order_id' => $this->order->order_code]),
             ],
         ];
 
