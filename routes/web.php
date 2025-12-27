@@ -72,7 +72,7 @@ Route::middleware(['auth', 'force.profile'])->group(function () {
     Route::get('/set-profile', SetProfile::class)->name('profile.setup');
     Route::get('/booking/review', BookingReviews::class)->name('booking.review');
     Route::get('/orders/{order}/pay', OrderPayment::class)->name('orders.pay');
-    Route::get('/orders/{order}/result', TransactionResult::class)->name('transactions.result');
+    Route::get('/transaction-result', TransactionResult::class)->name('transactions.result');
 
     Route::prefix('transaction-histories')->name('transaction-histories.')->group(function () {
         Route::get('/', TransactionHistories::class)->name('index');

@@ -11,34 +11,39 @@ use Barryvdh\DomPDF\Facade\Pdf;
 #[Layout('layouts.app', ['title' => 'Hasil Transaksi'])]
 class TransactionResult extends Component
 {
-    public Order $order;
-    public $isSuccess = false;
+    public ?Order $order = null;
+    public bool $isSuccess = false;
+    public string $status = '';
 
-    public function mount(Order $order)
+    public function mount()
     {
-        abort_if($order->user_id !== Auth::id(), 403);
+        $orderCode = request()->query('order_id');
+        $this->status = request()->query('transaction_status', '');
 
-        $this->order = $order->load(['booking.venue', 'payment', 'user']);
+        abort_if(!$orderCode, 404);
+
+        $this->order = Order::with(['booking.venue', 'payment', 'user'])
+            ->where('order_code', $orderCode)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
 
         $this->isSuccess =
-            $this->order->payment !== null &&
+            $this->order->payment &&
             $this->order->payment->payment_status === 'paid';
     }
 
     public function downloadPdf()
     {
-        if (!$this->isSuccess) {
-            session()->flash('error', 'Hanya transaksi yang berhasil yang dapat diunduh.');
-            return;
-        }
+        abort_if(!$this->isSuccess, 403);
 
         $pdf = Pdf::loadView('pdf.transaction-receipt', [
             'order' => $this->order
         ]);
 
-        return response()->streamDownload(function () use ($pdf) {
-            echo $pdf->stream();
-        }, 'Invoice-' . $this->order->order_code . '.pdf');
+        return response()->streamDownload(
+            fn() => print($pdf->output()),
+            'Invoice-' . $this->order->order_code . '.pdf'
+        );
     }
 
     public function render()
