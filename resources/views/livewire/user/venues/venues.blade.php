@@ -104,7 +104,7 @@
     <div class="bg-[#0f0f0f]">
         <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6">
             @if ($venues->count() > 0)
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($venues as $venue)
                         <a href="{{ route('venues.show', $venue->id) }}" wire:navigate
                             class="group block bg-white rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/20 transition-all duration-300 border border-gray-100 hover:border-indigo-300 hover:-translate-y-1">
