@@ -22,13 +22,9 @@ class TransactionHistories extends Component
         $bookingStatus = $order->booking?->status;
         $paymentStatus = $order->payment?->payment_status;
 
-        if ($paymentStatus) {
-            $displayStatus = $paymentStatus;
-        } elseif ($bookingStatus) {
-            $displayStatus = $bookingStatus;
-        } else {
-            $displayStatus = $orderStatus;
-        }
+        $displayStatus = $order->status
+            ?? $order->payment?->payment_status
+            ?? $order->booking?->status;
 
         $statusText = $displayStatus ? ucfirst(str_replace('_', ' ', $displayStatus)) : '-';
         $statusKey = strtolower((string) $displayStatus);

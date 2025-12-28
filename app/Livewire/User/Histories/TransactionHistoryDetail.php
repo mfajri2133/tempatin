@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 #[Layout('layouts.app', ['title' => 'Detail Histori Transaksi'])]
 class TransactionHistoryDetail extends Component
@@ -42,19 +43,52 @@ class TransactionHistoryDetail extends Component
             ->firstOrFail();
     }
 
+    public function pay()
+    {
+        abort_if(!$this->order, 404);
+
+        if ($this->order->status !== 'pending') {
+            session()->flash('error', 'Transaksi tidak dapat dibayar.');
+            return;
+        }
+
+        return redirect()->route('orders.pay', $this->order->id);
+    }
+
+    public function cancelOrder()
+    {
+        abort_if(!$this->order, 404);
+
+        if ($this->order->status !== 'pending') {
+            session()->flash('error', 'Transaksi tidak dapat dibatalkan.');
+            return;
+        }
+
+        DB::transaction(function () {
+            $this->order->update(['status' => 'failed']);
+
+            if ($this->order->booking) {
+                $this->order->booking->update(['status' => 'cancelled']);
+            }
+
+            if ($this->order->payment) {
+                $this->order->payment->update([
+                    'payment_status' => 'cancelled',
+                    'expired_at' => now(),
+                ]);
+            }
+        });
+
+        session()->flash('success', 'Transaksi berhasil dibatalkan.');
+
+        return redirect()->route('transaction-histories.index');
+    }
+
     public function getStatusBadgeProperty()
     {
-        $orderStatus = $this->order->status;
-        $bookingStatus = $this->order->booking?->status;
-        $paymentStatus = $this->order->payment?->payment_status;
-
-        if ($paymentStatus) {
-            $displayStatus = $paymentStatus;
-        } elseif ($bookingStatus) {
-            $displayStatus = $bookingStatus;
-        } else {
-            $displayStatus = $orderStatus;
-        }
+        $displayStatus = $this->order->status
+            ?? $this->order->payment?->payment_status
+            ?? $this->order->booking?->status;
 
         $statusText = $displayStatus ? ucfirst(str_replace('_', ' ', $displayStatus)) : '-';
         $statusKey = strtolower((string) $displayStatus);

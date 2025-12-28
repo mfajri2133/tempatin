@@ -19,7 +19,6 @@ class Dashboard extends Component
 {
     public $start_date;
     public $end_date;
-    public $period = 'month';
 
     public function mount()
     {
@@ -35,22 +34,6 @@ class Dashboard extends Component
             new DashboardExport($this->start_date, $this->end_date),
             $filename
         );
-    }
-
-    public function setPeriod($period)
-    {
-        $this->period = $period;
-
-        if ($period === 'month') {
-            $this->start_date = now()->startOfMonth()->format('Y-m-d');
-            $this->end_date = now()->endOfMonth()->format('Y-m-d');
-        } elseif ($period === 'year') {
-            $this->start_date = now()->startOfYear()->format('Y-m-d');
-            $this->end_date = now()->endOfYear()->format('Y-m-d');
-        } elseif ($period === 'all') {
-            $this->start_date = null;
-            $this->end_date = null;
-        }
     }
 
     public function render()
@@ -107,82 +90,80 @@ class Dashboard extends Component
 
     private function getChartData()
     {
-        if ($this->period === 'year' || !$this->start_date) {
-            $data = Order::select(
-                DB::raw('MONTH(created_at) as month'),
-                DB::raw('COUNT(*) as total')
-            )
-                ->when($this->start_date && $this->end_date, function ($query) {
-                    $query->whereBetween('created_at', [
-                        $this->start_date . ' 00:00:00',
-                        $this->end_date . ' 23:59:59'
-                    ]);
-                })
-                ->groupBy('month')
-                ->orderBy('month')
+        $start = Carbon::parse($this->start_date);
+        $end = Carbon::parse($this->end_date);
+        $diffInDays = $start->diffInDays($end);
+
+        // ≤ 31 hari → tampil per hari
+        if ($diffInDays <= 31) {
+            $data = Order::where('status', 'paid')
+                ->select(
+                    DB::raw('DATE(created_at) as date'),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->whereBetween('created_at', [
+                    $this->start_date . ' 00:00:00',
+                    $this->end_date . ' 23:59:59'
+                ])
+                ->groupBy('date')
+                ->orderBy('date')
                 ->get()
-                ->pluck('total', 'month')
+                ->pluck('total', 'date')
                 ->toArray();
 
-            $months = [
-                1 => 'Jan',
-                2 => 'Feb',
-                3 => 'Mar',
-                4 => 'Apr',
-                5 => 'Mei',
-                6 => 'Jun',
-                7 => 'Jul',
-                8 => 'Agu',
-                9 => 'Sep',
-                10 => 'Okt',
-                11 => 'Nov',
-                12 => 'Des'
-            ];
-
             $chartData = [];
-            foreach ($months as $num => $label) {
+            $period = CarbonPeriod::create($start, $end);
+
+            foreach ($period as $date) {
+                $dateStr = $date->format('Y-m-d');
                 $chartData[] = [
-                    'label' => $label,
-                    'value' => $data[$num] ?? 0
+                    'label' => $date->format('d M'),
+                    'value' => $data[$dateStr] ?? 0
                 ];
             }
 
             return $chartData;
-        } else {
-            $start = Carbon::parse($this->start_date);
-            $end = Carbon::parse($this->end_date);
-            $diffInDays = $start->diffInDays($end);
-
-            if ($diffInDays <= 31) {
-                $data = Order::select(
-                    DB::raw('DATE(created_at) as date'),
-                    DB::raw('COUNT(*) as total')
-                )
-                    ->whereBetween('created_at', [
-                        $this->start_date . ' 00:00:00',
-                        $this->end_date . ' 23:59:59'
-                    ])
-                    ->groupBy('date')
-                    ->orderBy('date')
-                    ->get()
-                    ->pluck('total', 'date')
-                    ->toArray();
-
-                $chartData = [];
-                $period = CarbonPeriod::create($start, $end);
-
-                foreach ($period as $date) {
-                    $dateStr = $date->format('Y-m-d');
-                    $chartData[] = [
-                        'label' => $date->format('d M'),
-                        'value' => $data[$dateStr] ?? 0
-                    ];
-                }
-
-                return $chartData;
-            } else {
-                return $this->getChartData();
-            }
         }
+
+        // > 31 hari → tampil per bulan
+        $data = Order::where('status', 'paid')
+            ->select(
+                DB::raw('MONTH(created_at) as month'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->whereBetween('created_at', [
+                $this->start_date . ' 00:00:00',
+                $this->end_date . ' 23:59:59'
+            ])
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get()
+            ->pluck('total', 'month')
+            ->toArray();
+
+        $months = [
+            1 => 'Jan',
+            2 => 'Feb',
+            3 => 'Mar',
+            4 => 'Apr',
+            5 => 'Mei',
+            6 => 'Jun',
+            7 => 'Jul',
+            8 => 'Agu',
+            9 => 'Sep',
+            10 => 'Okt',
+            11 => 'Nov',
+            12 => 'Des'
+        ];
+
+        $chartData = [];
+        foreach ($months as $num => $label) {
+            $chartData[] = [
+                'label' => $label,
+                'value' => $data[$num] ?? 0
+            ];
+        }
+
+        return $chartData;
     }
 }

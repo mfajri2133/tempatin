@@ -7,10 +7,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('layouts.dashboard', ['title' => 'Admin'])]
 class Admin extends Component
 {
+    use WithPagination;
     public string $search = '';
     public ?int $userLoggedId = null;
     public ?int $userId = null;
@@ -144,7 +146,7 @@ class Admin extends Component
                 });
             })
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('livewire.dashboard.admin', compact('users'));
     }

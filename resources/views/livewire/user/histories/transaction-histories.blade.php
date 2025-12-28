@@ -67,14 +67,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end gap-2">
-                            @if ($order->status === 'pending')
-                                <x-normal-button href="{{ route('orders.pay', $order->id) }}"
-                                    class="text-xs font-medium text-indigo-600 hover:text-indigo-700 px-3 py-1.5 rounded border border-indigo-600 hover:bg-indigo-50 transition-colors bg-transparent">
-                                    Bayar Sekarang
-                                </x-normal-button>
-                            @endif
-
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end">
                             <x-normal-button href="{{ route('transaction-histories.show', $order->id) }}"
                                 class="text-xs font-medium text-tp-black hover:text-gray-700 px-3 py-1.5 rounded border border-gray-300 hover:bg-gray-50 transition-colors bg-transparent">
                                 Lihat Detail
@@ -84,11 +77,9 @@
                 @endforeach
             </div>
 
-            @if (method_exists($orders, 'links'))
-                <div class="mt-8">
-                    {{ $orders->links() }}
-                </div>
-            @endif
+            <div class="m-6 flex justify-center sm:justify-end">
+                {{ $orders->links('components.pagination', ['color' => 'indigo']) }}
+            </div>
         @else
             <div class="text-center py-20">
                 <svg class="mx-auto h-12 w-12 text-tp-white/50 mb-4" fill="none" viewBox="0 0 24 24"

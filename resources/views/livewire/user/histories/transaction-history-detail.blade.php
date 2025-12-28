@@ -15,6 +15,22 @@
                 </svg>
                 Kembali
             </x-normal-button>
+
+            @if ($order->status === 'pending' && (!$order->payment || now()->lessThan($order->payment->expired_at)))
+                <div class="flex flex-wrap gap-2 mt-4">
+                    {{-- BAYAR --}}
+                    <button wire:click="pay"
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
+                        Bayar Sekarang
+                    </button>
+
+                    {{-- BATAL --}}
+                    <button wire:click="cancelOrder" wire:confirm="Apakah Anda yakin ingin membatalkan transaksi ini?"
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded bg-red-100 hover:bg-red-200 text-red-700 text-sm font-semibold transition">
+                        Batalkan Transaksi
+                    </button>
+                </div>
+            @endif
         </div>
 
         {{-- Main Card --}}
@@ -33,28 +49,6 @@
                         <span
                             class="inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full {{ $statusBadge['class'] ?? 'bg-gray-100 text-gray-700' }}">
                             Status: {{ strtoupper($statusBadge['text'] ?? '-') }}
-                        </span>
-
-                        {{-- Status Payment (raw) --}}
-                        <span
-                            class="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full
-                            {{ $order->payment?->payment_status === 'pending' ? 'bg-indigo-100 text-indigo-700' : '' }}
-                            {{ $order->payment?->payment_status === 'paid' ? 'bg-green-100 text-green-700' : '' }}
-                            {{ in_array($order->payment?->payment_status, ['expired', 'expire'], true) ? 'bg-orange-100 text-orange-700' : '' }}
-                            {{ $order->payment?->payment_status === 'failed' ? 'bg-red-100 text-red-700' : '' }}
-                            {{ !$order->payment ? 'bg-gray-100 text-gray-700' : '' }}">
-                            Payment: {{ strtoupper($order->payment?->payment_status ?? 'PENDING') }}
-                        </span>
-
-                        {{-- Status Booking --}}
-                        <span
-                            class="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full
-                            {{ $order->booking?->status === 'waiting' ? 'bg-amber-100 text-amber-700' : '' }}
-                            {{ $order->booking?->status === 'progress' ? 'bg-blue-100 text-blue-700' : '' }}
-                            {{ $order->booking?->status === 'finished' ? 'bg-green-100 text-green-700' : '' }}
-                            {{ in_array($order->booking?->status, ['cancelled', 'canceled'], true) ? 'bg-red-100 text-red-700' : '' }}
-                            {{ !$order->booking ? 'bg-gray-100 text-gray-700' : '' }}">
-                            Booking: {{ strtoupper($order->booking?->status ?? '-') }}
                         </span>
                     </div>
                 </div>

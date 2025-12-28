@@ -18,7 +18,6 @@ class TransactionResult extends Component
     public function mount()
     {
         $orderCode = request()->query('order_id');
-        $this->status = request()->query('transaction_status', '');
 
         abort_if(!$orderCode, 404);
 

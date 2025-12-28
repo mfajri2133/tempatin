@@ -197,8 +197,8 @@
                         </a>
                     @endforeach
                 </div>
-                <div class="mt-8">
-                    {{ $venues->links('components.pagination') }}
+                <div class="m-6 flex justify-center sm:justify-end">
+                    {{ $venues->links('components.pagination', ['color' => 'indigo']) }}
                 </div>
             @else
                 <div class="text-center py-20">

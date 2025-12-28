@@ -32,23 +32,20 @@ class OrderPayment extends Component
     public function checkExpiration()
     {
         if ($this->order->payment && $this->order->payment->expired_at) {
-            if (now()->greaterThan($this->order->payment->expired_at)) {
-                $this->isExpired = true;
-
-                DB::transaction(function () {
-                    $this->order->update(['status' => 'expired']);
-                    $this->order->booking->update(['status' => 'cancelled']);
-                    $this->order->payment->update(['payment_status' => 'expire']);
-                });
-
-                session()->flash('error', 'Waktu pembayaran telah habis. Silakan buat booking baru.');
-            }
+            $this->isExpired = now()->greaterThan(
+                $this->order->payment->expired_at
+            );
         }
     }
 
     public function pay()
     {
         $this->checkExpiration();
+
+        if ($this->order->payment && $this->order->payment->snap_token) {
+            $this->dispatch('open-midtrans', token: $this->order->payment->snap_token);
+            return;
+        }
 
         if ($this->isExpired) {
             session()->flash('error', 'Waktu pembayaran telah habis.');
@@ -72,7 +69,7 @@ class OrderPayment extends Component
             'expiry' => [
                 'start_time' => now()->format('Y-m-d H:i:s O'),
                 'unit'       => 'minutes',
-                'duration'   => 1,
+                'duration'   => 2,
             ],
             'callbacks' => [
                 'finish' => route('transactions.result', ['order_id' => $this->order->order_code]),
@@ -88,7 +85,7 @@ class OrderPayment extends Component
                     'invoice_id'     => $this->order->order_code,
                     'snap_token'     => $snapToken,
                     'payment_status' => 'pending',
-                    'expired_at'     => now()->addMinutes(6),
+                    'expired_at'     => now()->addMinutes(2),
                 ]
             );
 

@@ -5,10 +5,12 @@ namespace App\Livewire\Dashboard;
 use App\Models\User;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('layouts.dashboard', ['title' => 'Pengguna'])]
 class Users extends Component
 {
+    use WithPagination;
     public string $search = '';
 
     public function render()
@@ -22,7 +24,7 @@ class Users extends Component
                 });
             })
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('livewire.dashboard.users', [
             'users' => $users

@@ -6,21 +6,6 @@
         </div>
 
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <div class="flex gap-2 p-1 bg-gray-100 rounded-lg">
-                <button wire:click="setPeriod('month')"
-                    class="px-3 py-1.5 text-xs font-medium rounded transition {{ $period === 'month' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-600 hover:text-gray-900' }}">
-                    Bulan Ini
-                </button>
-                <button wire:click="setPeriod('year')"
-                    class="px-3 py-1.5 text-xs font-medium rounded transition {{ $period === 'year' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-600 hover:text-gray-900' }}">
-                    Tahun Ini
-                </button>
-                <button wire:click="setPeriod('all')"
-                    class="px-3 py-1.5 text-xs font-medium rounded transition {{ $period === 'all' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-600 hover:text-gray-900' }}">
-                    Semua
-                </button>
-            </div>
-
             <div class="flex items-center gap-2">
                 <input type="date" wire:model.live="start_date"
                     class="px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">

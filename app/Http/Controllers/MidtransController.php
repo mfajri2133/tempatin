@@ -42,7 +42,9 @@ class MidtransController extends Controller
                         'external_id'    => $transactionId,
                         'payment_status' => $transactionStatus,
                         'paid_at'        => $isPaid ? now() : null,
-                        'expired_at'     => $isExpired ? now() : $order->payment?->expired_at,
+                        'expired_at' => $isExpired
+                            ? ($notification->expiry_time ?? now())
+                            : $order->payment?->expired_at,
                     ]
                 );
 

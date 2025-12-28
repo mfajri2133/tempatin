@@ -82,11 +82,9 @@
                 @endforelse
             </tbody>
         </table>
-    </div>
 
-    @if (method_exists($transactions, 'links'))
-        <div class="p-4 border-t border-blue-100">
-            {{ $transactions->links() }}
+        <div class="m-6 flex justify-center sm:justify-end">
+            {{ $transactions->links('components.pagination', ['color' => 'blue']) }}
         </div>
-    @endif
+    </div>
 </div>

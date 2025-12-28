@@ -5,11 +5,13 @@ namespace App\Livewire\Dashboard;
 use App\Models\Category;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('layouts.dashboard', ['title' => 'Kategori'])]
 
 class Categories extends Component
 {
+    use WithPagination;
     public string $search = '';
     public ?int $categoryId = null;
     public string $name = '';
@@ -102,7 +104,7 @@ class Categories extends Component
                 $query->where('name', 'like', "%{$this->search}%");
             })
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('livewire.dashboard.categories', compact('categories'));
     }

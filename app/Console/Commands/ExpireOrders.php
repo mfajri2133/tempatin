@@ -16,7 +16,7 @@ class ExpireOrders extends Command
         $expiredOrders = Order::where('status', 'pending')
             ->whereHas('payment', function ($query) {
                 $query->where('payment_status', 'pending')
-                    ->where('created_at', '<', now()->subMinutes(6));
+                    ->where('created_at', '<', now()->subMinutes(2));
             })
             ->with(['booking', 'payment'])
             ->get();

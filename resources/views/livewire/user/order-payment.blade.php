@@ -136,11 +136,13 @@
         Livewire.on('open-midtrans', (data) => {
             window.snap.pay(data.token, {
                 onSuccess: function(result) {
-                    window.location.href = "/transactions/{{ $order->id }}/result";
+                    window.location.href =
+                        "{{ route('transactions.result') }}?order_id={{ $order->order_code }}";
                 },
 
                 onPending: function(result) {
-                    window.location.href = "/transactions/{{ $order->id }}/result";
+                    window.location.href =
+                        "{{ route('transactions.result') }}?order_id={{ $order->order_code }}";
                 },
 
                 onError: function(result) {
@@ -149,7 +151,7 @@
                 },
 
                 onClose: function() {
-                    console.log('Popup ditutup tanpa pembayaran');
+                    alert('Pembayaran belum diselesaikan.');
                 }
             });
         });
