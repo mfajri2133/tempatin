@@ -15,22 +15,6 @@
                 </svg>
                 Kembali
             </x-normal-button>
-
-            @if ($order->status === 'pending' && (!$order->payment || now()->lessThan($order->payment->expired_at)))
-                <div class="flex flex-wrap gap-2 mt-4">
-                    {{-- BAYAR --}}
-                    <button wire:click="pay"
-                        class="inline-flex items-center gap-2 px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
-                        Bayar Sekarang
-                    </button>
-
-                    {{-- BATAL --}}
-                    <button wire:click="cancelOrder" wire:confirm="Apakah Anda yakin ingin membatalkan transaksi ini?"
-                        class="inline-flex items-center gap-2 px-4 py-2 rounded bg-red-100 hover:bg-red-200 text-red-700 text-sm font-semibold transition">
-                        Batalkan Transaksi
-                    </button>
-                </div>
-            @endif
         </div>
 
         {{-- Main Card --}}
@@ -238,6 +222,25 @@
                     </div>
                 </div>
             @endif
+
+            <div class="flex justify-end m-4">
+                @if ($order->status === 'pending' && (!$order->payment || now()->lessThan($order->payment->expired_at)))
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        {{-- BAYAR --}}
+                        <button wire:click="pay"
+                            class="inline-flex items-center gap-2 px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
+                            Bayar Sekarang
+                        </button>
+
+                        {{-- BATAL --}}
+                        <button wire:click="cancelOrder"
+                            wire:confirm="Apakah Anda yakin ingin membatalkan transaksi ini?"
+                            class="inline-flex items-center gap-2 px-4 py-2 rounded bg-red-100 hover:bg-red-200 text-red-700 text-sm font-semibold transition">
+                            Batalkan Transaksi
+                        </button>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 </div>
