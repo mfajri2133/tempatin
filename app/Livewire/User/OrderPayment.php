@@ -4,6 +4,7 @@ namespace App\Livewire\User;
 
 use App\Models\Order;
 use App\Models\Payment;
+use App\Traits\WithToast;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,7 @@ use Midtrans\Config;
 #[Layout('layouts.app', ['title' => 'Pembayaran'])]
 class OrderPayment extends Component
 {
+    use WithToast;
     public Order $order;
     public $isExpired = false;
 
@@ -48,7 +50,7 @@ class OrderPayment extends Component
         }
 
         if ($this->isExpired) {
-            session()->flash('error', 'Waktu pembayaran telah habis.');
+            $this->toast('error', 'Waktu pembayaran telah habis.');
             return;
         }
 
@@ -91,8 +93,7 @@ class OrderPayment extends Component
 
             $this->dispatch('open-midtrans', token: $snapToken);
         } catch (Exception $e) {
-
-            session()->flash('error', 'Gagal memproses pembayaran. Silakan coba lagi.');
+            $this->toast('error', 'Gagal memproses pembayaran. Silakan coba lagi.');
         }
     }
 
@@ -112,11 +113,11 @@ class OrderPayment extends Component
                 }
             });
 
-            session()->flash('success', 'Pembayaran berhasil dibatalkan.');
+            $this->toast('success', 'Pembayaran berhasil dibatalkan.');
 
             return redirect()->route('transaction-histories.index');
         } catch (Exception $e) {
-            session()->flash('error', 'Gagal membatalkan pembayaran. Silakan coba lagi.');
+            $this->toast('error', 'Gagal membatalkan pembayaran. Silakan coba lagi.');
         }
     }
 

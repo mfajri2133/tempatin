@@ -3,12 +3,14 @@
 namespace App\Livewire;
 
 use App\Models\Mail;
+use App\Traits\WithToast;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 #[Layout('layouts.app', ['title' => 'Contact'])]
 class Contact extends Component
 {
+    use WithToast;
     public string $name = '';
     public string $email = '';
     public string $message = '';
@@ -27,7 +29,7 @@ class Contact extends Component
             'message' => $this->message,
         ]);
 
-        session()->flash('success', 'Pesan Anda telah terkirim. Terima kasih!');
+        $this->toast('success', 'Pesan Anda telah terkirim! Kami akan menghubungi Anda segera.');
 
         $this->reset();
     }

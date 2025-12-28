@@ -84,7 +84,7 @@ class Profile extends Component
             $user->save();
             $this->user = $user;
 
-            session()->flash('success', 'Foto profil berhasil dihapus!');
+            $this->toast('success', 'Foto profil berhasil dihapus!');
         }
 
         return redirect()->route('user.profile');

@@ -8,8 +8,10 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Midtrans\Config;
 use Midtrans\Notification;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MidtransController extends Controller
 {
@@ -51,6 +53,26 @@ class MidtransController extends Controller
                 if ($isPaid) {
                     $order->update(['status' => 'paid']);
                     $order->booking->update(['status' => 'progress']);
+
+                    if (!$order->booking->qr_img) {
+                        $qrContent = json_encode([
+                            'booking_code' => $order->booking->booking_code,
+                            'order_code'   => $order->order_code,
+                            'venue_id'     => $order->booking->venue_id,
+                        ]);
+
+                        $fileName = 'qr-booking-' . $order->booking->booking_code . '.png';
+                        $path = 'qrcodes/' . $fileName;
+
+                        Storage::disk('public')->put(
+                            $path,
+                            QrCode::format('png')->size(400)->generate($qrContent)
+                        );
+
+                        $order->booking->update([
+                            'qr_img' => $path
+                        ]);
+                    }
                 }
 
                 if ($isFailed) {

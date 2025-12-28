@@ -18,6 +18,7 @@ class Booking extends Model
         'booking_code',
         'status',
         'checkin_at',
+        'qr_img',
     ];
 
     protected static function booted()
