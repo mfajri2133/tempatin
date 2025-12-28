@@ -1,7 +1,7 @@
 <div>
     <section class="relative h-screen w-full overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style="background-image: url('{{ asset('images/about.jpg') }}');">
+            style="background-image: url('{{ asset('images/interior4.webp') }}');">
             <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-indigo-900/50"></div>
         </div>
         <div class="relative z-10 flex items-center justify-center h-full px-4">
