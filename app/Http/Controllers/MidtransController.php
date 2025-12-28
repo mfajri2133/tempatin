@@ -21,6 +21,16 @@ class MidtransController extends Controller
         Config::$isProduction = config('services.midtrans.is_production');
 
         try {
+            $payload = json_decode($request->getContent(), true);
+
+            dd('MIDTRANS CALLBACK', $payload);
+
+            $orderCode = $payload['order_id'] ?? null;
+            $transactionStatus = $payload['transaction_status'] ?? null;
+            $transactionId = $payload['transaction_id'] ?? null;
+
+            abort_if(!$orderCode || !$transactionStatus, 400);
+
             $notification = new Notification();
 
             $orderCode = $notification->order_id;
