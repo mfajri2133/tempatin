@@ -204,8 +204,6 @@ class TransactionHistoryDetail extends Component
 
     public function downloadPdf()
     {
-        abort_if(!$this->isSuccess, 403);
-
         $pdf = Pdf::loadView('pdf.transaction-receipt', [
             'order' => $this->order
         ]);
