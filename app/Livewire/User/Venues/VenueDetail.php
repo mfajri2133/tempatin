@@ -4,12 +4,14 @@ namespace App\Livewire\User\Venues;
 
 use App\Models\Venue;
 use App\Models\Booking;
+use App\Traits\WithToast;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 #[Layout('layouts.app', ['title' => 'Detail Tempat'])]
 class VenueDetail extends Component
 {
+    use WithToast;
     public Venue $venue;
     public string $booking_date = '';
     public string $start_time = '';
@@ -60,11 +62,20 @@ class VenueDetail extends Component
     public function toggleAvailability()
     {
         if (!$this->booking_date) {
-            session()->flash('error', 'Pilih tanggal terlebih dahulu');
+            $this->toast('error', 'Silakan pilih tanggal booking terlebih dahulu.');
             return;
         }
 
         $this->show_availability = !$this->show_availability;
+    }
+
+    private function currentHourIfToday(): ?int
+    {
+        if ($this->booking_date === now()->toDateString()) {
+            return now()->hour;
+        }
+
+        return null;
     }
 
     public function getAvailableHoursProperty()
@@ -73,13 +84,15 @@ class VenueDetail extends Component
             return [];
         }
 
-        // Hanya cek booking yang masih aktif (bukan cancelled atau finished)
+        $currentHour = $this->currentHourIfToday();
+
         $bookings = Booking::where('venue_id', $this->venue->id)
             ->where('booking_date', $this->booking_date)
             ->whereIn('status', ['waiting', 'progress'])
             ->get(['start_time', 'end_time']);
 
         $bookedHours = [];
+
         foreach ($bookings as $booking) {
             $start = (int) substr($booking->start_time, 0, 2);
             $end   = (int) substr($booking->end_time, 0, 2);
@@ -92,11 +105,14 @@ class VenueDetail extends Component
         $bookedHours = array_unique($bookedHours);
 
         $availableHours = [];
+
         for ($hour = 6; $hour <= 22; $hour++) {
+            $isPast = $currentHour !== null && $hour <= $currentHour;
+
             $availableHours[] = [
                 'hour'      => $hour,
                 'time'      => sprintf('%02d:00', $hour),
-                'is_booked' => in_array($hour, $bookedHours),
+                'is_booked' => in_array($hour, $bookedHours) || $isPast,
             ];
         }
 
@@ -109,12 +125,15 @@ class VenueDetail extends Component
             return [];
         }
 
+        $currentHour = $this->currentHourIfToday();
+
         $bookings = Booking::where('venue_id', $this->venue->id)
             ->where('booking_date', $this->booking_date)
             ->whereIn('status', ['waiting', 'progress'])
             ->get(['start_time', 'end_time']);
 
         $bookedHours = [];
+
         foreach ($bookings as $booking) {
             $start = (int) substr($booking->start_time, 0, 2);
             $end   = (int) substr($booking->end_time, 0, 2);
@@ -125,13 +144,15 @@ class VenueDetail extends Component
         }
 
         $options = [];
+
         for ($hour = 6; $hour <= 22; $hour++) {
+            $isPast = $currentHour !== null && $hour <= $currentHour;
             $isBooked = in_array($hour, $bookedHours);
 
             $options[] = [
-                'value' => sprintf('%02d:00', $hour),
-                'label' => sprintf('%02d:00', $hour),
-                'disabled' => $isBooked
+                'value'    => sprintf('%02d:00', $hour),
+                'label'    => sprintf('%02d:00', $hour),
+                'disabled' => $isBooked || $isPast,
             ];
         }
 
@@ -144,36 +165,37 @@ class VenueDetail extends Component
             return [];
         }
 
-        $startHour = (int)substr($this->start_time, 0, 2);
+        $startHour   = (int) substr($this->start_time, 0, 2);
+        $currentHour = $this->currentHourIfToday();
+
+        $minEndHour = max($startHour + 1, ($currentHour ?? 0) + 1);
 
         $bookings = Booking::where('venue_id', $this->venue->id)
             ->where('booking_date', $this->booking_date)
             ->whereIn('status', ['waiting', 'progress'])
             ->get(['start_time', 'end_time']);
 
-        $maxEndHour = 23; // Default maksimal jam 23:00
+        $maxEndHour = 23;
 
         foreach ($bookings as $booking) {
-            $bookingStartHour = (int) substr($booking->start_time, 0, 2);
-            $bookingEndHour   = (int) substr($booking->end_time, 0, 2);
+            $bookingStart = (int) substr($booking->start_time, 0, 2);
+            $bookingEnd   = (int) substr($booking->end_time, 0, 2);
 
-            // Jika ada booking yang dimulai setelah start_time kita
-            // Maka end_time maksimal adalah saat booking tersebut dimulai
-            if ($bookingStartHour > $startHour && $bookingStartHour < $maxEndHour) {
-                $maxEndHour = $bookingStartHour;
+            if ($bookingStart > $startHour && $bookingStart < $maxEndHour) {
+                $maxEndHour = $bookingStart;
             }
 
-            // Safety check
-            if ($startHour >= $bookingStartHour && $startHour < $bookingEndHour) {
+            if ($startHour >= $bookingStart && $startHour < $bookingEnd) {
                 return [];
             }
         }
 
         $options = [];
-        for ($hour = $startHour + 1; $hour <= $maxEndHour; $hour++) {
+
+        for ($hour = $minEndHour; $hour <= $maxEndHour; $hour++) {
             $options[] = [
                 'value' => sprintf('%02d:00', $hour),
-                'label' => sprintf('%02d:00', $hour)
+                'label' => sprintf('%02d:00', $hour),
             ];
         }
 
@@ -194,7 +216,6 @@ class VenueDetail extends Component
             'end_time'     => ['required', 'after:start_time'],
         ]);
 
-        // Double check availability
         $conflict = Booking::where('venue_id', $this->venue->id)
             ->where('booking_date', $this->booking_date)
             ->whereIn('status', ['waiting', 'progress'])
@@ -205,7 +226,7 @@ class VenueDetail extends Component
             ->exists();
 
         if ($conflict) {
-            session()->flash('error', 'Jadwal sudah dibooking oleh pengguna lain');
+            $this->toast('error', 'Waktu yang Anda pilih bertabrakan dengan booking yang sudah ada. Silakan pilih waktu lain.');
             $this->start_time = '';
             $this->end_time = '';
             $this->calculatePrice();

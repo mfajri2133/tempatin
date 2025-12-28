@@ -174,20 +174,6 @@
                         </p>
                     </div>
                 </div>
-                {{--
-                @if ($order->payment?->payment_url)
-                    <div class="pt-2">
-                        <x-normal-button href="{{ $order->payment->payment_url }}" target="_blank" rel="noopener"
-                            class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded text-sm transition bg-tp-black text-tp-white hover:bg-tp-black/90">
-                            Lanjutkan Pembayaran
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="size-4">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-7.5 0H21m0 0-3.75-3.75M21 10.5l-3.75 3.75" />
-                            </svg>
-                        </x-normal-button>
-                    </div>
-                @endif --}}
             </div>
 
             {{-- Timeline --}}
@@ -224,7 +210,7 @@
             @endif
 
             <div class="flex justify-end m-4">
-                @if ($order->status === 'pending' && (!$order->payment || now()->lessThan($order->payment->expired_at)))
+                @if ($order->status === 'pending')
                     <div class="flex flex-wrap gap-2 mt-4">
                         {{-- BAYAR --}}
                         <button wire:click="pay"
@@ -239,6 +225,27 @@
                             Batalkan Transaksi
                         </button>
                     </div>
+                @endif
+
+                @if ($order->status === 'paid')
+                    <button wire:click="downloadPdf" wire:loading.attr="disabled"
+                        class="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition disabled:opacity-60 flex items-center justify-center gap-2">
+                        <svg wire:loading.remove class="w-5 h-5" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        <svg wire:loading class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        <span wire:loading.remove>Download Invoice PDF</span>
+                        <span wire:loading>Generating PDF...</span>
+                    </button>
                 @endif
             </div>
         </div>

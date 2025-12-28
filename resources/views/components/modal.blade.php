@@ -14,7 +14,7 @@
 
 <div x-show="{{ $show }}" x-transition class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
     style="display: none;">
-    <div class="bg-white w-full {{ $sizes[$maxWidth] ?? $sizes['md'] }} rounded-lg p-4 shadow-lg">
+    <div class="bg-white w-full {{ $sizes[$maxWidth] ?? $sizes['md'] }} rounded-lg p-4 shadow-lg m-5">
 
         <!-- Header -->
         @if ($title)

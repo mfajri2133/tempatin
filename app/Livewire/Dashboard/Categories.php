@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Category;
+use App\Traits\WithToast;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,6 +12,7 @@ use Livewire\WithPagination;
 
 class Categories extends Component
 {
+    use WithToast;
     use WithPagination;
     public string $search = '';
     public ?int $categoryId = null;
@@ -60,12 +62,7 @@ class Categories extends Component
         $this->resetErrorBag();
 
         $this->dispatch('close-add-modal');
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => $this->isEdit
-                ? 'Kategori berhasil diperbarui'
-                : 'Kategori berhasil ditambahkan',
-        ]);
+        $this->toast('success', $this->isEdit ? 'Kategori berhasil diperbarui' : 'Kategori berhasil ditambahkan');
     }
 
     public function confirmDelete($categoryId)
@@ -79,10 +76,7 @@ class Categories extends Component
         Category::findOrFail($this->categoryId)->delete();
 
         $this->dispatch('close-delete-modal');
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Kategori berhasil dihapus',
-        ]);
+        $this->toast('success', 'Kategori berhasil dihapus');
     }
 
     public function updated($property)

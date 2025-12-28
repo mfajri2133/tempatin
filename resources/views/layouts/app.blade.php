@@ -30,6 +30,7 @@
 
     <x-footer-user />
     @livewireScripts
+    <x-toast />
 </body>
 
 </html>

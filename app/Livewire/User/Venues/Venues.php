@@ -4,6 +4,7 @@ namespace App\Livewire\User\Venues;
 
 use App\Models\Category;
 use App\Models\Venue;
+use App\Traits\WithToast;
 use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -14,6 +15,7 @@ use Throwable;
 class Venues extends Component
 {
     use WithPagination;
+    use WithToast;
     protected $paginationTheme = 'tailwind';
 
     public string $searchInput = '';
@@ -58,6 +60,7 @@ class Venues extends Component
                     ->toArray();
             }
         } catch (Throwable $e) {
+            $this->toast('error', 'Gagal memuat data kota/kabupaten.');
         }
 
         return [];

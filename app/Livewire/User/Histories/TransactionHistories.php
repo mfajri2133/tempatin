@@ -18,10 +18,6 @@ class TransactionHistories extends Component
 
     public function getStatusBadge($order)
     {
-        $orderStatus = $order->status;
-        $bookingStatus = $order->booking?->status;
-        $paymentStatus = $order->payment?->payment_status;
-
         $displayStatus = $order->status
             ?? $order->payment?->payment_status
             ?? $order->booking?->status;

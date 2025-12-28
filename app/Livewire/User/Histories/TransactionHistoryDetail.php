@@ -3,6 +3,8 @@
 namespace App\Livewire\User\Histories;
 
 use App\Models\Order;
+use App\Traits\WithToast;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 #[Layout('layouts.app', ['title' => 'Detail Histori Transaksi'])]
 class TransactionHistoryDetail extends Component
 {
+    use WithToast;
     public $orderId;
     public $order;
 
@@ -48,7 +51,7 @@ class TransactionHistoryDetail extends Component
         abort_if(!$this->order, 404);
 
         if ($this->order->status !== 'pending') {
-            session()->flash('error', 'Transaksi tidak dapat dibayar.');
+            $this->toast('error', 'Transaksi tidak dapat diproses untuk pembayaran.');
             return;
         }
 
@@ -60,7 +63,7 @@ class TransactionHistoryDetail extends Component
         abort_if(!$this->order, 404);
 
         if ($this->order->status !== 'pending') {
-            session()->flash('error', 'Transaksi tidak dapat dibatalkan.');
+            $this->toast('error', 'Transaksi tidak dapat dibatalkan.');
             return;
         }
 
@@ -79,7 +82,7 @@ class TransactionHistoryDetail extends Component
             }
         });
 
-        session()->flash('success', 'Transaksi berhasil dibatalkan.');
+        $this->toast('success', 'Transaksi berhasil dibatalkan.');
 
         return redirect()->route('transaction-histories.index');
     }
@@ -197,6 +200,20 @@ class TransactionHistoryDetail extends Component
         }
 
         return $steps;
+    }
+
+    public function downloadPdf()
+    {
+        abort_if(!$this->isSuccess, 403);
+
+        $pdf = Pdf::loadView('pdf.transaction-receipt', [
+            'order' => $this->order
+        ]);
+
+        return response()->streamDownload(
+            fn() => print($pdf->output()),
+            'Invoice-' . $this->order->order_code . '.pdf'
+        );
     }
 
     public function getBookingDurationProperty()

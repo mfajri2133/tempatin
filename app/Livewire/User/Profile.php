@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User;
 
+use App\Traits\WithToast;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +15,7 @@ use Livewire\WithFileUploads;
 class Profile extends Component
 {
     use WithFileUploads;
+    use WithToast;
     public $user;
     public $photo;
     public $name;
@@ -52,7 +54,7 @@ class Profile extends Component
 
         $this->user = $user;
 
-        session()->flash('success', 'Profil berhasil diperbarui!');
+        $this->toast('success', 'Profil berhasil diperbarui!');
         return redirect()->route('user.profile');
     }
     public function updatePassword()
@@ -68,7 +70,7 @@ class Profile extends Component
 
         $this->reset(['current_password', 'new_password', 'new_password_confirmation']);
 
-        session()->flash('success', 'Kata sandi berhasil diubah!');
+        $this->toast('success', 'Password berhasil diperbarui!');
         return redirect()->route('user.profile');
     }
 

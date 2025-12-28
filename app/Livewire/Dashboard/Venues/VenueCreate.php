@@ -4,6 +4,7 @@ namespace App\Livewire\Dashboard\Venues;
 
 use App\Models\Category;
 use App\Models\Venue;
+use App\Traits\WithToast;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -15,6 +16,7 @@ use Throwable;
 class VenueCreate extends Component
 {
     use WithFileUploads;
+    use WithToast;
 
     public $image;
     public int|string $category_id = '';
@@ -66,6 +68,7 @@ class VenueCreate extends Component
                     ->toArray();
             }
         } catch (Throwable $e) {
+            $this->toast('error', 'Gagal memuat data kota');
         }
 
         return [];
@@ -107,10 +110,7 @@ class VenueCreate extends Component
             'venue_img' => $imagePath,
         ]);
 
-        $this->dispatch('toast', [
-            'type' => 'success',
-            'message' => 'Venue berhasil ditambahkan',
-        ]);
+        $this->toast('success', 'Venue berhasil ditambahkan');
 
         return redirect()->route('dashboard.venues.index');
     }

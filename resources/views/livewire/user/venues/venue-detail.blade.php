@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="flex items-center gap-1.5">
                                     <div class="w-3 h-3 bg-red-500 rounded"></div>
-                                    <span class="text-gray-600">Terboking</span>
+                                    <span class="text-gray-600">Tidak Tersedia</span>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                             <option value="">Pilih</option>
                             @foreach ($this->start_time_options as $option)
                                 <option value="{{ $option['value'] }}" @disabled($option['disabled'])>
-                                    {{ $option['label'] }}{{ $option['disabled'] ? ' (Terboking)' : '' }}
+                                    {{ $option['label'] }}{{ $option['disabled'] ? ' (Tidak Tersedia)' : '' }}
                                 </option>
                             @endforeach
                         </select>

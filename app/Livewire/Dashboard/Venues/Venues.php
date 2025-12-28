@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard\Venues;
 
 use App\Models\Venue;
+use App\Traits\WithToast;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;

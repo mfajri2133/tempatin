@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\User;
+use App\Traits\WithToast;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
@@ -13,6 +14,7 @@ use Livewire\WithPagination;
 class Admin extends Component
 {
     use WithPagination;
+    use WithToast;
     public string $search = '';
     public ?int $userLoggedId = null;
     public ?int $userId = null;
@@ -95,6 +97,7 @@ class Admin extends Component
         $this->resetForm();
         $this->resetErrorBag();
         $this->dispatch('close-add-modal');
+        $this->toast('success', $this->isEdit ? 'Admin berhasil diperbarui' : 'Admin berhasil ditambahkan');
     }
 
     public function confirmDelete($userId)
@@ -108,6 +111,7 @@ class Admin extends Component
         User::findOrFail($this->userId)->delete();
 
         $this->dispatch('close-delete-modal');
+        $this->toast('success', 'Admin berhasil dihapus');
     }
 
     private function resetForm()
