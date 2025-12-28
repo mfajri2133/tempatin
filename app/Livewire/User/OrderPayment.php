@@ -33,18 +33,38 @@ class OrderPayment extends Component
 
     public function checkExpiration()
     {
-        if ($this->order->payment && $this->order->payment->expired_at) {
-            $this->isExpired = now()->greaterThan(
-                $this->order->payment->expired_at
-            );
+        if (!$this->order->payment) {
+            $this->isExpired = false;
+            return;
         }
+
+        if (in_array($this->order->payment->payment_status, ['capture', 'settlement'])) {
+            $this->isExpired = false;
+            return;
+        }
+
+        if (
+            $this->order->payment->payment_status === 'pending' &&
+            $this->order->payment->expired_at &&
+            now()->greaterThan($this->order->payment->expired_at)
+        ) {
+            $this->isExpired = true;
+            return;
+        }
+
+        $this->isExpired = false;
     }
+
 
     public function pay()
     {
         $this->checkExpiration();
 
-        if ($this->order->payment && $this->order->payment->snap_token) {
+        if (
+            $this->order->payment &&
+            $this->order->payment->snap_token &&
+            !$this->isExpired
+        ) {
             $this->dispatch('open-midtrans', token: $this->order->payment->snap_token);
             return;
         }
