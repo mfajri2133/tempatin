@@ -13,32 +13,30 @@ class ExpireOrders extends Command
 
     public function handle()
     {
+        $this->info('ExpireOrders daemon started');
+
+        while (true) {
+            $this->expireOnce();
+            sleep(15);
+        }
+    }
+
+    private function expireOnce()
+    {
         $expiredOrders = Order::where('status', 'pending')
             ->whereHas('payment', function ($query) {
                 $query->where('payment_status', 'pending')
                     ->where('expired_at', '<', now());
             })
             ->with(['booking', 'payment'])
-            ->lockForUpdate()
             ->get();
 
         foreach ($expiredOrders as $order) {
             DB::transaction(function () use ($order) {
                 $order->update(['status' => 'failed']);
-
-                if ($order->booking) {
-                    $order->booking->update(['status' => 'cancelled']);
-                }
-
-                $order->payment->update([
-                    'payment_status' => 'expire',
-                    'expired_at'     => now(),
-                ]);
+                optional($order->booking)->update(['status' => 'cancelled']);
+                optional($order->payment)->update(['payment_status' => 'expired']);
             });
-
-            $this->info("Order {$order->order_code} expired");
         }
-
-        $this->info("Total expired: " . $expiredOrders->count());
     }
 }
