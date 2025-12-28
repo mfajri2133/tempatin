@@ -95,7 +95,7 @@
             </div>
 
             <div class="mt-8 flex gap-3 justify-end">
-                @if ($isExpired || !$order->payment || $order->payment->payment_status !== 'pending')
+                @if ($isExpired)
                     <a href="{{ route('venues.index') }}"
                         class="px-6 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm transition">
                         Booking Lagi
