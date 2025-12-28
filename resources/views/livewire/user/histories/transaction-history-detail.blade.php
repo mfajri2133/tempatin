@@ -210,7 +210,7 @@
             @endif
 
             <div class="flex justify-end m-4">
-                @if ($order->status === 'pending')
+                @if ($order->status === 'pending' && $order->payment && $order->payment->payment_status === 'pending')
                     <div class="flex flex-wrap gap-2 mt-4">
                         {{-- BAYAR --}}
                         <button wire:click="pay"

@@ -22,27 +22,22 @@ class MidtransController extends Controller
 
         try {
             $payload = json_decode($request->getContent(), true);
-
-            dd('MIDTRANS CALLBACK', $payload);
+            Log::info('MIDTRANS CALLBACK', $payload);
 
             $orderCode = $payload['order_id'] ?? null;
             $transactionStatus = $payload['transaction_status'] ?? null;
             $transactionId = $payload['transaction_id'] ?? null;
+            $expiryTime = $payload['expiry_time'] ?? null;
 
             abort_if(!$orderCode || !$transactionStatus, 400);
-
-            $notification = new Notification();
-
-            $orderCode = $notification->order_id;
-            $transactionStatus = $notification->transaction_status;
-            $transactionId = $notification->transaction_id;
 
             $order = Order::where('order_code', $orderCode)
                 ->with(['booking', 'payment'])
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            DB::transaction(function () use ($order, $transactionStatus, $transactionId) {
+            DB::transaction(function () use ($order, $transactionStatus, $transactionId, $expiryTime) {
+
                 $isPaid = in_array($transactionStatus, ['capture', 'settlement']);
                 $isFailed = in_array($transactionStatus, ['deny', 'cancel']);
                 $isExpired = $transactionStatus === 'expire';
@@ -54,35 +49,13 @@ class MidtransController extends Controller
                         'external_id'    => $transactionId,
                         'payment_status' => $transactionStatus,
                         'paid_at'        => $isPaid ? now() : null,
-                        'expired_at' => $isExpired
-                            ? ($notification->expiry_time ?? now())
-                            : $order->payment?->expired_at,
+                        'expired_at'     => $isExpired ? $expiryTime : $order->payment?->expired_at,
                     ]
                 );
 
                 if ($isPaid) {
                     $order->update(['status' => 'paid']);
                     $order->booking->update(['status' => 'progress']);
-
-                    if (!$order->booking->qr_img) {
-                        $qrContent = json_encode([
-                            'booking_code' => $order->booking->booking_code,
-                            'order_code'   => $order->order_code,
-                            'venue_id'     => $order->booking->venue_id,
-                        ]);
-
-                        $fileName = 'qr-booking-' . $order->booking->booking_code . '.png';
-                        $path = 'qrcodes/' . $fileName;
-
-                        Storage::disk('public')->put(
-                            $path,
-                            QrCode::format('png')->size(400)->generate($qrContent)
-                        );
-
-                        $order->booking->update([
-                            'qr_img' => $path
-                        ]);
-                    }
                 }
 
                 if ($isFailed) {
@@ -98,6 +71,7 @@ class MidtransController extends Controller
 
             return response()->json(['status' => 'ok'], 200);
         } catch (Exception $e) {
+            Log::error('MIDTRANS ERROR', ['error' => $e->getMessage()]);
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage(),
