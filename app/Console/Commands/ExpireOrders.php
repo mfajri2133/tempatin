@@ -16,14 +16,15 @@ class ExpireOrders extends Command
         $expiredOrders = Order::where('status', 'pending')
             ->whereHas('payment', function ($query) {
                 $query->where('payment_status', 'pending')
-                    ->where('created_at', '<', now()->subMinutes(2));
+                    ->where('expired_at', '<', now());
             })
             ->with(['booking', 'payment'])
+            ->lockForUpdate()
             ->get();
 
         foreach ($expiredOrders as $order) {
             DB::transaction(function () use ($order) {
-                $order->update(['status' => 'expired']);
+                $order->update(['status' => 'failed']);
 
                 if ($order->booking) {
                     $order->booking->update(['status' => 'cancelled']);
