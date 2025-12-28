@@ -8,10 +8,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Midtrans\Config;
 use Midtrans\Notification;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MidtransController extends Controller
 {
@@ -21,61 +19,139 @@ class MidtransController extends Controller
         Config::$isProduction = config('services.midtrans.is_production');
 
         try {
-            $payload = json_decode($request->getContent(), true);
-            Log::info('MIDTRANS CALLBACK', $payload);
+            $notification = new Notification();
 
-            $orderCode = $payload['order_id'] ?? null;
-            $transactionStatus = $payload['transaction_status'] ?? null;
-            $transactionId = $payload['transaction_id'] ?? null;
-            $expiryTime = $payload['expiry_time'] ?? null;
+            $transactionStatus = $notification->transaction_status;
+            $fraudStatus = $notification->fraud_status ?? null;
+            $paymentType = $notification->payment_type;
+            $orderCode = $notification->order_id;
+            $transactionId = $notification->transaction_id;
 
-            abort_if(!$orderCode || !$transactionStatus, 400);
+            Log::info('MIDTRANS NOTIFICATION', [
+                'order_id' => $orderCode,
+                'transaction_status' => $transactionStatus,
+                'fraud_status' => $fraudStatus,
+                'payment_type' => $paymentType,
+                'transaction_id' => $transactionId,
+            ]);
 
             $order = Order::where('order_code', $orderCode)
                 ->with(['booking', 'payment'])
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            DB::transaction(function () use ($order, $transactionStatus, $transactionId, $expiryTime) {
+            DB::transaction(function () use ($order, $notification, $transactionStatus, $fraudStatus, $paymentType, $transactionId) {
 
-                $isPaid = in_array($transactionStatus, ['capture', 'settlement']);
-                $isFailed = in_array($transactionStatus, ['deny', 'cancel']);
-                $isExpired = $transactionStatus === 'expire';
+                $paymentStatus = $this->determinePaymentStatus(
+                    $transactionStatus,
+                    $fraudStatus,
+                    $paymentType
+                );
 
                 Payment::updateOrCreate(
                     ['order_id' => $order->id],
                     [
                         'invoice_id'     => $order->order_code,
                         'external_id'    => $transactionId,
-                        'payment_status' => $transactionStatus,
-                        'paid_at'        => $isPaid ? now() : null,
-                        'expired_at'     => $isExpired ? $expiryTime : $order->payment?->expired_at,
+                        'payment_status' => $paymentStatus['status'],
+                        'payment_type'   => $paymentType,
+                        'paid_at'        => $paymentStatus['is_paid'] ? now() : null,
+                        'expired_at'     => $paymentStatus['is_expired'] ? now() : $order->payment?->expired_at,
                     ]
                 );
 
-                if ($isPaid) {
-                    $order->update(['status' => 'paid']);
-                    $order->booking->update(['status' => 'progress']);
-                }
-
-                if ($isFailed) {
-                    $order->update(['status' => 'failed']);
-                    $order->booking->update(['status' => 'cancelled']);
-                }
-
-                if ($isExpired) {
-                    $order->update(['status' => 'expired']);
-                    $order->booking->update(['status' => 'cancelled']);
-                }
+                $this->updateOrderStatus($order, $paymentStatus);
             });
 
-            return response()->json(['status' => 'ok'], 200);
+            return response()->json(['status' => 'success'], 200);
         } catch (Exception $e) {
-            Log::error('MIDTRANS ERROR', ['error' => $e->getMessage()]);
+            Log::error('MIDTRANS NOTIFICATION ERROR', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
             return response()->json([
                 'status' => 'error',
-                'message' => $e->getMessage(),
+                'message' => 'Internal server error',
             ], 500);
+        }
+    }
+
+    private function determinePaymentStatus(string $transactionStatus, ?string $fraudStatus, string $paymentType): array
+    {
+        $result = [
+            'status' => $transactionStatus,
+            'is_paid' => false,
+            'is_failed' => false,
+            'is_expired' => false,
+        ];
+
+        switch ($transactionStatus) {
+            case 'capture':
+                if ($paymentType === 'credit_card') {
+                    if ($fraudStatus === 'accept') {
+                        $result['is_paid'] = true;
+                        $result['status'] = 'capture';
+                        Log::info("Transaction captured successfully (fraud: accept)");
+                    } else if ($fraudStatus === 'challenge') {
+                        $result['status'] = 'challenge';
+                        Log::warning("Transaction challenged by fraud detection");
+                    } else {
+                        $result['is_failed'] = true;
+                        $result['status'] = 'deny';
+                        Log::warning("Transaction denied by fraud detection");
+                    }
+                } else {
+                    $result['is_paid'] = true;
+                }
+                break;
+
+            case 'settlement':
+                $result['is_paid'] = true;
+                Log::info("Transaction settled successfully");
+                break;
+
+            case 'pending':
+                Log::info("Transaction pending - waiting for customer");
+                break;
+
+            case 'deny':
+                $result['is_failed'] = true;
+                Log::warning("Transaction denied");
+                break;
+
+            case 'expire':
+                $result['is_expired'] = true;
+                Log::info("Transaction expired");
+                break;
+
+            case 'cancel':
+                $result['is_failed'] = true;
+                Log::info("Transaction cancelled");
+                break;
+
+            default:
+                Log::warning("Unknown transaction status: {$transactionStatus}");
+                break;
+        }
+
+        return $result;
+    }
+
+    private function updateOrderStatus(Order $order, array $paymentStatus): void
+    {
+        if ($paymentStatus['is_paid']) {
+            $order->update(['status' => 'paid']);
+            $order->booking->update(['status' => 'progress']);
+            Log::info("Order marked as paid", ['order_code' => $order->order_code]);
+        } else if ($paymentStatus['is_failed']) {
+            $order->update(['status' => 'failed']);
+            $order->booking->update(['status' => 'cancelled']);
+            Log::info("Order marked as failed", ['order_code' => $order->order_code]);
+        } else if ($paymentStatus['is_expired']) {
+            $order->update(['status' => 'expired']);
+            $order->booking->update(['status' => 'cancelled']);
+            Log::info("Order marked as expired", ['order_code' => $order->order_code]);
         }
     }
 }

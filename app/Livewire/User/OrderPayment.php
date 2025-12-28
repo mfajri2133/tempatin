@@ -55,7 +55,6 @@ class OrderPayment extends Component
         $this->isExpired = false;
     }
 
-
     public function pay()
     {
         $this->checkExpiration();
@@ -70,7 +69,7 @@ class OrderPayment extends Component
         }
 
         if ($this->isExpired) {
-            $this->toast('error', 'Waktu pembayaran telah habis.');
+            $this->toast('error', 'Waktu pembayaran telah habis. Silakan buat pesanan baru.');
             return;
         }
 
@@ -101,6 +100,11 @@ class OrderPayment extends Component
         try {
             $snapToken = Snap::getSnapToken($params);
 
+            Log::info('SNAP TOKEN GENERATED', [
+                'order_code' => $this->order->order_code,
+                'user_id' => Auth::id(),
+            ]);
+
             Payment::updateOrCreate(
                 ['order_id' => $this->order->id],
                 [
@@ -113,7 +117,14 @@ class OrderPayment extends Component
 
             $this->dispatch('open-midtrans', token: $snapToken);
         } catch (Exception $e) {
-            $this->toast('error', 'Gagal memproses pembayaran. Silakan coba lagi.');
+            Log::error('SNAP TOKEN ERROR', [
+                'order_code' => $this->order->order_code,
+                'user_id' => Auth::id(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $this->toast('error', 'Gagal memproses pembayaran. Silakan coba lagi dalam beberapa saat.');
         }
     }
 
@@ -133,10 +144,21 @@ class OrderPayment extends Component
                 }
             });
 
+            Log::info('PAYMENT CANCELLED', [
+                'order_code' => $this->order->order_code,
+                'user_id' => Auth::id(),
+            ]);
+
             $this->toast('success', 'Pembayaran berhasil dibatalkan.');
 
             return redirect()->route('transaction-histories.index');
         } catch (Exception $e) {
+            Log::error('CANCEL PAYMENT ERROR', [
+                'order_code' => $this->order->order_code,
+                'user_id' => Auth::id(),
+                'error' => $e->getMessage(),
+            ]);
+
             $this->toast('error', 'Gagal membatalkan pembayaran. Silakan coba lagi.');
         }
     }

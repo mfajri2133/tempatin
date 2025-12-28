@@ -48,6 +48,21 @@
                 </div>
             @endif
 
+            @if ($isExpired)
+                <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <p class="text-sm font-semibold text-red-800">Pembayaran Kadaluarsa</p>
+                        <p class="text-sm text-red-700 mt-1">Waktu pembayaran telah habis. Silakan buat pesanan baru.
+                        </p>
+                    </div>
+                </div>
+            @endif
+
             <div class="space-y-4 text-sm">
                 <div class="flex justify-between">
                     <span class="text-gray-500">Kode Order</span>
@@ -105,7 +120,7 @@
                         wire:confirm="Apakah Anda yakin ingin membatalkan pembayaran ini?"
                         class="px-4 py-2 rounded border border-red-300 text-sm font-medium text-red-600 hover:bg-red-50 transition disabled:opacity-60">
                         <span wire:loading.remove wire:target="cancelPayment">Batalkan</span>
-                        <span wire:loading wire:target="cancelPayment">Cancelling...</span>
+                        <span wire:loading wire:target="cancelPayment">Membatalkan...</span>
                     </button>
 
                     <a href="{{ route('transaction-histories.index') }}"
@@ -116,7 +131,7 @@
                     <button wire:click="pay" wire:loading.attr="disabled"
                         class="px-6 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm transition disabled:opacity-60">
                         <span wire:loading.remove wire:target="pay">Lanjutkan Pembayaran</span>
-                        <span wire:loading wire:target="pay">Processing...</span>
+                        <span wire:loading wire:target="pay">Memproses...</span>
                     </button>
                 @endif
             </div>
@@ -130,52 +145,90 @@
 <script>
     document.addEventListener('livewire:init', () => {
         Livewire.on('open-midtrans', (data) => {
+            console.log('Opening Midtrans payment with token:', data.token);
+
             window.snap.pay(data.token, {
                 onSuccess: function(result) {
+                    console.log('Payment success:', result);
                     window.location.href =
-                        "{{ route('transactions.result') }}?order_id={{ $order->order_code }}";
+                        "{{ route('transactions.result', ['order_id' => $order->order_code]) }}";
                 },
 
                 onPending: function(result) {
+                    console.log('Payment pending:', result);
                     window.location.href =
-                        "{{ route('transactions.result') }}?order_id={{ $order->order_code }}";
+                        "{{ route('transactions.result', ['order_id' => $order->order_code]) }}";
                 },
 
                 onError: function(result) {
-                    alert('Pembayaran gagal: ' + (result.status_message ||
-                        'Terjadi kesalahan'));
+                    console.error('Payment error:', result);
+                    Livewire.dispatch('show-toast', {
+                        type: 'error',
+                        message: 'Pembayaran gagal: ' + (result.status_message ||
+                            'Terjadi kesalahan')
+                    });
                 },
 
                 onClose: function() {
-                    alert('Pembayaran belum diselesaikan.');
+                    console.log('Payment popup closed');
+                    Livewire.dispatch('$refresh');
                 }
             });
         });
     });
 
+    // Countdown Timer with Timezone Fix
     @if ($order->payment && $order->payment->expired_at && !$isExpired)
-        const expiredAt = new Date('{{ $order->payment->expired_at->format('Y-m-d H:i:s') }}').getTime();
+        (function() {
+            // Get expired timestamp from server (UTC)
+            const expiredAtUTC = '{{ $order->payment->expired_at->toIso8601String() }}';
+            const expiredAt = new Date(expiredAtUTC).getTime();
 
-        const countdownInterval = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = expiredAt - now;
+            const countdownElement = document.getElementById('countdown');
+            let hasExpired = false;
 
-            if (distance < 0) {
+            const countdownInterval = setInterval(function() {
+                // Get current time in UTC
+                const now = new Date().getTime();
+                const distance = expiredAt - now;
+
+                // If expired
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+
+                    if (!hasExpired) {
+                        hasExpired = true;
+                        countdownElement.textContent = 'EXPIRED';
+                        countdownElement.classList.add('text-red-600');
+
+                        // Refresh component to update status
+                        setTimeout(() => {
+                            @this.call('checkExpiration');
+                        }, 500);
+                    }
+
+                    return;
+                }
+
+                // Calculate minutes and seconds
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Update countdown display
+                countdownElement.textContent =
+                    String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+
+                // Warning when less than 30 seconds
+                if (distance < 30000 && !countdownElement.classList.contains('text-red-600')) {
+                    countdownElement.classList.add('text-red-600');
+                    countdownElement.classList.remove('text-yellow-900');
+                }
+            }, 1000);
+
+            // Cleanup on navigation away
+            document.addEventListener('livewire:navigating', () => {
                 clearInterval(countdownInterval);
-                document.getElementById('countdown').textContent = 'EXPIRED';
-
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-
-                return;
-            }
-
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('countdown').textContent =
-                String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-        }, 1000);
+            });
+        })();
     @endif
 </script>
