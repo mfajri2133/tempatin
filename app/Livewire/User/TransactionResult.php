@@ -26,7 +26,10 @@ class TransactionResult extends Component
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-        $this->isSuccess = $this->order->payment?->isSuccess() ?? false;
+        $this->isSuccess = in_array(
+            $this->order->payment?->payment_status,
+            ['capture', 'settlement']
+        );
     }
 
     public function downloadPdf()
