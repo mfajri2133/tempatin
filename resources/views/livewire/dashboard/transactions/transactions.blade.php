@@ -82,9 +82,8 @@
                 @endforelse
             </tbody>
         </table>
-
-        <div class="m-6 flex justify-center sm:justify-end">
-            {{ $transactions->links('components.pagination', ['color' => 'blue']) }}
-        </div>
+    </div>
+    <div class="m-6 flex justify-center sm:justify-end">
+        {{ $transactions->links('components.pagination', ['color' => 'blue']) }}
     </div>
 </div>
