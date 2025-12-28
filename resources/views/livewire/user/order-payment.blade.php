@@ -5,7 +5,6 @@
                 Pembayaran
             </h1>
 
-            {{-- Flash Messages --}}
             @if (session()->has('error'))
                 <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
                     <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
@@ -31,7 +30,6 @@
                 </div>
             @endif
 
-            {{-- Countdown Timer --}}
             @if ($order->payment && $order->payment->expired_at && !$isExpired)
                 <div class="mb-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                     <div class="flex items-center justify-between">
@@ -98,13 +96,11 @@
 
             <div class="mt-8 flex gap-3 justify-end">
                 @if ($isExpired)
-                    {{-- Jika Expired --}}
                     <a href="{{ route('venues.index') }}"
                         class="px-6 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm transition">
                         Booking Lagi
                     </a>
                 @else
-                    {{-- Normal Buttons --}}
                     <button wire:click="cancelPayment" wire:loading.attr="disabled"
                         wire:confirm="Apakah Anda yakin ingin membatalkan pembayaran ini?"
                         class="px-4 py-2 rounded border border-red-300 text-sm font-medium text-red-600 hover:bg-red-50 transition disabled:opacity-60">
