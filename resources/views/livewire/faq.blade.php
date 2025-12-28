@@ -3,7 +3,7 @@
     <section class="relative h-screen w-full overflow-hidden">
         {{-- Background Image --}}
         <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style="background-image: url('{{ asset('images/about.jpg') }}');">
+            style="background-image: url('{{ asset('images/interior1.webp') }}');">
             {{-- Overlay with gradient --}}
             <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-indigo-900/50"></div>
         </div>
