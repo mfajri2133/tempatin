@@ -157,7 +157,7 @@
                 </div>
 
                 <div class="bg-gray-50 px-6 py-4 flex gap-3">
-                    @if ($order->status === 'pending' && $order->payment && $order->payment->isPending())
+                    @if ($order->status === 'pending' && $order->payment && $order->payment->isFailed())
                         <a href="{{ route('orders.pay', $order) }}"
                             class="flex-1 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition text-center">
                             Coba Bayar Lagi
