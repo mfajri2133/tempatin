@@ -61,7 +61,9 @@
 
                             <div class="flex justify-between text-sm">
                                 <span class="text-gray-600">Status</span>
-                                <span class="font-semibold text-green-600">Paid</span>
+                                <span class="font-semibold text-green-600">
+                                    Pembayaran Berhasil
+                                </span>
                             </div>
 
                             <div class="flex justify-between text-sm">

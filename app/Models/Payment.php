@@ -25,4 +25,14 @@ class Payment extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    public function isSuccess(): bool
+    {
+        return in_array($this->payment_status, ['capture', 'settlement']);
+    }
+
+    public function isFailed(): bool
+    {
+        return in_array($this->payment_status, ['deny', 'cancel', 'expire']);
+    }
 }
