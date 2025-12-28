@@ -21,18 +21,20 @@
     </section>
 
     {{-- FAQ Content Section --}}
+    {{-- FAQ Content Section --}}
     <div class="bg-slate-50 flex items-center justify-center min-h-screen p-6">
         <div class="max-w-5xl w-full mx-auto">
 
             <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mt-6 mb-4">Looking for answers?</h2>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mt-6 mb-4">Cari jawaban di sini</h2>
                 <p class="text-slate-500 text-lg">Temukan jawaban cepat untuk pertanyaan yang sering diajukan pelanggan
                     kami.</p>
             </div>
 
             <div class="space-y-4">
                 {{-- FAQ Item 1 --}}
-                <details
+                {{-- Perubahan: Ditambahkan name="faq" --}}
+                <details name="faq"
                     class="group bg-white rounded-2xl border border-slate-200 shadow-sm transition-all duration-300 open:shadow-md open:ring-1 open:ring-indigo-100"
                     open>
                     <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8">
@@ -44,7 +46,7 @@
                             </div>
                             <h3
                                 class="text-lg md:text-xl font-bold text-slate-800 group-open:text-indigo-600 transition-colors">
-                                Do you charge for each upgrade?
+                                Apa itu TempatIN?
                             </h3>
                         </div>
                         <div class="relative w-6 h-6 flex items-center justify-center">
@@ -56,16 +58,16 @@
                     </summary>
                     <div class="px-6 pb-8 md:px-20 text-slate-600 leading-relaxed border-t border-slate-50 pt-4">
                         <p>
-                            Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps
-                            icing marzipan gummi bears macaroon dragée danish caramels powder. Bear claw dragée pastry
-                            topping
-                            soufflé. Wafer gummi bears marshmallow pastry pie.
+                            TempatIN adalah platform penyewaan tempat yang memudahkan pengguna untuk mencari, melihat
+                            detail, dan menyewa berbagai venue seperti aula, gedung, ruang meeting, hingga tempat
+                            acara lainnya secara online.
                         </p>
                     </div>
                 </details>
 
                 {{-- FAQ Item 2 --}}
-                <details
+                {{-- Perubahan: Ditambahkan name="faq" --}}
+                <details name="faq"
                     class="group bg-white rounded-2xl border border-slate-200 shadow-sm transition-all duration-300 open:shadow-md open:ring-1 open:ring-indigo-100">
                     <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8">
                         <div class="flex items-center gap-4">
@@ -76,7 +78,7 @@
                             </div>
                             <h3
                                 class="text-lg md:text-xl font-bold text-slate-800 group-open:text-indigo-600 transition-colors">
-                                Do I need to purchase a license for each website?
+                                Bagaimana cara menyewa tempat di TempatIN?
                             </h3>
                         </div>
                         <div class="relative w-6 h-6 flex items-center justify-center">
@@ -87,13 +89,14 @@
                         </div>
                     </summary>
                     <div class="px-6 pb-8 md:px-20 text-slate-600 leading-relaxed border-t border-slate-50 pt-4">
-                        Yes, each individual website requires its own unique license for standard use. Kami memastikan
-                        sistem lisensi kami transparan dan mudah dikelola melalui dashboard akun Anda.
+                        Anda cukup memilih tempat yang diinginkan, melihat detail serta ketersediaannya, lalu melakukan
+                        pemesanan melalui sistem yang telah disediakan di website.
                     </div>
                 </details>
 
                 {{-- FAQ Item 3 --}}
-                <details
+                {{-- Perubahan: Ditambahkan name="faq" --}}
+                <details name="faq"
                     class="group bg-white rounded-2xl border border-slate-200 shadow-sm transition-all duration-300 open:shadow-md open:ring-1 open:ring-indigo-100">
                     <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8">
                         <div class="flex items-center gap-4">
@@ -104,7 +107,7 @@
                             </div>
                             <h3
                                 class="text-lg md:text-xl font-bold text-slate-800 group-open:text-indigo-600 transition-colors">
-                                What is regular license?
+                                Apakah harga sewa sudah termasuk fasilitas?
                             </h3>
                         </div>
                         <div class="relative w-6 h-6 flex items-center justify-center">
@@ -115,13 +118,14 @@
                         </div>
                     </summary>
                     <div class="px-6 pb-8 md:px-20 text-slate-600 leading-relaxed border-t border-slate-50 pt-4">
-                        A regular license allows you to use the product for one single end product which end users are
-                        not charged for. Ini sangat cocok untuk proyek pribadi atau portofolio bisnis.
+                        Setiap tempat memiliki fasilitas yang berbeda-beda. Informasi fasilitas seperti kapasitas,
+                        parkir, AC, dan perlengkapan lainnya dapat dilihat pada halaman detail tempat.
                     </div>
                 </details>
 
                 {{-- FAQ Item 4 --}}
-                <details
+                {{-- Perubahan: Ditambahkan name="faq" --}}
+                <details name="faq"
                     class="group bg-white rounded-2xl border border-slate-200 shadow-sm transition-all duration-300 open:shadow-md open:ring-1 open:ring-indigo-100">
                     <summary class="flex items-center justify-between cursor-pointer list-none p-6 md:p-8">
                         <div class="flex items-center gap-4">
@@ -132,7 +136,7 @@
                             </div>
                             <h3
                                 class="text-lg md:text-xl font-bold text-slate-800 group-open:text-indigo-600 transition-colors">
-                                What is extended license?
+                                Bagaimana cara membatalkan booking?
                             </h3>
                         </div>
                         <div class="relative w-6 h-6 flex items-center justify-center">
@@ -143,8 +147,10 @@
                         </div>
                     </summary>
                     <div class="px-6 pb-8 md:px-20 text-slate-600 leading-relaxed border-t border-slate-50 pt-4">
-                        An extended license allows the product to be used in an end product that is sold to end users.
-                        Lisensi ini mencakup hak komersial penuh untuk SaaS atau aplikasi berbayar.
+                        Pembatalan booking dapat dilakukan dengan menekan tombol "<b>Batalkan</b>" pada halaman
+                        pemesanan.
+                        Setelah itu, akan muncul notifikasi konfirmasi untuk memastikan apakah Anda benar-benar ingin
+                        membatalkan booking tersebut.
                     </div>
                 </details>
             </div>
