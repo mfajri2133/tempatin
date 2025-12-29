@@ -1,6 +1,35 @@
 <div class="bg-tp-black min-h-screen py-10">
     <div class="max-w-2xl mx-auto px-4">
 
+        @if ($isVerifying)
+            <div wire:poll.2s="checkPaymentStatus"
+                class="bg-white rounded-lg shadow-lg border border-gray-200 p-10 text-center">
+                <svg class="animate-spin h-14 w-14 mx-auto text-indigo-600 mb-6" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                        stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z" />
+                </svg>
+
+                <h2 class="text-xl font-semibold text-gray-900">
+                    Memverifikasi Pembayaran
+                </h2>
+
+                <p class="text-gray-600 mt-2">
+                    Mohon tunggu, sistem sedang mengecek status pembayaran Anda
+                </p>
+
+                <div class="mt-6">
+                    <div class="text-4xl font-bold text-indigo-600">
+                        {{ $verifyCountdown }}
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">
+                        detik tersisa
+                    </p>
+                </div>
+            </div>
+        @endif
+
         @if ($isSuccess)
             <div class="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
                 <div class="bg-indigo-600 p-8 text-center">
@@ -110,7 +139,9 @@
                     </a>
                 </div>
             </div>
-        @else
+        @endif
+
+        @if (!$isSuccess && !$isVerifying)
             <div class="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
                 <div class="bg-indigo-600 p-8 text-center">
                     <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4">

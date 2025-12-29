@@ -20,7 +20,6 @@ class MidtransController extends Controller
     {
         $booking = $order->booking;
 
-        // idempotent guard
         if ($booking->qr_img) {
             return;
         }

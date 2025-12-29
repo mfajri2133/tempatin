@@ -14,8 +14,7 @@ class TransactionResult extends Component
     public ?Order $order = null;
     public bool $isSuccess = false;
     public bool $isVerifying = false;
-
-    public int $verifySeconds = 15;
+    public int $verifyCountdown = 15;
 
     public function mount()
     {
@@ -27,19 +26,39 @@ class TransactionResult extends Component
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
+        $this->evaluateStatus();
+    }
+
+    public function checkPaymentStatus()
+    {
+        $this->order->refresh();
+
+        $this->verifyCountdown--;
+
+        $this->evaluateStatus();
+
+        if ($this->verifyCountdown <= 0 && !$this->isSuccess) {
+            $this->isVerifying = false;
+        }
+    }
+
+    private function evaluateStatus(): void
+    {
         $paymentStatus = $this->order->payment?->payment_status;
 
-        if ($paymentStatus === 'paid') {
+        if (in_array($paymentStatus, ['capture', 'settlement'])) {
             $this->isSuccess = true;
+            $this->isVerifying = false;
             return;
         }
 
-        if ($paymentStatus === 'pending') {
+        if (in_array($paymentStatus, ['pending', 'challenge']) || !$paymentStatus) {
             $this->isVerifying = true;
             return;
         }
 
         $this->isSuccess = false;
+        $this->isVerifying = false;
     }
 
     public function downloadPdf()
