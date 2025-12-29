@@ -1,5 +1,3 @@
-@180513197265110
-
 <!DOCTYPE html>
 <html>
 
@@ -131,6 +129,23 @@
             margin-top: 10px;
         }
 
+        /* ===== QR SECTION ===== */
+        .qr-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .qr-section img {
+            width: 160px;
+            height: 160px;
+            margin-bottom: 10px;
+        }
+
+        .qr-section p {
+            font-size: 11px;
+            color: #374151;
+        }
+
         .footer {
             margin-top: 50px;
             padding-top: 20px;
@@ -232,6 +247,13 @@
                 <strong>Rp {{ number_format($order->total_amount, 0, ',', '.') }}</strong>
             </div>
         </div>
+
+        @if ($order->booking && $order->booking->qr_img)
+            <div class="qr-section">
+                <img src="file://{{ storage_path('app/public/' . $order->booking->qr_img) }}" alt="QR Booking">
+                <p>Tunjukkan QR ini saat check-in venue</p>
+            </div>
+        @endif
 
         <div class="footer">
             <p>Invoice ini dibuat secara otomatis oleh sistem.</p>
