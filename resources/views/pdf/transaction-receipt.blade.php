@@ -219,8 +219,34 @@
             margin-top: 6px;
         }
 
-        .summary {
-            margin-top: 30px;
+        .total-row.grand-total {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4F46E5;
+            border-top: 2px solid #4F46E5;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        /* ===== QR SECTION ===== */
+        .qr-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .qr-section img {
+            width: 160px;
+            height: 160px;
+            margin-bottom: 10px;
+        }
+
+        .qr-section p {
+            font-size: 11px;
+            color: #374151;
+        }
+
+        .footer {
+            margin-top: 50px;
             padding-top: 20px;
             border-top: 1px solid #E5E7EB;
         }
@@ -375,7 +401,7 @@
             </div>
         </div>
 
-        <div class="payment-box">
+        <<<<<<< HEAD <div class="payment-box">
             <div class="payment-title">Payment Information</div>
             <div class="payment-details">
                 <div class="payment-col">
@@ -391,89 +417,95 @@
                     <div class="value">{{ optional($order->payment->paid_at)->format('d M Y') ?? '-' }}</div>
                 </div>
             </div>
-        </div>
+    </div>
 
-        <div class="table-section">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 50%;">Description</th>
-                        <th style="text-align: center; width: 12%;">Duration</th>
-                        <th style="text-align: right; width: 18%;">Rate</th>
-                        <th style="text-align: right; width: 20%;">Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="item-title">{{ $order->booking->venue->name ?? '-' }}</div>
-                            <div class="item-meta">
-                                <div class="item-meta-row">
-                                    <strong>Date:</strong>
-                                    {{ \Carbon\Carbon::parse($order->booking->booking_date)->format('d F Y') }}
-                                </div>
-                                <div class="item-meta-row">
-                                    <strong>Time:</strong> {{ $order->booking->start_time ?? '-' }} –
-                                    {{ $order->booking->end_time ?? '-' }}
-                                </div>
-                                <div class="item-meta-row">
-                                    <strong>Location:</strong> {{ $order->booking->venue->city_name ?? '-' }}
-                                </div>
-                                @if ($order->booking->venue->category ?? false)
-                                    <span class="item-badge">{{ $order->booking->venue->category->name }}</span>
-                                @endif
+    <div class="table-section">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Description</th>
+                    <th style="text-align: center; width: 12%;">Duration</th>
+                    <th style="text-align: right; width: 18%;">Rate</th>
+                    <th style="text-align: right; width: 20%;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="item-title">{{ $order->booking->venue->name ?? '-' }}</div>
+                        <div class="item-meta">
+                            <div class="item-meta-row">
+                                <strong>Date:</strong>
+                                {{ \Carbon\Carbon::parse($order->booking->booking_date)->format('d F Y') }}
                             </div>
-                        </td>
-                        <td style="text-align: center;">
-                            <strong>{{ $order->booking->total_hours ?? 0 }}</strong> hours
-                        </td>
-                        <td style="text-align: right;">
-                            Rp {{ number_format($order->booking->venue->price_per_hour ?? 0, 0, ',', '.') }}
-                        </td>
-                        <td style="text-align: right;">
-                            <strong>Rp {{ number_format($order->total_amount ?? 0, 0, ',', '.') }}</strong>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            <div class="item-meta-row">
+                                <strong>Time:</strong> {{ $order->booking->start_time ?? '-' }} –
+                                {{ $order->booking->end_time ?? '-' }}
+                            </div>
+                            <div class="item-meta-row">
+                                <strong>Location:</strong> {{ $order->booking->venue->city_name ?? '-' }}
+                            </div>
+                            @if ($order->booking->venue->category ?? false)
+                                <span class="item-badge">{{ $order->booking->venue->category->name }}</span>
+                            @endif
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                        <strong>{{ $order->booking->total_hours ?? 0 }}</strong> hours
+                    </td>
+                    <td style="text-align: right;">
+                        Rp {{ number_format($order->booking->venue->price_per_hour ?? 0, 0, ',', '.') }}
+                    </td>
+                    <td style="text-align: right;">
+                        <strong>Rp {{ number_format($order->total_amount ?? 0, 0, ',', '.') }}</strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-            <div class="summary">
-                <div class="summary-row">
-                    <div class="summary-label">Subtotal</div>
-                    <div class="summary-value">Rp {{ number_format($order->total_amount ?? 0, 0, ',', '.') }}</div>
-                </div>
-                <div class="summary-row">
-                    <div class="summary-label">Tax & Fees</div>
-                    <div class="summary-value">Rp 0</div>
-                </div>
-                <div class="summary-row total">
-                    <div class="summary-label">Total Amount</div>
-                    <div class="summary-value">Rp {{ number_format($order->total_amount ?? 0, 0, ',', '.') }}</div>
-                </div>
+        <div class="summary">
+            <div class="summary-row">
+                <div class="summary-label">Subtotal</div>
+                <div class="summary-value">Rp {{ number_format($order->total_amount ?? 0, 0, ',', '.') }}</div>
             </div>
-        </div>
-
-        @if ($order->booking && $order->booking->qr_img)
-            <div class="qr-section">
-                <div class="qr-title">Check-In QR Code</div>
-                <div class="qr-wrapper">
-                    <img src="file://{{ storage_path('app/public/' . $order->booking->qr_img) }}" alt="QR Code">
-                </div>
-                <p class="qr-note">
-                    Present this QR code to venue staff upon arrival for check-in
-                </p>
+            <div class="summary-row">
+                <div class="summary-label">Tax & Fees</div>
+                <div class="summary-value">Rp 0</div>
             </div>
-        @endif
-
-        <div class="footer">
-            <div class="footer-thanks">Thank you for your business</div>
-            <p class="footer-text">This is a computer-generated invoice and is valid without signature.</p>
-            <p class="footer-text">For any inquiries, please contact our customer service.</p>
-            <div class="footer-meta">
-                Document generated on {{ now()->format('d F Y, H:i:s') }} WIB
+            <div class="summary-row total">
+                <div class="summary-label">Total Amount</div>
+                <div class="summary-value">Rp {{ number_format($order->total_amount ?? 0, 0, ',', '.') }}</div>
             </div>
         </div>
     </div>
+
+    @if ($order->booking && $order->booking->qr_img)
+        <div class="qr-section">
+            <div class="qr-title">Check-In QR Code</div>
+            <div class="qr-wrapper">
+                <img src="file://{{ storage_path('app/public/' . $order->booking->qr_img) }}" alt="QR Code">
+            </div>
+            <p class="qr-note">
+                Present this QR code to venue staff upon arrival for check-in
+            </p>
+            =======
+            @if ($order->booking && $order->booking->qr_img)
+                <div class="qr-section">
+                    <img src="file://{{ storage_path('app/public/' . $order->booking->qr_img) }}" alt="QR Booking">
+                    <p>Tunjukkan QR ini saat check-in venue</p>
+                    >>>>>>> 88a0718ea7f3558652702afa3c2557c68d6db127
+                </div>
+            @endif
+
+            <div class="footer">
+                <div class="footer-thanks">Thank you for your business</div>
+                <p class="footer-text">This is a computer-generated invoice and is valid without signature.</p>
+                <p class="footer-text">For any inquiries, please contact our customer service.</p>
+                <div class="footer-meta">
+                    Document generated on {{ now()->format('d F Y, H:i:s') }} WIB
+                </div>
+            </div>
+        </div>
 </body>
 
 </html>

@@ -66,7 +66,7 @@ class TransactionResult extends Component
         abort_if(!$this->isSuccess, 403);
 
         $pdf = Pdf::loadView('pdf.transaction-receipt', [
-            'order' => $this->order
+            'order' => $this->order->load('booking.venue', 'payment', 'user')
         ]);
 
         return response()->streamDownload(

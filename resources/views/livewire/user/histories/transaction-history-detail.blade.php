@@ -231,7 +231,7 @@
                 @if ($order->status === 'paid')
                     <div class="flex flex-wrap gap-2 mt-4">
                         <button wire:click="downloadPdf" wire:loading.attr="disabled"
-                            class="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition disabled:opacity-60 flex items-center justify-center gap-2">
+                            class="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded transition disabled:opacity-60 flex items-center justify-center gap-2">
                             <svg wire:loading.remove class="w-5 h-5" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -251,7 +251,7 @@
 
                         @if ($order->booking?->qr_img)
                             <button wire:click="openQr"
-                                class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition">
+                                class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded transition">
                                 Lihat QR Booking
                             </button>
                         @endif
