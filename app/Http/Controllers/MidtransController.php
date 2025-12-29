@@ -8,11 +8,50 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Midtrans\Config;
 use Midtrans\Notification;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MidtransController extends Controller
 {
+
+    private function generateBookingQrIfNeeded(Order $order): void
+    {
+        $booking = $order->booking;
+
+        // idempotent guard
+        if ($booking->qr_img) {
+            return;
+        }
+
+        $payload = [
+            'booking_code' => $booking->booking_code ?? $order->order_code,
+            'order_code'   => $order->order_code,
+            'user_id'      => $order->user_id,
+            'venue_id'     => $booking->venue_id,
+        ];
+
+        $qrImage = QrCode::format('png')
+            ->size(300)
+            ->margin(2)
+            ->generate(json_encode($payload));
+
+        $path = 'qrcodes/bookings/' . $order->order_code . '.png';
+
+        Storage::disk('public')->put($path, $qrImage);
+
+        $booking->update([
+            'qr_img' => $path,
+            'qr_generated_at' => now(),
+        ]);
+
+        Log::info('BOOKING QR GENERATED', [
+            'order_code' => $order->order_code,
+            'booking_id' => $booking->id,
+        ]);
+    }
+
     public function handle(Request $request)
     {
         Config::$serverKey = config('services.midtrans.server_key');
@@ -143,6 +182,7 @@ class MidtransController extends Controller
         if ($paymentStatus['is_paid']) {
             $order->update(['status' => 'paid']);
             $order->booking->update(['status' => 'progress']);
+            $this->generateBookingQrIfNeeded($order);
             Log::info("Order marked as paid", ['order_code' => $order->order_code]);
         } else if ($paymentStatus['is_failed']) {
             $order->update(['status' => 'failed']);

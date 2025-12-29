@@ -13,12 +13,13 @@ class TransactionResult extends Component
 {
     public ?Order $order = null;
     public bool $isSuccess = false;
-    public string $status = '';
+    public bool $isVerifying = false;
+
+    public int $verifySeconds = 15;
 
     public function mount()
     {
         $orderCode = request()->query('order_id');
-
         abort_if(!$orderCode, 404);
 
         $this->order = Order::with(['booking.venue', 'payment', 'user'])
@@ -26,10 +27,19 @@ class TransactionResult extends Component
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-        $this->isSuccess = in_array(
-            $this->order->payment?->payment_status,
-            ['capture', 'settlement']
-        );
+        $paymentStatus = $this->order->payment?->payment_status;
+
+        if ($paymentStatus === 'paid') {
+            $this->isSuccess = true;
+            return;
+        }
+
+        if ($paymentStatus === 'pending') {
+            $this->isVerifying = true;
+            return;
+        }
+
+        $this->isSuccess = false;
     }
 
     public function downloadPdf()
