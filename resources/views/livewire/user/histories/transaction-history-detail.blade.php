@@ -1,4 +1,5 @@
-<div class="bg-tp-black min-h-screen">
+<div x-data="{ showQRModal: false }" x-on:open-qr-modal.window="showQRModal = true"
+    x-on:close-qr-modal.window="showQRModal = false" class="bg-tp-black min-h-screen">
     <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6">
         {{-- Header --}}
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
@@ -259,36 +260,26 @@
             </div>
         </div>
     </div>
-</div>
-@if ($showQrModal)
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-        <div class="bg-white rounded-xl shadow-xl w-full max-w-sm p-6 relative">
 
-            <button wire:click="closeQr" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+    <x-modal show="showQRModal" title="QR Booking" maxWidth="md">
+        @if ($order->booking?->qr_img)
+            <div class="flex justify-center mb-4">
+                <img src="{{ asset('storage/' . $order->booking->qr_img) }}" alt="QR Booking" class="w-56 h-56" />
+            </div>
+
+            <p class="text-xs text-center text-gray-500">
+                Tunjukkan QR ini saat check-in venue
+            </p>
+        @else
+            <p class="text-center text-sm text-gray-500">
+                QR belum tersedia
+            </p>
+        @endif
+        <x-slot:footer>
+            <button @click="$dispatch('close-qr-modal')"
+                class="h-10 px-4 rounded bg-gray-100 text-xs text-gray-700 hover:bg-gray-200 transition">
+                Tutup
             </button>
-
-            <h3 class="text-lg font-bold text-center mb-4">
-                QR Booking
-            </h3>
-
-            @if ($order->booking?->qr_img)
-                <div class="flex justify-center mb-4">
-                    <img src="{{ asset('storage/' . $order->booking->qr_img) }}" alt="QR Booking"
-                        class="w-56 h-56" />
-                </div>
-
-                <p class="text-xs text-center text-gray-500">
-                    Tunjukkan QR ini saat check-in venue
-                </p>
-            @else
-                <p class="text-center text-sm text-gray-500">
-                    QR belum tersedia
-                </p>
-            @endif
-        </div>
-    </div>
-@endif
+        </x-slot:footer>
+    </x-modal>
+</div>

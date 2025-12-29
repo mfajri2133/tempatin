@@ -98,7 +98,6 @@
                 @enderror
             </div>
 
-
             <!-- KAPASITAS -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Kapasitas</label>

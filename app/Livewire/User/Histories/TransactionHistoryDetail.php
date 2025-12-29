@@ -17,16 +17,15 @@ class TransactionHistoryDetail extends Component
     use WithToast;
     public $orderId;
     public $order;
-    public bool $showQrModal = false;
 
     public function openQr()
     {
-        $this->showQrModal = true;
+        $this->dispatch('open-qr-modal');
     }
 
     public function closeQr()
     {
-        $this->showQrModal = false;
+        $this->dispatch('close-qr-modal');
     }
 
     public function mount($id)

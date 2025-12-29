@@ -26,7 +26,6 @@ class VenueCreate extends Component
     public string $city_code = '';
     public array $cities = [];
     public int|string $capacity = '';
-    public string $price_display = '';
     public int|string $price_per_hour = '';
     public string $status = 'available';
 
@@ -127,16 +126,6 @@ class VenueCreate extends Component
             'price_per_hour' => 'required|numeric|min:0',
             'status' => 'required|in:available,unavailable',
         ]);
-    }
-
-    public function updatedPriceDisplay($value)
-    {
-        $numeric = preg_replace('/[^0-9]/', '', $value);
-
-        $this->price_per_hour = $numeric;
-        $this->price_display = $numeric
-            ? 'Rp ' . number_format($numeric, 0, ',', '.')
-            : '';
     }
 
     public function deletePhoto()

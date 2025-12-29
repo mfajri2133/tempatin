@@ -70,11 +70,24 @@
             <!-- HARGA -->
             <div>
                 <label class="text-sm font-medium text-gray-700">Harga per Jam</label>
-                <input type="text" wire:model.live.debounce.300ms="price_display" inputmode="numeric"
-                    placeholder="Rp 0"
-                    class="w-full h-10 px-3 text-sm rounded-md border border-gray-300 bg-white
-                       focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-                       @error('price_per_hour') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+
+                <div class="relative flex items-center">
+                    <!-- PREFIX RP -->
+                    <span
+                        class="inline-flex items-center h-10 px-3
+                   rounded-l-md border border-r-0 border-gray-300
+                   bg-gray-100 text-gray-600 text-sm font-medium">
+                        Rp
+                    </span>
+
+                    <!-- INPUT NUMBER -->
+                    <input type="number" min="0" wire:model.live.debounce.300ms="price_per_hour" placeholder="0"
+                        class="w-full h-10 px-3 text-sm rounded-r-md
+                   border border-gray-300
+                   focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+                   @error('price_per_hour') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror" />
+                </div>
+
                 @error('price_per_hour')
                     <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                 @enderror
