@@ -15,6 +15,8 @@ use App\Livewire\Dashboard\Venues\Venues;
 use App\Livewire\Dashboard\Users;
 use App\Livewire\Dashboard\Admin;
 use App\Livewire\Dashboard\Categories;
+use App\Livewire\Dashboard\Inbox;
+use App\Livewire\Dashboard\QRScanner;
 use App\Livewire\Dashboard\Transactions\TransactionDetail;
 use App\Livewire\Dashboard\Transactions\Transactions;
 use App\Livewire\Faq;
@@ -97,6 +99,8 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'role:admin'
     Route::get('/users', Users::class)->name('users');
     Route::get('/admin-users', Admin::class)->name('admin-users');
     Route::get('/categories', Categories::class)->name('categories');
+    Route::get('/inbox', Inbox::class)->name('inbox');
+    Route::get('/qr-scanner', QRScanner::class)->name('qr-scanner');
 
     Route::prefix('transactions')->name('transactions.')->group(function () {
         Route::get('/', Transactions::class)->name('index');
