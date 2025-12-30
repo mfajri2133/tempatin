@@ -1,5 +1,5 @@
-<div class="bg-[#0f0f0f] py-12">
-    <div class="max-w-6xl mx-auto px-4">
+<div class="bg-[#0f0f0f] py-12 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-6xl px-4">
         <div class="mb-8 border-indigo-600">
             <h1 class="text-4xl font-black text-white text-center">
                 Hubungi <span class="text-indigo-600">Kami</span>
