@@ -23,7 +23,7 @@ class Dashboard extends Component
     public function mount()
     {
         $this->start_date = now()->startOfMonth()->format('Y-m-d');
-        $this->end_date = now()->endOfMonth()->format('Y-m-d');
+        $this->end_date   = now()->endOfMonth()->format('Y-m-d');
     }
 
     public function exportReport()
@@ -39,62 +39,63 @@ class Dashboard extends Component
     public function render()
     {
         $totalVenues = Venue::count();
-        $totalUsers = User::where('role', 'user')->count();
+        $totalUsers  = User::where('role', 'user')->count();
         $totalAdmins = User::where('role', 'admin')->count();
 
         $totalRevenue = Order::where('status', 'paid')
-            ->when($this->start_date && $this->end_date, function ($query) {
-                $query->whereBetween('created_at', [
-                    $this->start_date . ' 00:00:00',
-                    $this->end_date . ' 23:59:59'
-                ]);
-            })
+            ->whereBetween('created_at', [
+                $this->start_date . ' 00:00:00',
+                $this->end_date   . ' 23:59:59'
+            ])
             ->sum('total_amount');
 
         $chartData = $this->getChartData();
 
         $recentTransactions = Order::with(['user', 'booking.venue', 'payment'])
-            ->when($this->start_date && $this->end_date, function ($query) {
-                $query->whereBetween('created_at', [
-                    $this->start_date . ' 00:00:00',
-                    $this->end_date . ' 23:59:59'
-                ]);
-            })
-            ->orderBy('created_at', 'desc')
+            ->whereBetween('created_at', [
+                $this->start_date . ' 00:00:00',
+                $this->end_date   . ' 23:59:59'
+            ])
+            ->orderByDesc('created_at')
             ->limit(10)
             ->get();
 
         $topVenues = Booking::select('venue_id', DB::raw('COUNT(*) as total_bookings'))
-            ->when($this->start_date && $this->end_date, function ($query) {
-                $query->whereBetween('created_at', [
-                    $this->start_date . ' 00:00:00',
-                    $this->end_date . ' 23:59:59'
-                ]);
-            })
+            ->whereBetween('created_at', [
+                $this->start_date . ' 00:00:00',
+                $this->end_date   . ' 23:59:59'
+            ])
             ->groupBy('venue_id')
-            ->orderBy('total_bookings', 'desc')
+            ->orderByDesc('total_bookings')
             ->limit(5)
             ->with('venue')
             ->get();
 
         return view('livewire.dashboard.index', [
-            'totalVenues' => $totalVenues,
-            'totalUsers' => $totalUsers,
-            'totalAdmins' => $totalAdmins,
-            'totalRevenue' => $totalRevenue,
-            'chartData' => $chartData,
+            'totalVenues'        => $totalVenues,
+            'totalUsers'         => $totalUsers,
+            'totalAdmins'        => $totalAdmins,
+            'totalRevenue'       => $totalRevenue,
+            'chartData'          => $chartData,
             'recentTransactions' => $recentTransactions,
-            'topVenues' => $topVenues,
+            'topVenues'          => $topVenues,
         ]);
     }
 
+    /**
+     * Generate chart data (daily / monthly)
+     */
     private function getChartData()
     {
         $start = Carbon::parse($this->start_date);
-        $end = Carbon::parse($this->end_date);
+        $end   = Carbon::parse($this->end_date);
         $diffInDays = $start->diffInDays($end);
 
-        // ≤ 31 hari → tampil per hari
+        /**
+         * =========================
+         * DAILY (≤ 31 days)
+         * =========================
+         */
         if ($diffInDays <= 31) {
             $data = Order::where('status', 'paid')
                 ->select(
@@ -103,7 +104,7 @@ class Dashboard extends Component
                 )
                 ->whereBetween('created_at', [
                     $this->start_date . ' 00:00:00',
-                    $this->end_date . ' 23:59:59'
+                    $this->end_date   . ' 23:59:59'
                 ])
                 ->groupBy('date')
                 ->orderBy('date')
@@ -115,52 +116,55 @@ class Dashboard extends Component
             $period = CarbonPeriod::create($start, $end);
 
             foreach ($period as $date) {
-                $dateStr = $date->format('Y-m-d');
+                $key = $date->format('Y-m-d');
                 $chartData[] = [
                     'label' => $date->format('d M'),
-                    'value' => $data[$dateStr] ?? 0
+                    'value' => $data[$key] ?? 0
                 ];
             }
 
             return $chartData;
         }
 
-        // > 31 hari → tampil per bulan
+        /**
+         * =========================
+         * MONTHLY (> 31 days) ✅ FIXED
+         * =========================
+         */
         $data = Order::where('status', 'paid')
             ->select(
+                DB::raw('YEAR(created_at) as year'),
                 DB::raw('MONTH(created_at) as month'),
                 DB::raw('COUNT(*) as total')
             )
             ->whereBetween('created_at', [
                 $this->start_date . ' 00:00:00',
-                $this->end_date . ' 23:59:59'
+                $this->end_date   . ' 23:59:59'
             ])
-            ->groupBy('month')
+            ->groupBy('year', 'month')
+            ->orderBy('year')
             ->orderBy('month')
             ->get()
-            ->pluck('total', 'month')
+            ->mapWithKeys(function ($item) {
+                return [
+                    $item->year . '-' . str_pad($item->month, 2, '0', STR_PAD_LEFT)
+                    => $item->total
+                ];
+            })
             ->toArray();
 
-        $months = [
-            1 => 'Jan',
-            2 => 'Feb',
-            3 => 'Mar',
-            4 => 'Apr',
-            5 => 'Mei',
-            6 => 'Jun',
-            7 => 'Jul',
-            8 => 'Agu',
-            9 => 'Sep',
-            10 => 'Okt',
-            11 => 'Nov',
-            12 => 'Des'
-        ];
-
         $chartData = [];
-        foreach ($months as $num => $label) {
+        $period = CarbonPeriod::create(
+            $start->copy()->startOfMonth(),
+            '1 month',
+            $end->copy()->startOfMonth()
+        );
+
+        foreach ($period as $date) {
+            $key = $date->format('Y-m');
             $chartData[] = [
-                'label' => $label,
-                'value' => $data[$num] ?? 0
+                'label' => $date->format('M Y'),
+                'value' => $data[$key] ?? 0
             ];
         }
 
