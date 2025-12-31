@@ -12,6 +12,12 @@ class Inbox extends Component
 {
     use WithPagination;
     public string $search = '';
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         $inboxes = Mail::query()

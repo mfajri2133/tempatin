@@ -25,6 +25,11 @@ class Categories extends Component
         'name.max' => 'Nama maksimal 255 karakter',
     ];
 
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function create()
     {
         $this->resetForm();

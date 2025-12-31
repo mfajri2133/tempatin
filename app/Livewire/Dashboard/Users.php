@@ -13,6 +13,11 @@ class Users extends Component
     use WithPagination;
     public string $search = '';
 
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         $users = User::query()

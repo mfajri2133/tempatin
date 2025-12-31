@@ -21,7 +21,8 @@
 
     <!-- CLEAR -->
     <button type="button" x-show="search.length > 0" x-transition.opacity wire:loading.remove wire:target="search"
-        @click="search = ''" class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-600">
+        @click="$wire.set('search', '')"
+        class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-600">
         <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

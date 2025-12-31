@@ -34,6 +34,11 @@ class Admin extends Component
         'password.min' => 'Password minimal 8 karakter',
     ];
 
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function create()
     {
         $this->resetForm();
