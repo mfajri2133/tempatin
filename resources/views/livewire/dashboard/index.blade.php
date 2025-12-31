@@ -105,34 +105,13 @@
         <div class="flex items-center justify-between mb-6">
             <h2 class="text-lg font-bold text-tp-black">Grafik Transaksi</h2>
             <span class="text-xs text-gray-500">
-                {{ $start_date ? \Carbon\Carbon::parse($start_date)->format('d M Y') : 'All time' }} -
-                {{ $end_date ? \Carbon\Carbon::parse($end_date)->format('d M Y') : 'Now' }}
+                {{ \Carbon\Carbon::parse($start_date)->format('d M Y') }} -
+                {{ \Carbon\Carbon::parse($end_date)->format('d M Y') }}
             </span>
         </div>
 
-        @php
-            $maxValue = collect($chartData)->max('value') ?: 1;
-        @endphp
-
-        <div class="grid gap-2 h-48" style="grid-template-columns: repeat({{ count($chartData) }}, minmax(0, 1fr));">
-            @foreach ($chartData as $point)
-                @php
-                    $height = $maxValue > 0 ? (int) round(($point['value'] / $maxValue) * 100) : 0;
-                @endphp
-
-                <div class="flex flex-col items-center justify-end gap-2 h-full group">
-                    <div class="relative w-full">
-                        <div class="w-full rounded-t bg-indigo-100 border border-indigo-200 hover:bg-indigo-200 transition-colors cursor-pointer"
-                            style="height: {{ $height }}%">
-                        </div>
-                        <div
-                            class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-                            {{ $point['value'] }}
-                        </div>
-                    </div>
-                    <div class="text-[10px] text-gray-500 text-center">{{ $point['label'] }}</div>
-                </div>
-            @endforeach
+        <div wire:ignore>
+            <div id="transactionChart" class="h-64"></div>
         </div>
     </div>
 
@@ -203,4 +182,75 @@
             @endif
         </div>
     </div>
+
+    <script>
+        document.addEventListener('livewire:init', () => {
+            const initialData = @js($chartData);
+
+            const chart = new ApexCharts(
+                document.querySelector('#transactionChart'), {
+                    chart: {
+                        type: 'area',
+                        height: 260,
+                        toolbar: {
+                            show: false
+                        },
+                        animations: {
+                            easing: 'easeinout',
+                            speed: 600
+                        }
+                    },
+                    series: [{
+                        name: 'Jumlah Transaksi',
+                        data: initialData.map(item => item.value),
+                    }],
+                    xaxis: {
+                        categories: initialData.map(item => item.label),
+                        labels: {
+                            rotate: -45
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 3
+                    },
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.4,
+                            opacityTo: 0.05,
+                            stops: [0, 90, 100]
+                        }
+                    },
+                    colors: ['#6366f1'],
+                    tooltip: {
+                        y: {
+                            formatter: val => val.toLocaleString()
+                        }
+                    }
+                }
+            );
+
+            chart.render();
+
+            Livewire.hook('message.processed', () => {
+                const data = @js($chartData);
+
+                chart.updateOptions({
+                    xaxis: {
+                        categories: data.map(i => i.label)
+                    }
+                });
+
+                chart.updateSeries([{
+                    data: data.map(i => i.value)
+                }]);
+            });
+        });
+    </script>
+
 </div>
