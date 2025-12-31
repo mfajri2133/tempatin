@@ -57,7 +57,7 @@ class Dashboard extends Component
                 $this->end_date   . ' 23:59:59'
             ])
             ->orderByDesc('created_at')
-            ->limit(10)
+            ->limit(5)
             ->get();
 
         $topVenues = Booking::select('venue_id', DB::raw('COUNT(*) as total_bookings'))
