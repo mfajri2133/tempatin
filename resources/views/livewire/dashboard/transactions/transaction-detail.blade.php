@@ -23,26 +23,14 @@
                 {{ $transaction->booking?->booking_code ?? '-' }}
             </h2>
             <div class="mt-2 flex flex-wrap gap-2">
-                {{-- Status Payment --}}
                 <span
-                    class="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full
-                    {{ $transaction->payment?->payment_status == 'pending' ? 'bg-indigo-100 text-indigo-700' : '' }}
-                    {{ $transaction->payment?->payment_status == 'paid' ? 'bg-green-100 text-green-700' : '' }}
-                    {{ $transaction->payment?->payment_status == 'expired' ? 'bg-orange-100 text-orange-700' : '' }}
-                    {{ $transaction->payment?->payment_status == 'failed' ? 'bg-red-100 text-red-700' : '' }}
-                    {{ !$transaction->payment ? 'bg-gray-100 text-gray-700' : '' }}">
-                    Payment: {{ strtoupper($transaction->payment?->payment_status ?? 'PENDING') }}
+                    class="inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full {{ $orderStatusBadge['class'] }}">
+                    ORDER: {{ strtoupper($orderStatusBadge['text']) }}
                 </span>
 
-                {{-- Status Booking --}}
                 <span
-                    class="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full
-                    {{ $transaction->booking?->status == 'waiting' ? 'bg-amber-100 text-amber-700' : '' }}
-                    {{ $transaction->booking?->status == 'progress' ? 'bg-blue-100 text-blue-700' : '' }}
-                    {{ $transaction->booking?->status == 'finished' ? 'bg-green-100 text-green-700' : '' }}
-                    {{ $transaction->booking?->status == 'cancelled' ? 'bg-red-100 text-red-700' : '' }}
-                    {{ !$transaction->booking ? 'bg-gray-100 text-gray-700' : '' }}">
-                    Booking: {{ strtoupper($transaction->booking?->status ?? '-') }}
+                    class="inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full {{ $bookingStatusBadge['class'] }}">
+                    BOOKING: {{ strtoupper($bookingStatusBadge['text']) }}
                 </span>
             </div>
         </div>

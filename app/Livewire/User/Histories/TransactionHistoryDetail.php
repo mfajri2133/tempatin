@@ -97,29 +97,70 @@ class TransactionHistoryDetail extends Component
         return redirect()->route('transaction-histories.index');
     }
 
-    public function getStatusBadgeProperty()
+    public function getOrderStatusBadgeProperty()
     {
-        $displayStatus = $this->order->status
-            ?? $this->order->payment?->payment_status
-            ?? $this->order->booking?->status;
+        return match ($this->order->status) {
+            'pending' => [
+                'text' => 'Menunggu Pembayaran',
+                'class' => 'bg-yellow-100 text-yellow-800',
+            ],
+            'paid' => [
+                'text' => 'Dibayar',
+                'class' => 'bg-green-100 text-green-700',
+            ],
+            'failed' => [
+                'text' => 'Gagal / Batal',
+                'class' => 'bg-red-100 text-red-700',
+            ],
+            default => [
+                'text' => '-',
+                'class' => 'bg-gray-100 text-gray-700',
+            ],
+        };
+    }
 
-        $statusText = $displayStatus ? ucfirst(str_replace('_', ' ', $displayStatus)) : '-';
-        $statusKey = strtolower((string) $displayStatus);
+    public function getBookingStatusBadgeProperty()
+    {
+        $booking = $this->order->booking;
 
-        $badgeClass = 'bg-gray-100 text-gray-700';
+        if (!$booking) {
+            return [
+                'text' => '-',
+                'class' => 'bg-gray-100 text-gray-700',
+            ];
+        }
 
-        if (in_array($statusKey, ['paid', 'finished'], true)) {
-            $badgeClass = 'bg-green-100 text-green-700';
-        } elseif (in_array($statusKey, ['pending', 'waiting', 'progress'], true)) {
-            $badgeClass = 'bg-yellow-100 text-yellow-800';
-        } elseif (in_array($statusKey, ['failed', 'expired', 'cancelled'], true)) {
-            $badgeClass = 'bg-red-100 text-red-700';
+        if ($booking->status === 'cancelled') {
+            return [
+                'text' => 'Dibatalkan',
+                'class' => 'bg-red-100 text-red-700',
+            ];
+        }
+
+        if ($booking->status === 'progress' && $booking->checkin_at) {
+            return [
+                'text' => 'Selesai',
+                'class' => 'bg-green-100 text-green-700',
+            ];
+        }
+
+        if ($booking->status === 'progress') {
+            return [
+                'text' => 'Belum Check-in',
+                'class' => 'bg-blue-100 text-blue-700',
+            ];
+        }
+
+        if ($booking->status === 'waiting') {
+            return [
+                'text' => 'Menunggu Pembayaran',
+                'class' => 'bg-yellow-100 text-yellow-800',
+            ];
         }
 
         return [
-            'text' => $statusText,
-            'class' => $badgeClass,
-            'raw' => $displayStatus
+            'text' => ucfirst($booking->status),
+            'class' => 'bg-gray-100 text-gray-700',
         ];
     }
 
@@ -150,7 +191,8 @@ class TransactionHistoryDetail extends Component
     public function render()
     {
         return view('livewire.user.histories.transaction-history-detail', [
-            'statusBadge' => $this->statusBadge,
+            'orderStatusBadge'   => $this->orderStatusBadge,
+            'bookingStatusBadge' => $this->bookingStatusBadge,
             'bookingDuration' => $this->bookingDuration,
         ]);
     }

@@ -30,10 +30,14 @@
                     </h2>
 
                     <div class="mt-2 flex flex-wrap gap-2">
-                        {{-- Status utama (payment/booking/order) --}}
                         <span
-                            class="inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full {{ $statusBadge['class'] ?? 'bg-gray-100 text-gray-700' }}">
-                            Status: {{ strtoupper($statusBadge['text'] ?? '-') }}
+                            class="inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full {{ $orderStatusBadge['class'] }}">
+                            ORDER: {{ strtoupper($orderStatusBadge['text']) }}
+                        </span>
+
+                        <span
+                            class="inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full {{ $bookingStatusBadge['class'] }}">
+                            BOOKING: {{ strtoupper($bookingStatusBadge['text']) }}
                         </span>
                     </div>
                 </div>

@@ -29,7 +29,6 @@ class Transactions extends Component
         return [
             'pending',
             'paid',
-            'expired',
             'failed',
         ];
     }
