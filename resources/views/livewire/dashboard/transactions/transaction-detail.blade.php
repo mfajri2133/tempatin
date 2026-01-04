@@ -209,13 +209,13 @@
             <div>
                 <p class="text-xs font-medium text-gray-500 mb-1">Waktu Pembayaran</p>
                 <p class="text-sm font-bold text-gray-800">
-                    {{ $transaction->payment?->paid_at ? \Carbon\Carbon::parse($transaction->payment->paid_at)->format('d M Y H:i') : 'N/A' }}
+                    {{ $transaction->payment?->paid_at ?? '-' }}
                 </p>
             </div>
             <div>
-                <p class="text-xs font-medium text-gray-500 mb-1">Batas Waktu</p>
+                <p class="text-xs font-medium text-gray-500 mb-1">Batas Wsaktu</p>
                 <p class="text-sm font-bold text-red-500">
-                    {{ $transaction->payment?->expired_at ? \Carbon\Carbon::parse($transaction->payment->expired_at)->format('d M Y H:i') : 'N/A' }}
+                    {{ $transaction->payment?->expired_at ?? '-' }}
                 </p>
             </div>
         </div>

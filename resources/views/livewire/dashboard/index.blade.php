@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-4">
     <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
             <h1 class="text-2xl font-bold text-tp-black">Dashboard</h1>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
+        <div class="bg-white rounded-lg border border-gray-200 p-5  transition">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-sm text-gray-500 font-medium">Total Venue</p>
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
+        <div class="bg-white rounded-lg border border-gray-200 p-5  transition">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-sm text-gray-500 font-medium">Total Pendapatan</p>
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
+        <div class="bg-white rounded-lg border border-gray-200 p-5  transition">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-sm text-gray-500 font-medium">Total User</p>
@@ -84,7 +84,7 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
+        <div class="bg-white rounded-lg border border-gray-200 p-5  transition">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-sm text-gray-500 font-medium">Total Admin</p>
@@ -101,21 +101,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-lg border border-gray-200 p-6">
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="text-lg font-bold text-tp-black">Grafik Transaksi</h2>
-            <span class="text-xs text-gray-500">
-                {{ \Carbon\Carbon::parse($start_date)->format('d M Y') }} -
-                {{ \Carbon\Carbon::parse($end_date)->format('d M Y') }}
-            </span>
-        </div>
-
-        <div wire:ignore>
-            <div id="transactionChart" class="h-64"></div>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div class="bg-white rounded-lg border border-gray-200 p-6">
             <h2 class="text-lg font-bold text-tp-black mb-4">Transaksi Terbaru</h2>
 
@@ -182,75 +168,4 @@
             @endif
         </div>
     </div>
-
-    <script>
-        document.addEventListener('livewire:init', () => {
-            const initialData = @js($chartData);
-
-            const chart = new ApexCharts(
-                document.querySelector('#transactionChart'), {
-                    chart: {
-                        type: 'area',
-                        height: 260,
-                        toolbar: {
-                            show: false
-                        },
-                        animations: {
-                            easing: 'easeinout',
-                            speed: 600
-                        }
-                    },
-                    series: [{
-                        name: 'Jumlah Transaksi',
-                        data: initialData.map(item => item.value),
-                    }],
-                    xaxis: {
-                        categories: initialData.map(item => item.label),
-                        labels: {
-                            rotate: -45
-                        }
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    stroke: {
-                        curve: 'smooth',
-                        width: 3
-                    },
-                    fill: {
-                        type: 'gradient',
-                        gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.4,
-                            opacityTo: 0.05,
-                            stops: [0, 90, 100]
-                        }
-                    },
-                    colors: ['#6366f1'],
-                    tooltip: {
-                        y: {
-                            formatter: val => val.toLocaleString()
-                        }
-                    }
-                }
-            );
-
-            chart.render();
-
-            Livewire.hook('message.processed', () => {
-                const data = @js($chartData);
-
-                chart.updateOptions({
-                    xaxis: {
-                        categories: data.map(i => i.label)
-                    }
-                });
-
-                chart.updateSeries([{
-                    data: data.map(i => i.value)
-                }]);
-            });
-        });
-    </script>
-
 </div>

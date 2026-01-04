@@ -165,50 +165,17 @@
                     <div>
                         <p class="text-xs font-medium text-gray-500 mb-1">Waktu Pembayaran</p>
                         <p class="text-sm font-bold text-gray-900">
-                            {{ $order->payment?->paid_at ? \Carbon\Carbon::parse($order->payment->paid_at)->format('d M Y H:i') : 'N/A' }}
+                            {{ $order->payment?->paid_at ?? '-' }}
                         </p>
                     </div>
                     <div>
                         <p class="text-xs font-medium text-gray-500 mb-1">Batas Waktu</p>
                         <p class="text-sm font-bold text-red-600">
-                            {{ $order->payment?->expired_at ? \Carbon\Carbon::parse($order->payment->expired_at)->format('d M Y H:i') : 'N/A' }}
+                            {{ $order->payment?->expired_at ?? '-' }}
                         </p>
                     </div>
                 </div>
             </div>
-
-            {{-- Timeline --}}
-            @if (!empty($timelineSteps))
-                <div class="p-5 border-t border-gray-200">
-                    <h3 class="text-sm font-bold text-gray-900 mb-4">Timeline</h3>
-
-                    <div class="space-y-3">
-                        @foreach ($timelineSteps as $step)
-                            @php
-                                $stepStatus = $step['status'] ?? 'current';
-                                $dotClass = 'bg-gray-300';
-                                $textClass = 'text-gray-700';
-                                if ($stepStatus === 'completed') {
-                                    $dotClass = 'bg-green-500';
-                                    $textClass = 'text-gray-900';
-                                } elseif ($stepStatus === 'failed') {
-                                    $dotClass = 'bg-red-500';
-                                    $textClass = 'text-gray-900';
-                                }
-                            @endphp
-
-                            <div class="flex items-start gap-3">
-                                <div class="mt-1.5 h-2.5 w-2.5 rounded-full {{ $dotClass }}"></div>
-                                <div class="min-w-0">
-                                    <div class="text-sm font-semibold {{ $textClass }}">
-                                        {{ $step['label'] ?? '-' }}</div>
-                                    <div class="text-xs text-gray-500">{{ $step['description'] ?? '-' }}</div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
 
             <div class="flex justify-end m-4">
                 @if ($order->status === 'pending' && $order->payment && $order->payment->payment_status === 'pending')

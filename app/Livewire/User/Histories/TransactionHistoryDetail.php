@@ -123,95 +123,6 @@ class TransactionHistoryDetail extends Component
         ];
     }
 
-    public function getTimelineStepsProperty()
-    {
-        $steps = [];
-        $currentStatus = strtolower($this->order->status ?? '');
-        $bookingStatus = strtolower($this->order->booking?->status ?? '');
-        $paymentStatus = strtolower($this->order->payment?->payment_status ?? '');
-
-        $steps[] = [
-            'label' => 'Order Dibuat',
-            'description' => $this->order->created_at->format('d M Y, H:i'),
-            'status' => 'completed',
-            'icon' => 'receipt'
-        ];
-
-        if ($paymentStatus === 'paid' || $currentStatus === 'paid') {
-            $steps[] = [
-                'label' => 'Pembayaran Berhasil',
-                'description' => $this->order->payment?->paid_at
-                    ? Carbon::parse($this->order->payment->paid_at)->format('d M Y, H:i')
-                    : '-',
-                'status' => 'completed',
-                'icon' => 'check-circle'
-            ];
-        } elseif ($currentStatus === 'pending') {
-            $expiredAt = $this->order->payment?->expired_at
-                ? Carbon::parse($this->order->payment->expired_at)->format('d M Y, H:i')
-                : null;
-
-            $steps[] = [
-                'label' => 'Menunggu Pembayaran',
-                'description' => $expiredAt ? "Bayar sebelum: {$expiredAt}" : 'Segera lakukan pembayaran',
-                'status' => 'current',
-                'icon' => 'clock'
-            ];
-        } elseif (in_array($currentStatus, ['expired', 'failed'], true)) {
-            $steps[] = [
-                'label' => ucfirst($currentStatus),
-                'description' => $currentStatus === 'expired' ? 'Waktu pembayaran habis' : 'Pembayaran gagal',
-                'status' => 'failed',
-                'icon' => 'x-circle'
-            ];
-        }
-
-        if ($this->order->booking) {
-            if ($bookingStatus === 'waiting' && ($currentStatus === 'paid' || $paymentStatus === 'paid')) {
-                $bookingDate = $this->order->booking->booking_date
-                    ? Carbon::parse($this->order->booking->booking_date)->format('d M Y')
-                    : '-';
-                $startTime = $this->order->booking->start_time
-                    ? substr($this->order->booking->start_time, 0, 5)
-                    : '-';
-
-                $steps[] = [
-                    'label' => 'Menunggu Jadwal',
-                    'description' => "Booking: {$bookingDate} · {$startTime}",
-                    'status' => 'current',
-                    'icon' => 'calendar'
-                ];
-            } elseif ($bookingStatus === 'progress') {
-                $steps[] = [
-                    'label' => 'Sedang Berlangsung',
-                    'description' => 'Booking sedang berlangsung',
-                    'status' => 'current',
-                    'icon' => 'play'
-                ];
-            } elseif ($bookingStatus === 'finished') {
-                $checkinAt = $this->order->booking->checkin_at
-                    ? Carbon::parse($this->order->booking->checkin_at)->format('d M Y, H:i')
-                    : null;
-
-                $steps[] = [
-                    'label' => 'Selesai',
-                    'description' => $checkinAt ? "Check-in: {$checkinAt}" : 'Booking telah selesai',
-                    'status' => 'completed',
-                    'icon' => 'check-circle'
-                ];
-            } elseif ($bookingStatus === 'cancelled') {
-                $steps[] = [
-                    'label' => 'Dibatalkan',
-                    'description' => 'Booking telah dibatalkan',
-                    'status' => 'failed',
-                    'icon' => 'x-circle'
-                ];
-            }
-        }
-
-        return $steps;
-    }
-
     public function downloadPdf()
     {
         $pdf = Pdf::loadView('pdf.transaction-receipt', [
@@ -240,7 +151,6 @@ class TransactionHistoryDetail extends Component
     {
         return view('livewire.user.histories.transaction-history-detail', [
             'statusBadge' => $this->statusBadge,
-            'timelineSteps' => $this->timelineSteps,
             'bookingDuration' => $this->bookingDuration,
         ]);
     }
