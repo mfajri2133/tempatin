@@ -78,6 +78,19 @@ class VenueDetail extends Component
         return null;
     }
 
+    private function isStartTimeExpired(int $hour): bool
+    {
+        if ($this->booking_date !== now()->toDateString()) {
+            return false;
+        }
+
+        $now = now();
+
+        $startTime = now()->setTime($hour, 0);
+
+        return $now->greaterThan($startTime->addMinutes(30));
+    }
+
     public function getAvailableHoursProperty()
     {
         if (!$this->booking_date) {
@@ -107,12 +120,12 @@ class VenueDetail extends Component
         $availableHours = [];
 
         for ($hour = 6; $hour <= 22; $hour++) {
-            $isPast = $currentHour !== null && $hour <= $currentHour;
+            $isExpired = $this->isStartTimeExpired($hour);
 
             $availableHours[] = [
                 'hour'      => $hour,
                 'time'      => sprintf('%02d:00', $hour),
-                'is_booked' => in_array($hour, $bookedHours) || $isPast,
+                'is_booked' => in_array($hour, $bookedHours) || $isExpired,
             ];
         }
 
@@ -146,13 +159,13 @@ class VenueDetail extends Component
         $options = [];
 
         for ($hour = 6; $hour <= 22; $hour++) {
-            $isPast = $currentHour !== null && $hour <= $currentHour;
+            $isExpired = $this->isStartTimeExpired($hour);
             $isBooked = in_array($hour, $bookedHours);
 
             $options[] = [
                 'value'    => sprintf('%02d:00', $hour),
                 'label'    => sprintf('%02d:00', $hour),
-                'disabled' => $isBooked || $isPast,
+                'disabled' => $isBooked || $isExpired,
             ];
         }
 
